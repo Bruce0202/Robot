@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.12">
+  <POU Name="FB_Robot" Id="{bb53ae37-266d-444e-acc5-1c032fe98f91}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Robot
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	{attribute 'TcInitSymbol'}
+	oidInstance : OTCID;
+	ipRobot : IRobot;
+	hrInit : HRESULT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_exit" Id="{8ae06666-ce55-4525-94dc-d8d6be7e4422}">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	bInCopyCode : BOOL; // if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT bInCopyCode THEN
+	FW_SafeRelease(ADR(ipRobot));
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{6d818fef-0880-4cfe-9732-3d632cfc8a37}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT bInCopyCode THEN
+	IF ipRobot = 0 THEN
+		hrInit := FW_objMgr_GetObjectInstance(oid := oidInstance, iid:= TC_GLOBAL_IID_LIST.IID_IRobot,pipUnk := ADR(ipRobot)); 
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InitRobot" Id="{e1a75cb4-1f0b-4169-8d34-9e93f166f4f3}">
+      <Declaration><![CDATA[{attribute 'c++_compatible'}
+{attribute 'minimal_input_size' := '4'}
+{attribute 'pack_mode' := '4'}
+{warning 'add method implementation'}
+METHOD InitRobot : UDINT
+VAR_INPUT
+	pInitPar	: POINTER TO st_InitParameter;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (ipRobot <> 0) THEN
+	InitRobot := ipRobot.InitRobot(pInitPar);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RunRobot" Id="{54fbf472-68a6-4ad3-ab8e-f0741a546ddd}">
+      <Declaration><![CDATA[
+{attribute 'c++_compatible'}
+{attribute 'minimal_input_size' := '4'}
+{attribute 'pack_mode' := '4'}
+
+
+METHOD RunRobot : UDINT
+VAR_INPUT
+	pMC_Inputs	: POINTER TO st_AxisGroupRead;
+	pMC_Outputs	: POINTER TO st_AxisGroupSet;
+	pCtlComd	: POINTER TO Recvbuff;
+	pRobotStatus	: POINTER TO Sendbuff;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (ipRobot <> 0) THEN
+	RunRobot := ipRobot.RunRobot(pMC_Inputs, pMC_Outputs, pCtlComd, pRobotStatus);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StopRobot" Id="{1bd503dc-9449-46d6-87aa-d98db2c4979f}">
+      <Declaration><![CDATA[{attribute 'c++_compatible'}
+{attribute 'minimal_input_size' := '4'}
+{attribute 'pack_mode' := '4'}
+{warning 'add method implementation'}
+METHOD StopRobot : HRESULT
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (ipRobot <> 0) THEN
+	StopRobot := ipRobot.StopRobot();
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Robot">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.FB_exit">
+      <LineId Id="7" Count="1" />
+      <LineId Id="6" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.FB_init">
+      <LineId Id="8" Count="3" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.InitRobot">
+      <LineId Id="11" Count="1" />
+      <LineId Id="10" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.RunRobot">
+      <LineId Id="14" Count="1" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.StopRobot">
+      <LineId Id="8" Count="1" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.12">
+  <POU Name="FB_ReadAxisStatus" Id="{df6ae7bd-09fc-46a8-8e9a-ef5fe5e1c5bf}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ReadAxisStatus
+VAR_IN_OUT
+
+AxisRef : AXIS_REF;
+
+END_VAR
+
+VAR_OUTPUT
+
+AxisStatus : st_ReadAxis;
+
+END_VAR
+VAR	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[AxisRef.ReadStatus();  
+AxisStatus.Position			:= AxisRef.NcToPlc.ActPos;
+AxisStatus.Velocity			:= AxisRef.NcToPlc.ActVelo;
+AxisStatus.Acceleration		:= AxisRef.NcToPlc.ActAcc;
+AxisStatus.Torque		    := AxisRef.NcToPlc.ActTorque;
+//AxisStatus.Current			:= AxisRef.NcToPlc.ActTorque;
+AxisStatus.ErrorID			:= AxisRef.NcToPlc.ErrorCode;
+
+IF AxisRef.Status.ErrorStop THEN
+	AxisStatus.eState := eAxis_ERRORSTOP;
+ELSIF AxisRef.Status.Disabled THEN
+	AxisStatus.eState := eAxis_DISABLED;
+ELSIF AxisRef.Status.StandStill THEN
+	AxisStatus.eState := eAxis_STANDSTILL;
+ELSIF AxisRef.Status.Homing THEN
+	AxisStatus.eState := eAxis_HOMING;
+ELSIF AxisRef.Status.Stopping THEN
+	AxisStatus.eState := eAxis_STOPPING;
+ELSIF AxisRef.Status.DiscreteMotion THEN
+	AxisStatus.eState := eAxis_DISCRETEMOTION;
+ELSIF AxisRef.Status.ContinuousMotion THEN
+	AxisStatus.eState := eAxis_CONTINOUSMOTION;
+ELSIF AxisRef.Status.SynchronizedMotion THEN
+	AxisStatus.eState := eAxis_SYNCHRONIZEDMOTION;
+ELSE
+	AxisStatus.eState := eAxis_UNDEFINED;
+END_IF
+
+
+	
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_ReadAxisStatus">
+      <LineId Id="101" Count="4" />
+      <LineId Id="147" Count="0" />
+      <LineId Id="132" Count="0" />
+      <LineId Id="111" Count="16" />
+      <LineId Id="130" Count="1" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="66" Count="4" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

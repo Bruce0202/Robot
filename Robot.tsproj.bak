@@ -1,0 +1,2784 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4022.22">
+	<DataTypes>
+		<DataType>
+			<Name GUID="{4C3FC5AC-D5AA-44C6-AC5A-159774BA0F6D}" Namespace="MC" TcBaseType="true" HideType="true" IecDeclaration="DWORD;">NCTOPLC_AXIS_REF_STATE</Name>
+			<BitSize>32</BitSize>
+			<SubItem>
+				<Name>Operational</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Homed</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>1</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>NotMoving</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>2</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>InPositionArea</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>3</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>InTargetPosition</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>4</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Protected</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>5</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ErrorPropagationDelayed</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>6</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>HasBeenStopped</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>7</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>HasJob</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>8</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>PositiveDirection</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>9</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>NegativeDirection</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>10</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>HomingBusy</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>11</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ConstantVelocity</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>12</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Compensating</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>13</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ExtSetPointGenEnabled</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>14</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>PhasingActive</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>15</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ExternalLatchValid</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>16</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>NewTargetPos</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>17</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ContinuousMotion</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>19</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ControlLoopClosed</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>20</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CamTableQueued</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>21</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CamDataQueued</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>22</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CamScalingPending</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>23</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CmdBuffered</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>24</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>PTPmode</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>25</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SoftLimitMinExceeded</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>26</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SoftLimitMaxExceeded</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>27</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>DriveDeviceError</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>28</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>MotionCommandsLocked</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>29</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>IoDataInvalid</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>30</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Error</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>31</BitOffs>
+			</SubItem>
+			<Format Name="Short">
+				<Printf>%08x</Printf>
+			</Format>
+			<Format Name="Cpp">
+				<Printf>0x%08x</Printf>
+			</Format>
+			<Format Name="IEC">
+				<Printf>16#%08X</Printf>
+			</Format>
+		</DataType>
+		<DataType>
+			<Name GUID="{6EF49753-C72C-4F50-AA44-3C7498E76CFE}" Namespace="MC" TcBaseType="true" HideType="true" IecDeclaration="DWORD;">NCTOPLC_AXIS_REF_OPMODE</Name>
+			<BitSize>32</BitSize>
+			<SubItem>
+				<Name>OpModePosAreaMonitoring</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModeTargetPosMonitoring</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>1</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModeLoop</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>2</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModeMotionMonitoring</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>3</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModePEHTimeMonitoring</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>4</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModeBacklashCompensation</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>5</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModeDelayedErrorReaction</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>6</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModeModulo</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>7</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModeSimulationAxis</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>8</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModePosLagMonitoring</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>16</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModeVeloLagMonitoring</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>17</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModeSoftLimitMinMonitoring</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>18</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModeSoftLimitMaxMonitoring</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>19</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModePosCorrection</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>20</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModeAllowSlaveCommands</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>21</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModeAllowExtSetAxisCommands</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>22</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ApplicationRequest</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>23</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{303D9411-849C-467F-8A4C-5C8CD0F3DD46}" Namespace="MC" TcBaseType="true" HideType="true">NCTOPLC_AXIS_REF_STATE2_FLAGS</Name>
+			<BitSize>32</BitSize>
+			<SubItem>
+				<Name>AvoidingCollision</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<Format Name="Short">
+				<Printf>%08x</Printf>
+			</Format>
+			<Format Name="Cpp">
+				<Printf>0x%08x</Printf>
+			</Format>
+			<Format Name="IEC">
+				<Printf>16#%08X</Printf>
+			</Format>
+		</DataType>
+		<DataType>
+			<Name GUID="{669F3788-48FD-42CF-8A59-2DA946853FB6}" Namespace="MC" TcBaseType="true" HideType="true">NCTOPLC_AXIS_REF_STATE2</Name>
+			<BitSize>32</BitSize>
+			<SubItem>
+				<Name>Value</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000007}">DWORD</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Flags</Name>
+				<Type GUID="{303D9411-849C-467F-8A4C-5C8CD0F3DD46}" Namespace="MC">NCTOPLC_AXIS_REF_STATE2_FLAGS</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<Format Name="Short">
+				<Printf>%08x</Printf>
+			</Format>
+			<Format Name="Cpp">
+				<Printf>0x%08x</Printf>
+			</Format>
+			<Format Name="IEC">
+				<Printf>16#%08X</Printf>
+			</Format>
+		</DataType>
+		<DataType>
+			<Name GUID="{BA9D9D0F-1A4A-4A27-A19F-3032626A8491}" Namespace="MC" TcBaseType="true" HideType="true">NCTOPLC_AXIS_REF_CAMCOUPLINGSTATE</Name>
+			<BitSize>8</BitSize>
+			<SubItem>
+				<Name>CamActivationPending</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CamDeactivationPending</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>1</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CamActive</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>2</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CamDataQueued</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>6</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CamScalingPending</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>7</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-000000000039}" TcBaseType="true" HideType="true">UINTARR8</Name>
+			<BitSize>128</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000005}">UINT</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>8</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC" TcBaseType="true">NCTOPLC_AXIS_REF</Name>
+			<BitSize>2048</BitSize>
+			<SubItem>
+				<Name>StateDWord</Name>
+				<Type GUID="{4C3FC5AC-D5AA-44C6-AC5A-159774BA0F6D}" Namespace="MC">NCTOPLC_AXIS_REF_STATE</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ErrorCode</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>32</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>AxisState</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<Comment>
+					<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+				</Comment>
+				<BitSize>32</BitSize>
+				<BitOffs>64</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>AxisModeConfirmation</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>96</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>HomingState</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<Comment>
+					<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+				</Comment>
+				<BitSize>32</BitSize>
+				<BitOffs>128</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CoupleState</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<Comment>
+					<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+				</Comment>
+				<BitSize>32</BitSize>
+				<BitOffs>160</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SvbEntries</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>192</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SafEntries</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>224</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>AxisId</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>256</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModeDWord</Name>
+				<Type GUID="{6EF49753-C72C-4F50-AA44-3C7498E76CFE}" Namespace="MC">NCTOPLC_AXIS_REF_OPMODE</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>288</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ActPos</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>320</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ModuloActPos</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>384</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ActiveControlLoopIndex</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>448</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ControlLoopIndex</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>464</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ModuloActTurns</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000009}">DINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>480</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ActVelo</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>512</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>PosDiff</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>576</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SetPos</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>640</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SetVelo</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>704</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SetAcc</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>768</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>TargetPos</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>832</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ModuloSetPos</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>896</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ModuloSetTurns</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000009}">DINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>960</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CmdNo</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>992</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CmdState</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>1008</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SetJerk</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>1024</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SetTorque</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>1088</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ActTorque</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>1152</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>StateDWord2</Name>
+				<Type GUID="{669F3788-48FD-42CF-8A59-2DA946853FB6}" Namespace="MC">NCTOPLC_AXIS_REF_STATE2</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>1216</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>StateDWord3</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000007}">DWORD</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>1248</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>TouchProbeState</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000007}">DWORD</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>1280</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>TouchProbeCounter</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000007}">DWORD</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>1312</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CamCouplingState</Name>
+				<Type GUID="{BA9D9D0F-1A4A-4A27-A19F-3032626A8491}" Namespace="MC">NCTOPLC_AXIS_REF_CAMCOUPLINGSTATE</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>8</Elements>
+				</ArrayInfo>
+				<BitSize>64</BitSize>
+				<BitOffs>1344</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CamCouplingTableID</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000039}">UINTARR8</Type>
+				<BitSize>128</BitSize>
+				<BitOffs>1408</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ActTorqueDerivative</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>1536</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SetTorqueDerivative</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>1600</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ActPosWithoutPosCorrection</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>1792</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ActAcc</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>1856</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>DcTimeStamp</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>1920</BitOffs>
+			</SubItem>
+			<Properties>
+				<Property>
+					<Name>NcStructType</Name>
+					<Value>2</Value>
+				</Property>
+			</Properties>
+			<Relations>
+				<Relation Priority="100">
+					<Type GUID="{429B767E-373B-40AE-BFA5-E1C08B444DF3}">NCAXLESTRUCT_TOPLC</Type>
+				</Relation>
+				<Relation Priority="100">
+					<Type GUID="{E8DA524A-605F-4879-82E6-B86EF6986572}">NCAXLESTRUCT_TOPLC2</Type>
+				</Relation>
+				<Relation Priority="100">
+					<Type GUID="{B507963E-69F3-4B64-BB8C-2BD7A560976D}">NCAXLESTRUCT_TOPLC3</Type>
+				</Relation>
+				<Relation Priority="100">
+					<Type GUID="{F794B740-82D7-4637-848E-4F74A711D038}">NCAXLESTRUCT_TOPLC4</Type>
+				</Relation>
+				<Relation Priority="100">
+					<Type GUID="{40BD39B0-C3EA-4F74-9F4F-5F1982786F7C}"/>
+				</Relation>
+				<Relation Priority="100">
+					<Type GUID="{40BD39B2-C3EA-4F74-9F4F-5F1982786F7C}"/>
+				</Relation>
+				<Relation Priority="100">
+					<Type GUID="{8CDE0C45-AB9D-42DB-BC94-1CF7521AB268}"/>
+				</Relation>
+			</Relations>
+		</DataType>
+		<DataType>
+			<Name GUID="{875D2B22-B7EB-497E-B933-0C004593CCF3}" Namespace="MC" TcBaseType="true" HideType="true" IecDeclaration="DWORD;">PLCTONC_AXIS_REF_CTRL</Name>
+			<BitSize>32</BitSize>
+			<SubItem>
+				<Name>Enable</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>FeedEnablePlus</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>1</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>FeedEnableMinus</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>2</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>HomingSensor</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>5</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>AcceptBlockedDrive</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>8</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>PlcDebugFlag</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>30</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>NcDebugFlag</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>31</BitOffs>
+			</SubItem>
+			<Format Name="Short">
+				<Printf>%08x</Printf>
+			</Format>
+			<Format Name="Cpp">
+				<Printf>0x%08x</Printf>
+			</Format>
+			<Format Name="IEC">
+				<Printf>16#%08X</Printf>
+			</Format>
+		</DataType>
+		<DataType>
+			<Name GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC" TcBaseType="true">PLCTONC_AXIS_REF</Name>
+			<BitSize>1024</BitSize>
+			<SubItem>
+				<Name>ControlDWord</Name>
+				<Type GUID="{875D2B22-B7EB-497E-B933-0C004593CCF3}" Namespace="MC">PLCTONC_AXIS_REF_CTRL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Override</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>32</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>AxisModeRequest</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>64</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>AxisModeDWord</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>96</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>AxisModeLReal</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>128</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>PositionCorrection</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>192</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ExtSetPos</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>256</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ExtSetVelo</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>320</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ExtSetAcc</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>384</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ExtSetDirection</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000009}">DINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>448</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ExtControllerOutput</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>512</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>GearRatio1</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>576</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>GearRatio2</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>640</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>GearRatio3</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>704</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>GearRatio4</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>768</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>MapState</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>832</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>PlcCycleControl</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000001}">BYTE</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>840</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>PlcCycleCount</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000001}">BYTE</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>848</BitOffs>
+			</SubItem>
+			<Properties>
+				<Property>
+					<Name>NcStructType</Name>
+					<Value>1</Value>
+				</Property>
+			</Properties>
+			<Relations>
+				<Relation Priority="100">
+					<Type GUID="{60392271-8688-4F4C-B404-618DF106325D}">NCAXLESTRUCT_FROMPLC3</Type>
+				</Relation>
+			</Relations>
+		</DataType>
+		<DataType>
+			<Name GUID="{193F32A1-4268-4405-8082-179ACDDBAE73}">st_InitParameter</Name>
+			<BitSize>96</BitSize>
+			<SubItem>
+				<Name>JointsNum</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>RecvSize</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>32</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SendSize</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>64</BitOffs>
+			</SubItem>
+			<Hides>
+				<Hide GUID="{6D6D0624-F2D9-4AC5-A654-976BC52AD749}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{ECD7093D-84B1-4DCE-8FD3-5FECA3911656}">eAxis_States</Name>
+			<BitSize>32</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eAxis_UNDEFINED]]>
+				</Text>
+				<Enum>0</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eAxis_DISABLED]]>
+				</Text>
+				<Enum>1</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eAxis_STANDSTILL]]>
+				</Text>
+				<Enum>2</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eAxis_ERRORSTOP]]>
+				</Text>
+				<Enum>3</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eAxis_STOPPING]]>
+				</Text>
+				<Enum>4</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eAxis_HOMING]]>
+				</Text>
+				<Enum>5</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eAxis_DISCRETEMOTION]]>
+				</Text>
+				<Enum>6</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eAxis_CONTINOUSMOTION]]>
+				</Text>
+				<Enum>7</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eAxis_SYNCHRONIZEDMOTION]]>
+				</Text>
+				<Enum>8</Enum>
+			</EnumInfo>
+			<Hides>
+				<Hide GUID="{7A0E9FDB-2BB5-4D21-9964-F205E1977FE4}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{6E6455FB-F847-4761-AF0F-6D621F0AA3E4}">st_ReadAxis</Name>
+			<BitSize>448</BitSize>
+			<SubItem>
+				<Name>Index</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>eState</Name>
+				<Type GUID="{ECD7093D-84B1-4DCE-8FD3-5FECA3911656}">eAxis_States</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>32</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Position</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>64</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Velocity</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>128</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Torque</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>192</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Current</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>256</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Acceleration</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>320</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ErrorID</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>384</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Error</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>416</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>bHomed</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>424</BitOffs>
+			</SubItem>
+			<Hides>
+				<Hide GUID="{8F94DA26-D4B8-4E0C-85A2-4F15DA24F2E5}"/>
+				<Hide GUID="{E9F817E5-8309-46B6-843A-7BB5EBD58F41}"/>
+				<Hide GUID="{B32A436A-1B3D-4670-96C0-773B75CCEC00}"/>
+				<Hide GUID="{9A31C86A-EC19-4DB2-BE65-E1BB3AB9FF88}"/>
+				<Hide GUID="{E2585FA9-A9DB-4257-9D37-7A99ED41EB6A}"/>
+				<Hide GUID="{147316CD-5F07-45B8-9786-68D60C74B29A}"/>
+				<Hide GUID="{52116A36-721F-422E-9460-B67A384535F3}"/>
+				<Hide GUID="{FA2AAF93-364A-4925-A0DF-37B9753912F4}"/>
+				<Hide GUID="{E58EE95D-F3C5-40D3-84CE-2C692EB14C86}"/>
+				<Hide GUID="{9DAAC0FF-FDB6-4F12-A518-4D40C13802B2}"/>
+				<Hide GUID="{20B04263-9F04-4816-B50B-E068A0882107}"/>
+				<Hide GUID="{D3558C4D-A6B5-4A79-9016-5FD2681D66C1}"/>
+				<Hide GUID="{27848C61-261D-4D27-A73B-55EE72501418}"/>
+				<Hide GUID="{25FA6BEC-C4C8-4E1A-864C-F5D9AC6177AF}"/>
+				<Hide GUID="{27CDA57C-9038-445D-A16B-1EFDF8044B4B}"/>
+				<Hide GUID="{011F48A8-E32A-4A2E-8C25-C278750AF51D}"/>
+				<Hide GUID="{F8220202-5F0B-4659-9800-6DA464A216E5}"/>
+				<Hide GUID="{287A4080-6899-4F9C-B517-A963BDB63997}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{B98167E8-0DA1-4964-97FB-04A3E4FC85D8}">stAction</Name>
+			<BitSize>1664</BitSize>
+			<SubItem>
+				<Name>bflag</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>16</Elements>
+				</ArrayInfo>
+				<BitSize>128</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>iData</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>16</Elements>
+				</ArrayInfo>
+				<BitSize>512</BitSize>
+				<BitOffs>128</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>dData</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>16</Elements>
+				</ArrayInfo>
+				<BitSize>1024</BitSize>
+				<BitOffs>640</BitOffs>
+			</SubItem>
+			<Hides>
+				<Hide GUID="{2CE5DB23-37E8-4262-B8D4-735F47EF99A0}"/>
+				<Hide GUID="{3BAC5D73-5C4F-4F24-AC02-23BA64F6CA22}"/>
+				<Hide GUID="{81866468-894E-414B-BCAA-D8019EEB97B9}"/>
+				<Hide GUID="{F87E8377-89DE-451B-840F-3D268289910B}"/>
+				<Hide GUID="{B1D3090C-BB08-4C39-9023-4CDD36FE4956}"/>
+				<Hide GUID="{E87BBE99-D931-4E02-858F-12D8D5F6A53C}"/>
+				<Hide GUID="{A5B7F969-3B02-4ADA-ACA6-DD33FF497ED5}"/>
+				<Hide GUID="{7EC8032E-18D5-4C03-A29E-D58CA04CD4E1}"/>
+				<Hide GUID="{3E7A9C5E-89D2-4460-8CE7-0846CB314029}"/>
+				<Hide GUID="{20AFAA92-0FE0-42FC-963A-4F2CA00DEB59}"/>
+				<Hide GUID="{C652D1AC-D9E5-4E2A-BC77-7FC8776B593D}"/>
+				<Hide GUID="{84F6C150-769A-4ED5-A591-19714FCB5C31}"/>
+				<Hide GUID="{E8376D0C-DA68-4089-8327-C084C297CD75}"/>
+				<Hide GUID="{0949DAC4-E7DB-4D88-8832-6B94F166F454}"/>
+				<Hide GUID="{70B08E1A-A8B5-414A-BFAF-161CE76E3C3A}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{2795DE3B-85A3-4575-B002-5B15DEF32B9C}">st_AxisGroupRead</Name>
+			<BitSize>20672</BitSize>
+			<SubItem>
+				<Name>Number</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>AxisGoup</Name>
+				<Type GUID="{6E6455FB-F847-4761-AF0F-6D621F0AA3E4}">st_ReadAxis</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>20</Elements>
+				</ArrayInfo>
+				<BitSize>8960</BitSize>
+				<BitOffs>64</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>RobotActAction</Name>
+				<Type GUID="{B98167E8-0DA1-4964-97FB-04A3E4FC85D8}">stAction</Type>
+				<BitSize>1664</BitSize>
+				<BitOffs>9024</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>LinkActActions</Name>
+				<Type GUID="{B98167E8-0DA1-4964-97FB-04A3E4FC85D8}">stAction</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>6</Elements>
+				</ArrayInfo>
+				<BitSize>9984</BitSize>
+				<BitOffs>10688</BitOffs>
+			</SubItem>
+			<Hides>
+				<Hide GUID="{689A8493-430D-4EA5-85C5-E98213B4F3EC}"/>
+				<Hide GUID="{10BFA39A-CA07-4638-8D58-19770E34156A}"/>
+				<Hide GUID="{59D55F5D-ED7A-47ED-B805-A680D7244D50}"/>
+				<Hide GUID="{BFF54D0D-3CA2-40AB-988F-DB731B35E8B4}"/>
+				<Hide GUID="{2D0DB7BC-641A-4806-81BC-B9D49B897A78}"/>
+				<Hide GUID="{9B3E1275-F7EF-403A-BAE2-FFFAE3CAE66F}"/>
+				<Hide GUID="{01C12124-9A92-482E-AE15-71C8BFC5EA73}"/>
+				<Hide GUID="{E0CD0E1E-5C98-4B0C-B52B-C2822928EA33}"/>
+				<Hide GUID="{20DDB7EC-8567-4A4B-8C71-C7FE57285C91}"/>
+				<Hide GUID="{AAB9C7EA-098E-472E-AD06-310D1DAF8C4E}"/>
+				<Hide GUID="{7F3CF565-C9B6-48B2-BC3D-2E8F056822FE}"/>
+				<Hide GUID="{00C30EC2-5EBD-4BDB-8342-520DF64BF6E8}"/>
+				<Hide GUID="{0624032A-B7B2-4C77-820A-B5DC0C70609A}"/>
+				<Hide GUID="{2265C34A-3B8A-4761-89F9-6BEEF3366B6C}"/>
+				<Hide GUID="{FE7879E4-34EF-4D50-AD40-938BE803F4CB}"/>
+				<Hide GUID="{F26DFEE9-BC51-41D9-BD84-691E647E62CB}"/>
+				<Hide GUID="{5196E77D-152F-4716-BF29-BED79BFF340A}"/>
+				<Hide GUID="{56C3EA3F-D975-439B-821A-70BF2547E1F2}"/>
+				<Hide GUID="{3CC51220-B8F6-42F5-9C6E-9BC650FB25DE}"/>
+				<Hide GUID="{00C60AE6-BD21-4176-B69A-D62B6EC0E106}"/>
+				<Hide GUID="{36F4B250-FE7F-4B38-892B-14CD27822F6A}"/>
+				<Hide GUID="{7A86DD43-99F8-41F8-8668-7F921D87DCF8}"/>
+				<Hide GUID="{B3295DBA-80EF-4FC0-A6D3-8E3AC0CD1AE0}"/>
+				<Hide GUID="{0485CA8B-54ED-4C59-8904-7E03044D1F06}"/>
+				<Hide GUID="{01E2B99C-AFAF-4A37-AF54-51A23C7AC58D}"/>
+				<Hide GUID="{C72B64D1-31FD-4B83-A2DD-9991397F35A2}"/>
+				<Hide GUID="{F1E19F24-50D9-41E8-981A-0C865C64477B}"/>
+				<Hide GUID="{79B856B9-8A06-4BEF-9131-7A1E83A87B00}"/>
+				<Hide GUID="{5DEBCC1B-6FC9-4AD5-96A3-F88EF61A67F9}"/>
+				<Hide GUID="{BEB5FAFC-EDA8-4A79-9D28-EE8D94A1C71E}"/>
+				<Hide GUID="{46604D82-2DD6-477D-A236-A560D8D3621F}"/>
+				<Hide GUID="{3BC5FDD2-EF09-416B-97C0-9F37BBD624DC}"/>
+				<Hide GUID="{25359925-A772-495B-A648-EF65DDD829B5}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{3DD5BF5D-CAE2-4B02-853C-7823514EBE54}">eMC_Motion</Name>
+			<BitSize>32</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eMC_NONE]]>
+				</Text>
+				<Enum>0</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eMC_RESET]]>
+				</Text>
+				<Enum>1</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eMC_HOME]]>
+				</Text>
+				<Enum>2</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eMC_POWER]]>
+				</Text>
+				<Enum>3</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eMC_STOP]]>
+				</Text>
+				<Enum>4</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eMC_HALT]]>
+				</Text>
+				<Enum>5</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eMC_MOV_ABS]]>
+				</Text>
+				<Enum>6</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eMC_MOV_CON_ABS]]>
+				</Text>
+				<Enum>7</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eMC_MOV_RELATIVE]]>
+				</Text>
+				<Enum>9</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[eMC_MOV_VEL]]>
+				</Text>
+				<Enum>10</Enum>
+			</EnumInfo>
+			<Hides>
+				<Hide GUID="{05B86F9E-C00D-4EDD-AFEE-32CB179A2C32}"/>
+				<Hide GUID="{665EE531-F678-4AA9-ABFE-A2EB6DDA8B96}"/>
+				<Hide GUID="{CE40D1B1-682C-459C-94F2-C5716DC6F83A}"/>
+				<Hide GUID="{CE777A54-BAB4-4E4C-9054-F3D75C9AC3D6}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{9C054410-FD15-4319-843A-82C59CC2246D}">st_SetAxis</Name>
+			<BitSize>448</BitSize>
+			<SubItem>
+				<Name>Index</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>eMC_Motion</Name>
+				<Type GUID="{3DD5BF5D-CAE2-4B02-853C-7823514EBE54}">eMC_Motion</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>32</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>bEnable</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>64</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Position</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>128</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Velocity</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>192</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Torque</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>256</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>EndVelocity</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>320</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Distance</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>384</BitOffs>
+			</SubItem>
+			<Hides>
+				<Hide GUID="{E59749F6-ED85-4347-820E-7407A7C038BD}"/>
+				<Hide GUID="{3895BE42-5BAD-472A-99D6-7C36B9934E22}"/>
+				<Hide GUID="{F12C5504-AEBD-4B86-B7DD-00C2912FC02C}"/>
+				<Hide GUID="{7D47C30A-A6BB-40BE-BBFF-3A586539C783}"/>
+				<Hide GUID="{A1460B20-936F-4495-BCC3-61658303613D}"/>
+				<Hide GUID="{324076D3-9E43-46AE-9127-D70478E6DB83}"/>
+				<Hide GUID="{B3BF45F1-4F47-49A3-A149-AB712FA203B4}"/>
+				<Hide GUID="{00DDBB81-44D6-4E23-B92D-FD1A9E05F2AD}"/>
+				<Hide GUID="{2A1F478A-C66E-4966-B736-81C0DE4AD851}"/>
+				<Hide GUID="{AA2E0B3F-1B10-4660-AEAB-94DF36C1E92D}"/>
+				<Hide GUID="{85780175-DD2F-45CF-94C9-DFC0D0FAF300}"/>
+				<Hide GUID="{1EDA245D-91D0-460F-AA88-6082AD92CC8E}"/>
+				<Hide GUID="{6C3BF95A-F95D-489A-B59A-6D0D7AA0BDBA}"/>
+				<Hide GUID="{205EBB3B-C4C1-4852-A41E-59D642A8A9A2}"/>
+				<Hide GUID="{A104D1F5-7376-4404-B87A-4C411E3D37CA}"/>
+				<Hide GUID="{F1A7B517-D761-4C2D-A8BC-45A2BC812226}"/>
+				<Hide GUID="{997A774E-498A-4705-9E6A-308FB577DAA6}"/>
+				<Hide GUID="{AA8554C2-5ABC-495E-983E-F420A4BF5152}"/>
+				<Hide GUID="{FFB7FAEF-DD0D-4800-B2E5-A8FA19E1849B}"/>
+				<Hide GUID="{0E854060-4D03-42EB-BB82-6D05F078DF26}"/>
+				<Hide GUID="{D582EB9F-A86E-4F36-B1BC-24E439717CE3}"/>
+				<Hide GUID="{FCC91CD5-F245-48A5-AB18-772D38C32820}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{67A85B2E-3D03-448A-92A9-2AA4E9750A65}">st_AxisGroupSet</Name>
+			<BitSize>20672</BitSize>
+			<SubItem>
+				<Name>Number</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>AxisGroup</Name>
+				<Type GUID="{9C054410-FD15-4319-843A-82C59CC2246D}">st_SetAxis</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>20</Elements>
+				</ArrayInfo>
+				<BitSize>8960</BitSize>
+				<BitOffs>64</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>RobotSetAction</Name>
+				<Type GUID="{B98167E8-0DA1-4964-97FB-04A3E4FC85D8}">stAction</Type>
+				<BitSize>1664</BitSize>
+				<BitOffs>9024</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>LinkSetActions</Name>
+				<Type GUID="{B98167E8-0DA1-4964-97FB-04A3E4FC85D8}">stAction</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>6</Elements>
+				</ArrayInfo>
+				<BitSize>9984</BitSize>
+				<BitOffs>10688</BitOffs>
+			</SubItem>
+			<Hides>
+				<Hide GUID="{42C9DBC1-12DA-4367-8E31-E96EF13AC039}"/>
+				<Hide GUID="{16C37C49-5A2E-40FF-976D-F7D7DAC1BDE4}"/>
+				<Hide GUID="{AC2E5A28-4E6D-40D2-91A2-EDC99E14788F}"/>
+				<Hide GUID="{38D10BE8-CD1E-40B0-8C38-0038B39CFA5B}"/>
+				<Hide GUID="{C032289D-5F20-482D-890C-CC52244FC3F7}"/>
+				<Hide GUID="{7A0831B3-5E16-4C0F-AE05-5701DAE33B73}"/>
+				<Hide GUID="{E9497DF8-8382-4528-B029-E7A27F0F0B08}"/>
+				<Hide GUID="{D59321D7-C1F7-459B-9E45-F69F34311AE7}"/>
+				<Hide GUID="{C595C319-5668-43E6-9C7A-31B596CC56D3}"/>
+				<Hide GUID="{977AD1E0-A8B1-4933-9B2E-2CFA515D5CE9}"/>
+				<Hide GUID="{4B071096-4FCC-46E3-AE8D-C42A29D21BCF}"/>
+				<Hide GUID="{952E4E93-057C-451D-AF46-2CFD2B825619}"/>
+				<Hide GUID="{CBB9CEE4-EEF9-443C-97EB-6734AF0086AA}"/>
+				<Hide GUID="{F1337D0E-658F-4DA1-A468-0F2201AE2F14}"/>
+				<Hide GUID="{B416BB0E-BDF3-4981-82F4-31B9401C0D03}"/>
+				<Hide GUID="{7038DF14-289E-4262-83DA-887D24EAEB0E}"/>
+				<Hide GUID="{CF7480D2-168A-49CF-9D7B-D0412F0775D3}"/>
+				<Hide GUID="{00A082EA-62AF-4777-AC9C-C06410E27560}"/>
+				<Hide GUID="{9863BDD6-1925-4A83-9EB0-90C5B80B7296}"/>
+				<Hide GUID="{D2AEB791-CD35-4FB3-A38A-A9AF6A9FE5B5}"/>
+				<Hide GUID="{B17EA829-9EEA-4B4A-838B-791A178C6B0D}"/>
+				<Hide GUID="{E0857CAD-2BE5-4604-8C50-6A4A7448C492}"/>
+				<Hide GUID="{43F5B2E1-FC57-46DD-A097-DE191E962587}"/>
+				<Hide GUID="{20EB14D9-43FC-4DCF-9394-C8404BBE9E2B}"/>
+				<Hide GUID="{F5A76F0E-08A4-4247-B535-C44CC65BE9B9}"/>
+				<Hide GUID="{18CC1755-AE8F-4AA0-B313-FD6A9F326A14}"/>
+				<Hide GUID="{8A92AF0F-746D-4A98-B219-02192CB2F47B}"/>
+				<Hide GUID="{18349FCA-A61F-4478-AA05-3179C132ED9C}"/>
+				<Hide GUID="{F05D8330-BBD8-4F3D-B9EB-7869D5E68F44}"/>
+				<Hide GUID="{CE2DCA2C-B00D-420D-8088-3C9D674ABF0B}"/>
+				<Hide GUID="{E6AA3770-362B-4E6C-BF3A-4E66D3491944}"/>
+				<Hide GUID="{EFA0F071-6010-4872-9076-1B0C3DE2D102}"/>
+				<Hide GUID="{45F0AD5F-93E4-4044-9A69-1BE1894F4DC2}"/>
+				<Hide GUID="{D8D422D7-6B2C-457C-8022-09017A8C7ED0}"/>
+				<Hide GUID="{EACCF63C-85C8-4D7E-A962-79756A733C0F}"/>
+				<Hide GUID="{77019E04-1877-4B13-8FAC-147C7AA0A272}"/>
+				<Hide GUID="{C816BC0B-2096-43E4-A3A7-3AEEF2CC59E8}"/>
+				<Hide GUID="{6B2CE2E5-BAC7-4D9D-A257-E3926DD12A82}"/>
+				<Hide GUID="{C6BC60A4-984B-4F7D-A281-FEDEA4BEEDF2}"/>
+				<Hide GUID="{3D4134C8-2808-4924-BCFE-59A8C1B6C3E7}"/>
+				<Hide GUID="{72E04610-1E05-4974-B9CA-B5DC36664169}"/>
+				<Hide GUID="{21AAAE14-E675-492E-AD3F-912892A5BA7F}"/>
+				<Hide GUID="{6D2AD16C-E1DA-43B2-9526-D26BAFAAD304}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{D725118C-E845-4968-A17E-442AB4535B6C}">Recvbuff</Name>
+			<BitSize>24000</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>3000</Elements>
+			</ArrayInfo>
+			<Hides>
+				<Hide GUID="{37E20E73-C4F6-4E68-868C-64E7AD9705B4}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{99F04275-81C5-4CC3-A499-173A200C8B79}">Sendbuff</Name>
+			<BitSize>24000</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>3000</Elements>
+			</ArrayInfo>
+			<Hides>
+				<Hide GUID="{15B7178F-8BD3-47EB-B2A8-A9786651BAAC}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{4F1720B0-73ED-4CFA-A4FA-F4D2622882F0}">IRobot</Name>
+			<BitSize X64="64">32</BitSize>
+			<BaseType GUID="{00000001-0000-0000-E000-000000000064}">ITcUnknown</BaseType>
+			<Method>
+				<Name>InitRobot</Name>
+				<ReturnType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</ReturnType>
+				<ReturnBitSize>32</ReturnBitSize>
+				<Parameter>
+					<Name>pInitPar</Name>
+					<Type GUID="{193F32A1-4268-4405-8082-179ACDDBAE73}" PointerTo="1">st_InitParameter</Type>
+					<BitSize X64="64">32</BitSize>
+				</Parameter>
+			</Method>
+			<Method>
+				<Name>RunRobot</Name>
+				<ReturnType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</ReturnType>
+				<ReturnBitSize>32</ReturnBitSize>
+				<Parameter>
+					<Name>pMC_Inputs</Name>
+					<Type GUID="{2795DE3B-85A3-4575-B002-5B15DEF32B9C}" PointerTo="1">st_AxisGroupRead</Type>
+					<BitSize X64="64">32</BitSize>
+				</Parameter>
+				<Parameter>
+					<Name>pMC_Outputs</Name>
+					<Type GUID="{67A85B2E-3D03-448A-92A9-2AA4E9750A65}" PointerTo="1">st_AxisGroupSet</Type>
+					<BitSize X64="64">32</BitSize>
+				</Parameter>
+				<Parameter>
+					<Name>pCtlComd</Name>
+					<Type GUID="{D725118C-E845-4968-A17E-442AB4535B6C}" PointerTo="1">Recvbuff</Type>
+					<BitSize X64="64">32</BitSize>
+				</Parameter>
+				<Parameter>
+					<Name>pRobotStatus</Name>
+					<Type GUID="{99F04275-81C5-4CC3-A499-173A200C8B79}" PointerTo="1">Sendbuff</Type>
+					<BitSize X64="64">32</BitSize>
+				</Parameter>
+			</Method>
+			<Method>
+				<Name>StopRobot</Name>
+				<ReturnType GUID="{18071995-0000-0000-0000-000000000019}">HRESULT</ReturnType>
+				<ReturnBitSize>32</ReturnBitSize>
+			</Method>
+			<Hides>
+				<Hide GUID="{C717E6BC-0CBE-4245-B26C-D1ED8E6F1F91}"/>
+				<Hide GUID="{1A926360-E6AD-4286-B9AD-BBD31BEA3A55}"/>
+				<Hide GUID="{8F662F1A-A987-480A-9707-D119FC5C860D}"/>
+				<Hide GUID="{3B83E219-13B1-49BE-8701-8359EBE102F1}"/>
+				<Hide GUID="{8851C4B5-712A-4472-9CCB-064C5D61356E}"/>
+				<Hide GUID="{0A0EBE3D-7E4A-4CB4-A62B-8B84CAA7AFA5}"/>
+				<Hide GUID="{59EA2E5E-7DC2-4950-8346-ED27FFC9B3E5}"/>
+				<Hide GUID="{8A03A870-5A25-425C-B8BF-86D669D4537E}"/>
+				<Hide GUID="{C4852715-3455-4902-9D11-84A3FF06C939}"/>
+				<Hide GUID="{CC59797D-31E3-4846-B3D2-E640BE6669FE}"/>
+				<Hide GUID="{8AF2A758-7357-4AB7-9E64-785A50BA13D1}"/>
+				<Hide GUID="{1A52C1DC-971D-4634-84E9-2086C2F2D7B4}"/>
+				<Hide GUID="{8921B753-50C9-4DAD-9D14-890F43932E1A}"/>
+				<Hide GUID="{11B4C850-40BF-4D3D-8F5D-EB8A9E6B34E3}"/>
+				<Hide GUID="{04DAA46F-A0FA-4923-82DA-A913DE4A7833}"/>
+				<Hide GUID="{B4BC038E-1F29-4000-9202-541A40089DB8}"/>
+				<Hide GUID="{8124EBA6-8F30-49B4-BFA7-FC88E3F4768F}"/>
+				<Hide GUID="{E10A2A15-7B85-4441-A482-57D77101AEFF}"/>
+				<Hide GUID="{14FFE0AB-0C82-4CD1-95CD-F36AB1D5ACAC}"/>
+				<Hide GUID="{9384652C-390B-4C20-96C5-C97A3BAF9597}"/>
+				<Hide GUID="{A899437A-9F7C-46C0-B84B-579ACA263C47}"/>
+				<Hide GUID="{EAFC8EE0-F945-4F53-966B-47BC48868182}"/>
+				<Hide GUID="{3CED3223-124A-4006-B7FB-50308E703436}"/>
+				<Hide GUID="{73129573-4C04-4364-ACC3-702239701237}"/>
+				<Hide GUID="{EA950236-B645-4482-BD15-80DA11813F2A}"/>
+				<Hide GUID="{99857628-38F2-44DF-9810-EEAE41DC3B0D}"/>
+				<Hide GUID="{E77CF0E7-7E02-4296-BC2B-E95B55355F66}"/>
+				<Hide GUID="{839C6E8F-69B5-4FF3-98F0-F53BB6F5C775}"/>
+				<Hide GUID="{1A3AFD76-290A-4348-A93B-65DBD36D94F3}"/>
+				<Hide GUID="{8118FDB0-8DCC-414B-A958-FC4D2950F4A3}"/>
+				<Hide GUID="{30657D09-56DD-48B3-AD10-A19610AD5669}"/>
+				<Hide GUID="{87E9DD9F-55D6-4E11-9A1C-84D5A6D18481}"/>
+				<Hide GUID="{1F379263-8C13-4D60-9CB1-0A4673FF1A36}"/>
+				<Hide GUID="{C6598F1C-DEE3-441C-9EC5-00FAC8194CAD}"/>
+				<Hide GUID="{7FC18F54-83DA-44ED-96F8-4F93563C6E94}"/>
+				<Hide GUID="{EA77A482-5D63-4649-A6AC-F6667D1ED450}"/>
+				<Hide GUID="{49B042AF-6808-45A5-942D-C36DDAE8F939}"/>
+				<Hide GUID="{EF2B493D-8D1C-4C31-B6F0-01910ED810B3}"/>
+				<Hide GUID="{E8E6F7B9-17E6-4DE0-A1F2-7386581B68E0}"/>
+				<Hide GUID="{94CD49A4-7496-4038-8C75-27E90FB33E87}"/>
+				<Hide GUID="{E3D13C64-AE10-44FA-854C-2D77D31C6EFF}"/>
+				<Hide GUID="{31899721-D296-452D-AFFB-176C939BF84A}"/>
+				<Hide GUID="{D29F4A04-6F6C-4709-AF5B-9DBB620203E6}"/>
+				<Hide GUID="{48A9EA9A-5553-4FDC-B71B-6E350CD92442}"/>
+				<Hide GUID="{D325D3DA-4481-4671-A58F-8B0C84FF7733}"/>
+				<Hide GUID="{B590A991-6B8D-4548-B7A3-7708C8A5AB62}"/>
+				<Hide GUID="{012290AF-25F8-4C47-92F4-1B9AF59FE3A0}"/>
+				<Hide GUID="{8F24EEAF-542F-47EA-8C72-2FDB9ABBDA62}"/>
+				<Hide GUID="{84C5246A-2298-446D-8085-1F09C3D53D99}"/>
+				<Hide GUID="{276A3937-8D1B-4566-8798-D01F6E931236}"/>
+				<Hide GUID="{C6BDFA6E-7B74-4679-A92A-9BA137C56843}"/>
+				<Hide GUID="{18A42C2E-F1AE-4A08-BF1C-7B863920A952}"/>
+				<Hide GUID="{0FE587D6-D324-404D-9599-76449054BF66}"/>
+				<Hide GUID="{546C5663-46F5-44E4-9655-11684E493CFB}"/>
+				<Hide GUID="{2C271F18-8333-4718-86F8-F7833A5CF47D}"/>
+				<Hide GUID="{39E7B2A6-55E1-47FA-BC20-F7A80A0C50C2}"/>
+				<Hide GUID="{E6150588-FBF0-4AF2-92D0-D7F39DCE4F15}"/>
+				<Hide GUID="{A3595FFC-4BAC-47C6-B5F8-098F56CE6222}"/>
+				<Hide GUID="{B51BA8B8-BA43-44F0-B11A-BAC3A5CB190D}"/>
+				<Hide GUID="{476B746A-B39E-4388-83CC-DFBDD5131BE8}"/>
+				<Hide GUID="{4BB311D7-9A03-436A-8C6C-5AE478E5BBF1}"/>
+				<Hide GUID="{EEA34567-C601-419B-9BEB-1E40D72BBBD5}"/>
+				<Hide GUID="{147F2CEC-9F74-41CA-88DF-0D874511795A}"/>
+				<Hide GUID="{475BB9B8-416E-4C91-A977-4CC832738F23}"/>
+				<Hide GUID="{FCD2C9DB-35E3-4A59-BC04-79D681916A9B}"/>
+				<Hide GUID="{8041E989-517C-4BB0-8277-041391C6ED3D}"/>
+				<Hide GUID="{273471D6-FF03-4A2C-BEC4-234BD0DA4CA7}"/>
+				<Hide GUID="{77061549-B4FD-4E92-871A-34331700EDA5}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{C621DA2E-6F5C-4E51-BF11-4E13CB91B2A8}" PersistentType="true">NewType</Name>
+			<BitSize>8</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
+		</DataType>
+	</DataTypes>
+	<Project ProjectGUID="{3D06685F-FAFA-4E39-917E-09E722FF068E}" Target64Bit="true" AutoPrioManagement="true" ShowHideConfigurations="#x306">
+		<System>
+			<Settings>
+				<Debugger Priority="61"/>
+				<IoIdleTask Priority="6"/>
+			</Settings>
+			<Licenses>
+				<Target>
+					<ManualSelect>{FDEB49FC-E8D5-4978-96BC-06E257B23F2D}</ManualSelect>
+					<ManualSelect>{3EBB9639-5FF3-42B6-8847-35C70DC013C8}</ManualSelect>
+					<ManualSelect>{BCA6EE0A-9CE1-4D3F-98CA-413ABC0D94FD}</ManualSelect>
+					<ManualSelect>{081AC839-28D0-49CA-9792-72680E1F3249}</ManualSelect>
+				</Target>
+			</Licenses>
+			<Tasks>
+				<Task Id="4" Priority="8" CycleTime="100000" AmsPort="351" AdtTasks="true">
+					<Name>MainTask</Name>
+				</Task>
+				<Task Id="5" Priority="12" CycleTime="200000" AmsPort="352" AdtTasks="true">
+					<Name>CommTask</Name>
+				</Task>
+			</Tasks>
+		</System>
+		<Motion>
+			<NC>
+				<SafTask Priority="4" CycleTime="20000" AmsPort="501" IoAtBegin="true">
+					<Name>NC-Task 1 SAF</Name>
+					<Vars VarGrpType="1" InsertType="1">
+						<Name>Inputs</Name>
+					</Vars>
+					<Vars VarGrpType="2" InsertType="1">
+						<Name>Outputs</Name>
+					</Vars>
+					<Image Id="1" AddrType="1" ImageType="1">
+						<Name>Image</Name>
+					</Image>
+				</SafTask>
+				<SvbTask Priority="10" CycleTime="100000" AmsPort="511">
+					<Name>NC-Task 1 SVB</Name>
+				</SvbTask>
+			</NC>
+		</Motion>
+		<Plc>
+			<Project GUID="{FCCC0181-E1F9-4EFD-AADC-02FE4DBAFC20}" Name="RobotMainTask" PrjFilePath="RobotMainTask\RobotMainTask.plcproj" TmcFilePath="RobotMainTask\RobotMainTask.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="RobotMainTask\RobotMainTask.tmc">
+					<Name>RobotMainTask Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="1">
+						<Name>MainTask Inputs</Name>
+						<Var>
+							<Name>GVL.RUpAngel</Name>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>GVL.RDownAngel</Name>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[0].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[1].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[2].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[3].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[4].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[5].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[6].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[7].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[8].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[9].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[10].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[11].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[12].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[13].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[14].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[15].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[16].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[17].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[18].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[19].NcToPlc</Name>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<SubVar>
+								<Name>AxisState</Name>
+								<Comment>
+									<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>HomingState</Name>
+								<Comment>
+									<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+								</Comment>
+							</SubVar>
+							<SubVar>
+								<Name>CoupleState</Name>
+								<Comment>
+									<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+								</Comment>
+							</SubVar>
+						</Var>
+						<Var>
+							<Name>GVL.LUpAngel</Name>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>GVL.LDownAngel</Name>
+							<Type>UDINT</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="2">
+						<Name>MainTask Outputs</Name>
+						<Var>
+							<Name>GVL.TestMotor[0].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[1].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[2].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[3].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[4].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[5].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[6].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[7].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[8].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[9].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[10].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[11].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[12].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[13].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[14].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[15].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[16].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[17].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[18].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL.TestMotor[19].PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="1">
+						<Name>CommTask Inputs</Name>
+						<Var>
+							<Name>GVL.current</Name>
+							<Type>UDINT</Type>
+						</Var>
+					</Vars>
+					<UnrestoredVarLinks ImportTime="2018-10-22T11:30:53">
+						<OwnerA Name="OutputSrc" Prefix="TIPC^RobotMainTask^RobotMainTask Instance" Type="2">
+							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
+								<Link VarA="MAIN.st_GroupSetAxis.st_EachSetAxis[0].TestMotor.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
+							</OwnerB>
+						</OwnerA>
+						<OwnerA Name="InputDst" Prefix="TIPC^RobotMainTask^RobotMainTask Instance" Type="1">
+							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
+								<Link VarA="MAIN.st_GroupSetAxis.st_EachSetAxis[0].TestMotor.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<UnrestoredVarLinks ImportTime="2019-03-07T16:53:29">
+						<OwnerA Name="InputDst" Prefix="TIPC^RobotMainTask^RobotMainTask Instance" Type="1">
+							<OwnerB Name="TIID^Device 2 (EL6751)^Box 5 (FRABA)">
+								<Link VarA="MAIN.RUpAngel" TypeA="UDINT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="TxPDO 1^Inputs^VarIn-0" RestoreInfo="ANotFound"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<UnrestoredVarLinks ImportTime="2019-03-13T14:53:35">
+						<OwnerA Name="InputDst" Prefix="TIPC^RobotMainTask^RobotMainTask Instance" Type="1">
+							<OwnerB Name="TIID^Device 4 (EtherCAT)^Drive 8 (Elmo Drive)">
+								<Link VarA="GVL.current1" TypeA="UDINT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="Inputs_1^Current actual value" Size="16" RestoreInfo="TypeMismatch" OldTypeA="UDINT" OldGuidA="{18071995-0000-0000-0000-000000000008}" NewTypeA="INT" NewGuidA="{18071995-0000-0000-0000-000000000006}"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<InitSymbols>
+						<InitSymbol>
+							<Name>MAIN.robot.oidInstance</Name>
+							<Type GUID="{18071995-0000-0000-0000-00000000000F}">OTCID</Type>
+							<Data>20000101</Data>
+						</InitSymbol>
+					</InitSymbols>
+					<TaskPouOids>
+						<TaskPouOid Prio="8" OTCID="#x08502001"/>
+						<TaskPouOid Prio="12" OTCID="#x08502002"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+		</Plc>
+		<Cpp>
+			<Project GUID="{CA56CD3F-158A-4E43-B8B6-B8BE9CF9CD67}" Name="RobotModule" PrjFilePath="RobotModule\RobotModule.vcxproj" TmcFilePath="RobotModule\RobotModule.tmc">
+				<Instance Id="#x01010020" KeepUnrestoredLinks="2">
+					<Name>RobotModule_Obj1 (Robot)</Name>
+					<TmcDesc GUID="{E3CBE668-9044-452B-A1AA-D122D672D922}">
+						<Name>Robot</Name>
+						<CLSID ClassFactory="RobotModule">{E3CBE668-9044-452B-A1AA-D122D672D922}</CLSID>
+						<Licenses>
+							<License>
+								<LicenseId>{304D006A-8299-4560-AB79-438534B50288}</LicenseId>
+							</License>
+						</Licenses>
+						<InitSequence>SO</InitSequence>
+						<Contexts>
+							<Context>
+								<Id>1</Id>
+								<Name>Default</Name>
+								<ManualConfig>
+									<OTCID>#x02010040</OTCID>
+								</ManualConfig>
+								<Priority>8</Priority>
+								<CycleTime>10000000</CycleTime>
+							</Context>
+						</Contexts>
+						<Interfaces>
+							<Interface>
+								<Type GUID="{00000012-0000-0000-E000-000000000064}">ITComObject</Type>
+							</Interface>
+							<Interface>
+								<Type GUID="{03000012-0000-0000-E000-000000000064}">ITcADI</Type>
+							</Interface>
+							<Interface>
+								<Type GUID="{03000018-0000-0000-E000-000000000064}">ITcWatchSource</Type>
+							</Interface>
+							<Interface>
+								<Type GUID="{4F1720B0-73ED-4CFA-A4FA-F4D2622882F0}">IRobot</Type>
+							</Interface>
+						</Interfaces>
+						<Deployment>
+							<FileEntry TargetPlatform="TwinCAT RT (x86)">
+								<SourceFile>%SOLUTIONDEPLOYMENTPATH%TwinCAT RT (x86)\%CLASSFACTORYNAME%.sys</SourceFile>
+								<DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.sys</DestinationFile>
+							</FileEntry>
+							<FileEntry TargetPlatform="TwinCAT RT (x86)">
+								<SourceFile>%SOLUTIONDEPLOYMENTPATH%TwinCAT RT (x86)\%CLASSFACTORYNAME%.pdb</SourceFile>
+								<DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.pdb</DestinationFile>
+							</FileEntry>
+							<FileEntry TargetPlatform="TwinCAT RT (x64)">
+								<SourceFile>%SOLUTIONDEPLOYMENTPATH%TwinCAT RT (x64)\%CLASSFACTORYNAME%.sys</SourceFile>
+								<DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.sys</DestinationFile>
+							</FileEntry>
+							<FileEntry TargetPlatform="TwinCAT RT (x64)">
+								<SourceFile>%SOLUTIONDEPLOYMENTPATH%TwinCAT RT (x64)\%CLASSFACTORYNAME%.pdb</SourceFile>
+								<DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.pdb</DestinationFile>
+							</FileEntry>
+						</Deployment>
+					</TmcDesc>
+				</Instance>
+			</Project>
+		</Cpp>
+	</Project>
+</TcSmProject>

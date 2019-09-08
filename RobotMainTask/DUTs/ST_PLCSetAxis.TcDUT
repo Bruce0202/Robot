@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.12">
+  <DUT Name="ST_PLCSetAxis" Id="{ae7becec-db17-483a-b091-ca6c12d20070}">
+    <Declaration><![CDATA[TYPE ST_PLCSetAxis :
+STRUCT
+	
+	Num  				: UINT;
+
+	E_ExecuteCmd		: E_ExeCmd;
+	ST_MoveObject		: ST_MoveObj;
+		
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

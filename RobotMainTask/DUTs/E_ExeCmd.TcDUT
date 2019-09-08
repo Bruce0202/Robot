@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.12">
+  <DUT Name="E_ExeCmd" Id="{d779404b-65f1-4a2e-80a2-b312ff1e61aa}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_ExeCmd :
+(
+		E_PowerOff,
+		E_PowerOn,    //E_Enable
+		E_MoveAbs,
+		E_MoveConAbs,
+		E_MoveRelative,
+		E_MoveVelocity,
+		E_Halt,
+		E_Stop,
+		E_Reset,
+		E_Home
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{ac790f44-3243-48db-abc5-016b2a66f48c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{249987ba-1a94-4a46-b65c-e2ac82825122}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TwinCAT UM Files">
+      <UniqueIdentifier>{102fd640-e065-4801-bab7-538e66a8f939}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TwinCAT RT Files">
+      <UniqueIdentifier>{dae2b698-69cf-482a-90f1-42104aa9948b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMC Files">
+      <UniqueIdentifier>{e697227b-6ea9-4ed0-835e-8569e824d7f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GeneralRobot">
+      <UniqueIdentifier>{72a4f0ab-dd0f-46fe-a965-c08b21c0bf04}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TcPch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RobotModuleClassFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RobotModuleInterfaces.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RobotModuleServices.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RobotModuleCtrl.h">
+      <Filter>TwinCAT UM Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RobotModuleDriver.h">
+      <Filter>TwinCAT RT Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Robot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralRobot\Axis.h">
+      <Filter>GeneralRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralRobot\DataStruct.h">
+      <Filter>GeneralRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralRobot\ErrCode.h">
+      <Filter>GeneralRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralRobot\GeneralRobot.h">
+      <Filter>GeneralRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralRobot\Link.h">
+      <Filter>GeneralRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralRobot\LinkObject.h">
+      <Filter>GeneralRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralRobot\Parameter.h">
+      <Filter>GeneralRobot</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TcPch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RobotModuleClassFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RobotModuleCtrl.cpp">
+      <Filter>TwinCAT UM Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RobotModuleW32.cpp">
+      <Filter>TwinCAT UM Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RobotModuleDriver.cpp">
+      <Filter>TwinCAT RT Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Robot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralRobot\Axis.cpp">
+      <Filter>GeneralRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralRobot\ErrCode.cpp">
+      <Filter>GeneralRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralRobot\GeneralRobot.cpp">
+      <Filter>GeneralRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralRobot\Link.cpp">
+      <Filter>GeneralRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralRobot\LinkObject.cpp">
+      <Filter>GeneralRobot</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RobotModule.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RobotModuleW32.def">
+      <Filter>TwinCAT UM Files</Filter>
+    </None>
+    <None Include="RobotModule.tmc">
+      <Filter>TMC Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="RobotModuleW32.idl">
+      <Filter>TwinCAT UM Files</Filter>
+    </Midl>
+  </ItemGroup>
+</Project>

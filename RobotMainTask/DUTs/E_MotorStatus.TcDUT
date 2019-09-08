@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.12">
+  <DUT Name="E_MotorStatus" Id="{ee52bae8-3d13-4232-92a2-cf7040c732fa}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_MotorStatus :
+(
+	MOTORSTATUS_DISABLED,       	//*****NEW	if the MC_Power.Enable is FALSE that motor will be disable, from any MOTORSTATUS
+	MOTORSTATUS_Standstill,		//is the enable status, can response any Cmd
+	MOTORSTATUS_ERRORSTOP,		//NEW
+	MOTORSTATUS_HOMING,			//NEW
+	MOTORSTATUS_STOPPING,		//NEW
+	MOTORSTATUS_DISCRETEMOTION,		//NEW
+	MOTORSTATUS_CONTINUOUSMOTION,	//NEW
+	MOTORSTATUS_SYNMOTION		//Advance
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

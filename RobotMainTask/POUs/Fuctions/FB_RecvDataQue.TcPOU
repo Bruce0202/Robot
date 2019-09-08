@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.12">
+  <POU Name="FB_RecvDataQue" Id="{400763d7-e0d8-4c83-a976-4af3d2e79d18}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_RecvDataQue
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	nQueHead			: USINT := 1;
+	nQueTail			: USINT := 0;
+	i					: USINT := 0;
+	GetDataFailCNT		: UDINT := 0;
+	PutDataFailCNT		: UDINT := 0;
+END_VAR
+VAR (*DATA ACCESS BY SERVAL TASK*)
+	bRecvQueFill		: ARRAY[1..GVL.QueLen] OF BOOL;
+	bRecvQueLock		: ARRAY[1..GVL.QueLen] OF BOOL;
+	RecvQue				: ARRAY[1..GVL.QueLen, 1..GVL.MaxDataLen] OF BYTE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+]]></ST>
+    </Implementation>
+    <Method Name="GetfromQue" Id="{43c26d8f-6faf-4ebe-9393-459af4b4fcdd}">
+      <Declaration><![CDATA[METHOD GetfromQue : BOOL
+VAR_INPUT
+	DataBuff 		: POINTER TO ARRAY[1..GVL.MaxDataLen] OF BYTE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF TestAndSet(bRecvQueLock[nQueHead])THEN
+	IF bRecvQueFill[nQueHead] THEN
+		memcpy(DataBuff,ADR(RecvQue)+ (nQueHead-1)*GVL.MaxDataLen,GVL.MaxDataLen);
+		bRecvQueLock[nQueHead]:= FALSE;	
+		
+		bRecvQueFill[nQueHead]:= FALSE;
+		nQueHead := nQueHead + 1;
+		GetDataFailCNT := 0;
+		IF nQueHead > 4 THEN
+			nQueHead := 1;
+		END_IF
+	ELSE
+		memset(DataBuff,0,GVL.MaxDataLen);
+		bRecvQueLock[nQueHead]:= FALSE;	
+		GetDataFailCNT := GetDataFailCNT+1;			
+	END_IF
+	
+ELSE
+	//the que is emty, set buffer 0.
+	memset(DataBuff,0,GVL.MaxDataLen);
+	GetDataFailCNT := GetDataFailCNT+1;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PutToQue" Id="{8eba646b-1b1f-400a-b2b7-8c3e225853f7}">
+      <Declaration><![CDATA[METHOD PUBLIC PutToQue : BOOL
+VAR_INPUT
+	DataBuff 		: POINTER TO ARRAY[1..GVL.MaxDataLen] OF BYTE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nQueTail := nQueTail + 1;
+IF nQueTail > 4 THEN
+	nQueTail := 1;
+END_IF
+IF TestAndSet(bRecvQueLock[nQueTail])THEN
+	memcpy(ADR(RecvQue)+ (nQueTail-1)*GVL.MaxDataLen,DataBuff,GVL.MaxDataLen);
+	bRecvQueLock[nQueTail]:= FALSE;	
+	bRecvQueFill[nQueTail]:= TRUE;
+	PutDataFailCNT := 0;
+	
+ELSE
+	//abandan this data, this may cause unresbonse to some command (very very low possiblity)
+	nQueTail := nQueTail - 1;
+	IF nQueTail = 0 THEN
+	nQueTail := 4;
+	END_IF
+	PutDataFailCNT := PutDataFailCNT+1;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reset" Id="{2a0e9f08-27eb-43e7-a4e8-1a3816f0a93d}">
+      <Declaration><![CDATA[METHOD Reset : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 1 TO GVL.QueLen DO
+	IF TestAndSet(bRecvQueLock[i]) THEN
+		bRecvQueFill[i] := FALSE;
+		bRecvQueLock[i] := FALSE;
+	END_IF
+END_FOR
+nQueHead := 1;
+nQueTail := 0;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_RecvDataQue">
+      <LineId Id="29" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_RecvDataQue.GetfromQue">
+      <LineId Id="11" Count="1" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="35" Count="1" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="43" Count="1" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="15" Count="2" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_RecvDataQue.PutToQue">
+      <LineId Id="7" Count="5" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="21" Count="1" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="15" Count="5" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_RecvDataQue.Reset">
+      <LineId Id="5" Count="1" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="10" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

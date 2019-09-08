@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.12">
+  <POU Name="FB_ServerWait" Id="{ed199503-4219-4dd1-8488-4a55422b2c84}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ServerWait
+(*Listioning and accecpt connect for remote*)
+VAR_INPUT
+	bEnable : BOOL;
+	sLocalHost : STRING(15) := '192.168.1.245';//'192.168.1.245';'192.168.137.74'
+	nLocalPort : UINT := 4999;
+
+END_VAR
+VAR_OUTPUT
+	hSocket : T_HSOCKET;
+	bBusy: BOOL;
+	bError: BOOL;
+	nErrID : UDINT;
+END_VAR
+VAR
+	fblisten :FB_SocketListen := (sSrvNetID := '');	
+	fbAccept : FB_SocketAccept;
+	fbClose : FB_SocketClose;
+	fbReconncetTon: TON:=(PT := GVL.Reconnect_time);
+	fbAcceptTon: TON:=(PT := GVL.AcceptTime);
+		
+	hListener : T_HSOCKET;	
+	
+	bListening : BOOL;
+	bAccepting : BOOL;
+	
+	step : UINT := 0;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE step OF
+	0:(*Init*)
+		IF bEnable THEN
+			fbReconncetTon(IN := FALSE);
+			fblisten(bExecute := FALSE);
+			step := 10;
+			bBusy:= TRUE;
+			nErrID := 0;
+			bError := FALSE;
+		END_IF
+	10:(*Start listenin*)
+		fbReconncetTon(IN := TRUE, PT := GVL.Reconnect_time);
+		IF fbReconncetTon.Q THEN
+			fblisten(sLocalHost := sLocalHost,
+			nLocalPort := nLocalPort,
+			bExecute := TRUE,
+			tTimeout := GVL.ListenTime);
+			step := 15;	
+		END_IF
+						
+	15:(*Listening*)
+		fbListen(bExecute := FALSE);
+		bListening := TRUE;
+		IF NOT fbListen.bBusy THEN
+			IF NOT fbListen.bError THEN
+				hListener := fbListen.hListener; 
+				
+				step := 20;
+				(*prepare for accept*)
+				fbAcceptTon(IN:=FALSE);
+				fbAccept(bExecute := FALSE);
+			ELSE
+				bError := TRUE;				
+				nErrID := fbListen.nErrId;
+				step := 100;
+			END_IF
+		END_IF
+	20:(*start to accept*)	
+		bListening := FALSE;
+		fbAcceptTon(IN := TRUE,PT := GVL.AcceptTime);
+		IF fbAcceptTon.Q THEN
+			fbAcceptTon(IN :=FALSE);
+			fbAccept(hListener := hListener, bExecute := TRUE);
+			step := 25;
+		END_IF
+	25: (* Accepting*)
+		fbAccept(bExecute := FALSE);
+		bAccepting := TRUE;
+		IF NOT fbAccept.bBusy THEN
+			IF NOT fbAccept.bError THEN
+				(*check if there is connection be accepted*)
+				IF fbAccept.bAccepted THEN
+					hSocket := fbAccept.hSocket;
+					bBusy := FALSE;
+					step := 40;
+				ELSE
+					step := 20;
+				END_IF	
+							
+			ELSE
+				bError := TRUE;
+				nErrID := fbAccept.nErrId;
+				step := 100;	
+			END_IF
+		END_IF
+		
+	40:(*wait for new connect*)
+		bBusy := TRUE;
+		step:= 20;
+	100:(*deal with error*)
+		step := 0;
+		
+		
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="FB_ServerWait">
+      <LineId Id="9" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="160" Count="1" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="291" Count="0" />
+      <LineId Id="293" Count="1" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="159" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="164" Count="3" />
+      <LineId Id="162" Count="1" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="169" Count="0" />
+      <LineId Id="248" Count="0" />
+      <LineId Id="170" Count="1" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="182" Count="0" />
+      <LineId Id="217" Count="1" />
+      <LineId Id="215" Count="1" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="296" Count="0" />
+      <LineId Id="290" Count="0" />
+      <LineId Id="184" Count="0" />
+      <LineId Id="183" Count="0" />
+      <LineId Id="172" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="213" Count="0" />
+      <LineId Id="250" Count="0" />
+      <LineId Id="214" Count="0" />
+      <LineId Id="221" Count="0" />
+      <LineId Id="219" Count="0" />
+      <LineId Id="222" Count="0" />
+      <LineId Id="220" Count="0" />
+      <LineId Id="209" Count="0" />
+      <LineId Id="223" Count="0" />
+      <LineId Id="249" Count="0" />
+      <LineId Id="224" Count="0" />
+      <LineId Id="238" Count="0" />
+      <LineId Id="304" Count="0" />
+      <LineId Id="227" Count="0" />
+      <LineId Id="241" Count="1" />
+      <LineId Id="305" Count="0" />
+      <LineId Id="243" Count="0" />
+      <LineId Id="310" Count="0" />
+      <LineId Id="309" Count="0" />
+      <LineId Id="303" Count="0" />
+      <LineId Id="234" Count="0" />
+      <LineId Id="245" Count="0" />
+      <LineId Id="292" Count="0" />
+      <LineId Id="246" Count="0" />
+      <LineId Id="228" Count="0" />
+      <LineId Id="226" Count="0" />
+      <LineId Id="187" Count="1" />
+      <LineId Id="307" Count="1" />
+      <LineId Id="306" Count="0" />
+      <LineId Id="252" Count="0" />
+      <LineId Id="256" Count="0" />
+      <LineId Id="198" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

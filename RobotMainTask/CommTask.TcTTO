@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.12">
+  <Task Name="CommTask" Id="{1ba81e36-30b1-41d4-9db4-8b9a05c8f2b3}">
+    <!--CycleTime in micro seconds.-->
+    <CycleTime>20000</CycleTime>
+    <Priority>12</Priority>
+    <PouCall>
+      <Name>Comm</Name>
+    </PouCall>
+    <TaskFBGuid>{c81d01fb-23a7-4aa5-887f-900d0ce39696}</TaskFBGuid>
+    <Fb_init>{f76725b0-12d6-43f3-b8f9-b343f692c255}</Fb_init>
+    <Fb_exit>{a591abc0-40ba-428c-bab6-5c8601f48227}</Fb_exit>
+    <CycleUpdate>{60efda3b-9837-4c97-aca3-cff1b466d121}</CycleUpdate>
+    <PostCycleUpdate>{87bd0d5e-009f-4e39-b5bb-4baa3cdbf021}</PostCycleUpdate>
+  </Task>
+</TcPlcObject>

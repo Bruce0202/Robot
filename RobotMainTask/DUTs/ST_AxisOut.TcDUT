@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.12">
+  <DUT Name="ST_AxisOut" Id="{112257c0-d1e6-4d0e-a8ce-8d3ac562fa03}">
+    <Declaration><![CDATA[TYPE ST_AxisOut :
+STRUCT
+
+
+	eStatus   : E_MotorStatus;
+	
+	Response 	: STRING;
+	ENABLE     : BOOL;
+	ServoDone  : BOOL;
+	ServoBusy  : BOOL;
+	ServoError : BOOL;
+	ServoErrorID : UDINT;	
+//get these variable from the READSTATUS().NcToPlc;	
+//	ErrorCode:UDINT;//NC轴错误代码
+//	AxisState:UDINT;//NC轴状态
+//	HomingState:UDINT;//NC轴回原位状态
+//	AxisId:UDINT;//NC轴的编码
+	ActPos:LREAL;//NC轴的实际位置
+	ActVelo:LREAL;//NC轴的实际速度
+	ActAcc:LREAL;//NC轴的实际加速度
+	ActTorque:LREAL;//NC轴的实际转矩
+	SetPos:LREAL;//NC轴的设定位置
+	SetVelo:LREAL;//NC轴的设定速度
+	SetAcc:LREAL;//NC轴的设定加速度
+	SetTorque:LREAL;//NC轴的设定转矩
+//	TargetPos:LREAL;//NC轴的目标位置
+	PosDiff:LREAL;//位置误差	
+
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

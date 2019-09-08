@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.12">
+  <DUT Name="ST_MoveObj" Id="{4d3dedf1-dc91-4fbe-9eb9-659c02ed2957}">
+    <Declaration><![CDATA[TYPE ST_MoveObj :
+STRUCT
+	
+	Dir			: INT;	
+	Position 		: LREAL;
+	Distance 		: LREAL;
+	Velocity 		: LREAL;
+	EndVelocity 	: LREAL;
+	Torque		: LREAL;
+
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

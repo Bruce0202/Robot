@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.12">
+  <POU Name="MAIN" Id="{c3a5645a-c88b-4d8d-9c7f-23d853324ec7}" SpecialFunc="None">
+    <Declaration><![CDATA[
+ PROGRAM MAIN
+VAR{varable needed}
+	robot				: FB_Robot;
+	fbReadAxisStatus 	: FB_ReadAxisStatus;
+	fbMCMotion 			: ARRAY[0..19] OF FB_SetAxisMotion;
+	
+	MC_ActStatus		: st_AxisGroupRead; 		 //**OUT**give the data to thr Upper
+	MC_SetCommd			: st_AxisGroupSet;			 //**IN** get the data from the Upper and set the Axis 
+	CtlComd		: RecvBuff;		(*Commd to MC*)
+	Status		: SendBuff;		(*MC_State*)
+	
+	
+	ErrID		: UDINT := 0;	
+	step		: INT := 0;
+	{time cost of every cycle}
+	CycleTime	: LREAL := 0;
+	CycleTime_Max: LREAL := 0;	
+END_VAR
+
+VAR{varable FOR test}
+	i :UDINT := 0;
+	j :UDINT := 0;
+	w :UDINT := 0;
+	vel : LREAL;
+	nCounter: BYTE := 0;
+	nCounter1: BYTE := 0;
+	GetTime:GETCPUACCOUNT;
+	time_start: UDINT;
+	time_end:UDINT;
+	labelOld:DINT := 0;
+	labelNew:DINT := 0;
+	count: UDINT := 0;
+	count11 : UDINT := 0;
+	delay : TON;
+	
+	test : LREAL := 0;
+	test1 : LREAL := 0;
+END_VAR
+
+    ]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE step OF
+	0: {prepare varable before start robot}	
+		step := 5;
+	5:	{NC init before robot start}	
+		GroupInitAxis(); 	
+		step := 10;
+	10:{Init robot}
+		ErrID := robot.InitRobot(ADR(GVL.InitPar));
+	 	IF (0 = ErrID )THEN
+		 	step := 15;
+		ELSE
+			step := 0;
+		END_IF
+	15:
+		GetTime(cpuAccountDW=>time_start);
+	 	
+		GVL.fbRecvDataQue.GetfromQue(ADR(CtlComd));
+		GroupReadAxis();
+
+		robot.RunRobot(pMC_Inputs := ADR(MC_ActStatus), pMC_Outputs := ADR(MC_SetCommd),
+								pCtlComd	:= ADR(CtlComd) , pRobotStatus := ADR(Status));
+														
+		GroupSetAxis();
+		GVL.fbSendDataQue.PutToQue(ADR(Status));
+		
+		GetTime(cpuAccountDW=>time_end);
+		CycleTime := (time_end- time_start)/10000.0;
+		CycleTime_Max:= MAX(CycleTime,CycleTime_Max);
+	 	
+	20: 
+		robot.StopRobot();
+		step:= 0;
+END_CASE; 
+]]></ST>
+    </Implementation>
+    <Action Name="GroupInitAxis" Id="{9457ddde-3e72-4440-a7d5-33bae3ae3ccf}">
+      <Implementation>
+        <ST><![CDATA[i := 0;]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="GroupReadAxis" Id="{14c0d48f-5ba2-4ac9-9f47-d99d60eeb3df}">
+      <Implementation>
+        <ST><![CDATA[FOR i:= 0 TO 7 DO //MC_ActStatus.Number
+	fbReadAxisStatus(AxisRef := GVL.TestMotor[i], AxisStatus => MC_ActStatus.AxisGoup[i]);	
+END_FOR
+
+]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="GroupSetAxis" Id="{136d041d-cbc5-43ae-8121-b996fcb4942e}">
+      <Implementation>
+        <ST><![CDATA[FOR i:= 0 TO 7 DO //MC_ActStatus.Number
+	fbMCMotion[i](axis := GVL.TestMotor[i], SetCmd := MC_SetCommd.AxisGroup[i], ActStatus := MC_ActStatus.AxisGoup[i]);
+END_FOR
+//fbMCMotion(axis := GVL.TestMotor[0], SetCmd := MC_SetCommd.AxisGroup[0], ActStatus := MC_ActStatus.AxisGoup[0]);]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="MAIN">
+      <LineId Id="2" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="422" Count="0" />
+      <LineId Id="201" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="462" Count="0" />
+      <LineId Id="39" Count="1" />
+      <LineId Id="42" Count="1" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="235" Count="0" />
+      <LineId Id="505" Count="0" />
+      <LineId Id="268" Count="0" />
+      <LineId Id="202" Count="0" />
+      <LineId Id="267" Count="0" />
+      <LineId Id="320" Count="0" />
+      <LineId Id="203" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="192" Count="0" />
+      <LineId Id="191" Count="0" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="68" Count="1" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="195" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.GroupInitAxis">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.GroupReadAxis">
+      <LineId Id="1" Count="0" />
+      <LineId Id="4" Count="0" />
+      <LineId Id="3" Count="0" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="91" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.GroupSetAxis">
+      <LineId Id="2" Count="2" />
+      <LineId Id="11" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

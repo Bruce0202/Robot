@@ -1,0 +1,445 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.12">
+  <POU Name="FB_SetAxisMotion" Id="{3525fe16-db4c-4df2-b32e-c0850fa112d0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SetAxisMotion
+VAR_IN_OUT
+		axis : AXIS_REF;   			// the input axis
+END_VAR
+VAR_INPUT
+	SetCmd : st_SetAxis;	
+	ActStatus: st_ReadAxis;
+END_VAR
+VAR		
+	fbMC_Stop:			MC_Stop;		
+	fbMC_Home:			MC_Home;		
+	fbMC_Halt:			MC_Halt;
+	fbMC_Power:			MC_Power;
+	fbMC_Reset:			MC_Reset;
+	fbMC_MovVel:		MC_MoveVelocity;
+	fbMC_MovAbs:		MC_MoveAbsolute;
+	fbMC_MovConAbs:		MC_MoveContinuousAbsolute;//定义一个绝对运动功能块
+	fbMC_MovRelative:	MC_MoveRelative;	
+
+	eDir				:mc_direction;
+	
+	bWarning			:BOOL := FALSE;
+	
+	bHalt				:BOOL := FALSE;
+	
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE ActStatus.eState OF
+	
+	eAxis_ERRORSTOP:
+		A_ErrorStop();	
+	eAxis_DISABLED:
+		A_Disable();	
+	eAxis_STANDSTILL:
+		A_Standstill();
+	eAxis_HOMING:
+		A_Homing();		
+	eAxis_STOPPING:
+		A_Stopping();	
+	eAxis_DISCRETEMOTION:
+		A_DiscreteMotion();		
+	eAxis_CONTINOUSMOTION:
+		A_ContinuousMotion();			
+END_CASE
+fbMC_Stop( Axis:= axis,Execute:= FALSE );
+fbMC_Halt(Axis:=axis, Execute:= FALSE);
+fbMC_Home( Axis:=axis, Execute:=FALSE);
+fbMC_Reset(Axis:= axis, 	Execute:=FALSE);
+fbMC_MovAbs(Axis:= axis, Execute:=FALSE);
+fbMC_MovConAbs(Axis:= axis, Execute:=FALSE);
+fbMC_MovRelative(Axis:= axis,  Execute:=FALSE);
+fbMC_MovVel(Axis:= axis, Execute:=FALSE);
+]]></ST>
+    </Implementation>
+    <Action Name="A_ContinuousMotion" Id="{a04b305e-d514-4023-9aee-01b7d802daa2}">
+      <Implementation>
+        <ST><![CDATA[CASE SetCmd.eMC_Motion OF
+	eMC_NONE:
+		//fbMC_Halt(Axis:=axis, Execute:= TRUE);
+	eMC_POWER:
+		IF SetCmd.bEnable = TRUE THEN
+			fbMC_Power(	Axis:= axis, Enable:= TRUE, Enable_Positive:= TRUE,
+					Enable_Negative:= TRUE );
+		ELSE
+			fbMC_Power(	Axis:= axis, Enable:= FALSE);			
+		END_IF	
+		
+	eMC_STOP:
+		fbMC_Stop( Axis:= axis,Execute:= TRUE );
+//		fbMC_Stop( Axis:= axis,Execute:= FALSE );
+	
+	eMC_HALT:
+		fbMC_Halt(Axis:=axis, Execute:= TRUE);
+//		fbMC_Halt(Axis:=axis, Execute:= FALSE);
+		
+	eMC_MOV_ABS:
+		fbMC_MovAbs(Axis:= axis, Execute:=TRUE , 
+					Position:=SetCmd.Position, 
+					Velocity:=ABS(SetCmd.Velocity),
+					BufferMode := MC_BlendingLow);
+//		fbMC_MovAbs(Axis:= axis, Execute:=FALSE);
+	
+	eMC_MOV_CON_ABS:
+		fbMC_MovConAbs(Axis:= axis, Execute:=TRUE, 
+						Position:=SetCmd.Position ,Velocity:= ABS(SetCmd.Velocity),
+						EndVelocity:= ABS(SetCmd.EndVelocity));
+//		fbMC_MovConAbs(Axis:= axis, Execute:=FALSE);
+	
+	eMC_MOV_RELATIVE:
+		fbMC_MovRelative(Axis:= axis,  Execute:=TRUE , 
+			Distance:= SetCmd.Distance,  Velocity:= SetCmd.Velocity);
+//		fbMC_MovRelative(Axis:= axis,  Execute:=FALSE);
+	
+	eMC_MOV_VEL:
+		IF (SetCmd.Velocity >= 0) THEN
+			eDir := MC_Positive_Direction;
+		ELSE
+			eDir := MC_Negative_Direction;
+		END_IF
+		fbMC_MovVel(Axis:= axis, Execute:=TRUE, 
+					Velocity:=ABS(SetCmd.Velocity), Direction:=eDir);	
+//		fbMC_MovVel(Axis:= axis, Execute:=FALSE);
+		
+ELSE
+	bWarning := TRUE;
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Disable" Id="{e21ecd9d-08d6-4342-84ad-181e26702c9b}">
+      <Implementation>
+        <ST><![CDATA[CASE SetCmd.eMC_Motion OF
+	eMC_NONE:
+	eMC_POWER:
+		IF SetCmd.bEnable = TRUE THEN
+			fbMC_Power(	Axis:= axis, Enable:= TRUE, Enable_Positive:= TRUE,
+					Enable_Negative:= TRUE );
+		ELSE
+			fbMC_Power(	Axis:= axis, Enable:= FALSE);			
+		END_IF
+	eMC_Reset:
+		fbMC_Reset(Axis:= axis, 	Execute:=TRUE);
+//		fbMC_Reset(Axis:= axis, 	Execute:=FALSE);	
+ELSE
+	bWarning := TRUE;
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_DiscreteMotion" Id="{95b09518-3e6b-49c9-9f15-c1e96552aed8}">
+      <Implementation>
+        <ST><![CDATA[CASE SetCmd.eMC_Motion OF
+	eMC_NONE:
+		//fbMC_Halt(Axis:=axis, Execute:= TRUE);			
+	eMC_POWER:
+		IF SetCmd.bEnable = TRUE THEN
+			fbMC_Power(	Axis:= axis, Enable:= TRUE, Enable_Positive:= TRUE,
+					Enable_Negative:= TRUE );
+		ELSE
+			fbMC_Power(	Axis:= axis, Enable:= FALSE);			
+		END_IF
+	
+	eMC_STOP:
+		fbMC_Stop( Axis:= axis,Execute:= TRUE );
+//		fbMC_Stop( Axis:= axis,Execute:= FALSE );
+	
+	eMC_HALT:
+		fbMC_Halt(Axis:=axis, Execute:= TRUE);
+//		fbMC_Halt(Axis:=axis, Execute:= FALSE);
+
+	eMC_MOV_ABS:
+		fbMC_MovAbs(Axis:= axis, Execute:=TRUE , 
+					Position:=SetCmd.Position, 
+					Velocity:=ABS(SetCmd.Velocity),
+					BufferMode := MC_BlendingLow);
+//		fbMC_MovAbs(Axis:= axis, Execute:=FALSE);
+	
+	eMC_MOV_CON_ABS:
+		fbMC_MovConAbs(Axis:= axis, Execute:=TRUE, 
+						Position:=SetCmd.Position ,Velocity:= ABS(SetCmd.Velocity),
+						EndVelocity:= ABS(SetCmd.EndVelocity));
+//		fbMC_MovConAbs(Axis:= axis, Execute:=FALSE);
+	
+	eMC_MOV_RELATIVE:
+		fbMC_MovRelative(Axis:= axis,  Execute:=TRUE , 
+			Distance:= SetCmd.Distance,  Velocity:= SetCmd.Velocity);
+//		fbMC_MovRelative(Axis:= axis,  Execute:=FALSE);
+	
+	eMC_MOV_VEL:
+		IF (SetCmd.Velocity >= 0) THEN
+			eDir := MC_Positive_Direction;
+		ELSE
+			eDir := MC_Negative_Direction;
+		END_IF
+		fbMC_MovVel(Axis:= axis, Execute:=TRUE, 
+					Velocity:=ABS(SetCmd.Velocity), Direction:=eDir);	
+//		fbMC_MovVel(Axis:= axis, Execute:=FALSE);
+		
+ELSE
+	bWarning := TRUE;
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_ErrorStop" Id="{047bd619-78a6-4151-b47f-544f83a81ae5}">
+      <Implementation>
+        <ST><![CDATA[CASE SetCmd.eMC_Motion OF
+	eMC_NONE:
+	eMC_RESET:	
+		fbMC_Reset(Axis:= axis, 	Execute:=TRUE);		
+//		fbMC_Reset(Axis:= axis, 	Execute:=FALSE);	
+ELSE
+	bWarning := TRUE;
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Homing" Id="{3fc141f7-2cfe-4d25-a4e7-d1d0cc141eba}">
+      <Implementation>
+        <ST><![CDATA[CASE SetCmd.eMC_Motion OF
+	eMC_NONE:	
+	eMC_STOP:
+		fbMC_Stop(Axis:=axis, 	Execute:=TRUE);
+//		fbMC_Stop(Axis:=axis, 	Execute:=FALSE);
+	eMC_POWER:
+		IF SetCmd.bEnable = TRUE THEN
+			fbMC_Power(	Axis:= axis, Enable:= TRUE, Enable_Positive:= TRUE,
+					Enable_Negative:= TRUE );
+		ELSE
+			fbMC_Power(	Axis:= axis, Enable:= FALSE);			
+		END_IF
+ELSE
+	bWarning := TRUE;		
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Standstill" Id="{464e950c-3029-4c8e-adfc-23e09d0d37bd}">
+      <Implementation>
+        <ST><![CDATA[CASE SetCmd.eMC_Motion OF
+	eMC_NONE:
+	eMC_RESET:
+		fbMC_Reset(Axis:= axis, 	Execute:=TRUE);
+
+		bWarning := TRUE;	
+	eMC_HOME:
+		fbMC_Home( Axis:=axis, Execute:=TRUE ,
+				   Position:=0 ,HomingMode:= );
+
+	
+	eMC_POWER:
+		IF SetCmd.bEnable = TRUE THEN
+			fbMC_Power(	Axis:= axis, Enable:= TRUE, Enable_Positive:= TRUE,
+					Enable_Negative:= TRUE );
+		ELSE
+			fbMC_Power(	Axis:= axis, Enable:= FALSE);			
+		END_IF	
+		
+	eMC_STOP:
+		fbMC_Stop( Axis:= axis,Execute:= TRUE );
+
+	
+	eMC_HALT:
+		fbMC_Halt(Axis:=axis, Execute:= TRUE);
+
+
+	eMC_MOV_ABS:
+
+		fbMC_MovAbs(Axis:= axis, Execute:=TRUE , 
+					Position:= SetCmd.Position, 
+					Velocity:= ABS(SetCmd.Velocity));
+
+	
+	eMC_MOV_CON_ABS:
+		fbMC_MovConAbs(Axis:= axis, Execute:=TRUE, 
+						Position:= SetCmd.Position ,Velocity:= ABS(SetCmd.Velocity),
+						EndVelocity:= ABS(SetCmd.EndVelocity));
+
+	
+	eMC_MOV_RELATIVE:
+		fbMC_MovRelative(Axis:= axis,  Execute:=TRUE , 
+			Distance:= SetCmd.Distance,  Velocity:= ABS(SetCmd.Velocity));
+
+	
+	eMC_MOV_VEL:
+		IF (SetCmd.Velocity >= 0) THEN
+			eDir := MC_Positive_Direction;
+		ELSE
+			eDir := MC_Negative_Direction;
+		END_IF
+		fbMC_MovVel(Axis:= axis, Execute:=TRUE, 
+					Velocity:=ABS(SetCmd.Velocity), Direction:=eDir);
+
+ELSE
+	bWarning := TRUE;	
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Stopping" Id="{13fbaf66-a053-4cc7-a61f-94880b765ed0}">
+      <Implementation>
+        <ST><![CDATA[CASE SetCmd.eMC_Motion OF
+	eMC_NONE:
+	eMC_STOP:
+		fbMC_Stop( Axis:= axis,Execute:= TRUE );
+//		fbMC_Stop( Axis:= axis,Execute:= FALSE );		
+	eMC_POWER:
+		IF SetCmd.bEnable = TRUE THEN
+			fbMC_Power(	Axis:= axis, Enable:= TRUE, Enable_Positive:= TRUE,
+					Enable_Negative:= TRUE );
+		ELSE
+			fbMC_Power(	Axis:= axis, Enable:= FALSE);			
+		END_IF
+	
+ELSE
+	bWarning := TRUE;
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="FB_SetAxisMotion">
+      <LineId Id="114" Count="2" />
+      <LineId Id="454" Count="0" />
+      <LineId Id="118" Count="12" />
+      <LineId Id="482" Count="0" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="485" Count="1" />
+      <LineId Id="137" Count="0" />
+      <LineId Id="341" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="483" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_SetAxisMotion.A_ContinuousMotion">
+      <LineId Id="310" Count="1" />
+      <LineId Id="396" Count="0" />
+      <LineId Id="317" Count="0" />
+      <LineId Id="367" Count="4" />
+      <LineId Id="319" Count="0" />
+      <LineId Id="374" Count="0" />
+      <LineId Id="372" Count="1" />
+      <LineId Id="322" Count="0" />
+      <LineId Id="376" Count="0" />
+      <LineId Id="324" Count="1" />
+      <LineId Id="354" Count="0" />
+      <LineId Id="377" Count="5" />
+      <LineId Id="356" Count="0" />
+      <LineId Id="331" Count="4" />
+      <LineId Id="358" Count="0" />
+      <LineId Id="336" Count="0" />
+      <LineId Id="383" Count="12" />
+      <LineId Id="361" Count="1" />
+      <LineId Id="349" Count="1" />
+      <LineId Id="309" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SetAxisMotion.A_Disable">
+      <LineId Id="94" Count="1" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="59" Count="1" />
+      <LineId Id="101" Count="1" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="91" Count="1" />
+      <LineId Id="89" Count="1" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SetAxisMotion.A_DiscreteMotion">
+      <LineId Id="297" Count="1" />
+      <LineId Id="362" Count="0" />
+      <LineId Id="338" Count="0" />
+      <LineId Id="356" Count="4" />
+      <LineId Id="306" Count="3" />
+      <LineId Id="344" Count="0" />
+      <LineId Id="310" Count="2" />
+      <LineId Id="345" Count="0" />
+      <LineId Id="313" Count="4" />
+      <LineId Id="353" Count="0" />
+      <LineId Id="346" Count="0" />
+      <LineId Id="318" Count="4" />
+      <LineId Id="349" Count="0" />
+      <LineId Id="323" Count="3" />
+      <LineId Id="350" Count="0" />
+      <LineId Id="327" Count="8" />
+      <LineId Id="351" Count="1" />
+      <LineId Id="336" Count="1" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SetAxisMotion.A_ErrorStop">
+      <LineId Id="120" Count="2" />
+      <LineId Id="161" Count="1" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="119" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SetAxisMotion.A_Homing">
+      <LineId Id="22" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="74" Count="5" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="21" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SetAxisMotion.A_Standstill">
+      <LineId Id="410" Count="1" />
+      <LineId Id="414" Count="0" />
+      <LineId Id="486" Count="0" />
+      <LineId Id="489" Count="0" />
+      <LineId Id="502" Count="0" />
+      <LineId Id="415" Count="0" />
+      <LineId Id="431" Count="0" />
+      <LineId Id="474" Count="0" />
+      <LineId Id="490" Count="0" />
+      <LineId Id="416" Count="0" />
+      <LineId Id="458" Count="0" />
+      <LineId Id="491" Count="4" />
+      <LineId Id="485" Count="0" />
+      <LineId Id="503" Count="0" />
+      <LineId Id="480" Count="0" />
+      <LineId Id="435" Count="0" />
+      <LineId Id="496" Count="0" />
+      <LineId Id="418" Count="0" />
+      <LineId Id="479" Count="0" />
+      <LineId Id="442" Count="0" />
+      <LineId Id="497" Count="0" />
+      <LineId Id="484" Count="0" />
+      <LineId Id="419" Count="0" />
+      <LineId Id="504" Count="0" />
+      <LineId Id="448" Count="0" />
+      <LineId Id="451" Count="0" />
+      <LineId Id="477" Count="0" />
+      <LineId Id="505" Count="0" />
+      <LineId Id="420" Count="0" />
+      <LineId Id="482" Count="0" />
+      <LineId Id="453" Count="0" />
+      <LineId Id="456" Count="0" />
+      <LineId Id="476" Count="0" />
+      <LineId Id="499" Count="0" />
+      <LineId Id="421" Count="0" />
+      <LineId Id="478" Count="0" />
+      <LineId Id="460" Count="0" />
+      <LineId Id="463" Count="0" />
+      <LineId Id="500" Count="0" />
+      <LineId Id="422" Count="0" />
+      <LineId Id="481" Count="0" />
+      <LineId Id="465" Count="5" />
+      <LineId Id="473" Count="0" />
+      <LineId Id="501" Count="0" />
+      <LineId Id="487" Count="1" />
+      <LineId Id="412" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SetAxisMotion.A_Stopping">
+      <LineId Id="2" Count="1" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="19" Count="5" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="14" Count="1" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

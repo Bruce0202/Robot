@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.12">
+  <POU Name="Comm" Id="{93c0d1cc-df49-48e0-a27a-4e6a6632f415}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Comm
+VAR
+	fbWaitConnect 	: FB_ServerWait;
+	fbRecv			: FB_SocketReceive 	:= (sSrvNetId := '');
+	fbSend			: FB_SocketSend 	:= (sSrvNetId := '');
+	fbClose			: FB_SocketClose 	:= (sSrvNetID := '');	
+	fbCloseAll		: FB_SocketCloseAll := (sSrvNetID := '');
+	
+	hSocket 		: T_HSOCKET;
+	RecvLen 		: UDINT := 0;
+	SendLen			: UDINT	:= 0;
+
+	bNewRecv 		: BOOL;	
+	bNewSend 		: BOOL;	
+	bConnect 		: BOOL;
+	nErrID 			: UDINT;
+	step 			: UDINT;
+
+	RecvBuff 		: ARRAY[1..GVL.MaxDataLen] OF BYTE;
+	//SendBuff 		: ARRAY[1..GVL.DataLen] OF BYTE;
+	SendBuff 		: ARRAY[1..GVL.MaxDataLen] OF BYTE;	
+	DataRecv 		: ARRAY[1..GVL.MaxDataLen] OF BYTE;
+	DataSend		: ARRAY[1..GVL.MaxDataLen] OF BYTE;
+END_VAR
+
+VAR(*For Test*)
+	GetTime			: GETCPUACCOUNT;
+	time_start		: UDINT;
+	time_end 		: UDINT;
+	time_cost 		: REAL;
+END_VAR
+    ]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE step OF
+	0:(*prepare*)
+		bConnect := FALSE;
+		fbCloseAll(bExecute:= FALSE);
+		fbCloseAll(bExecute:= TRUE);
+		step := 1;
+	1:(*Preparing*)
+		fbCloseAll(bExecute:= FALSE);
+		IF NOT fbCloseALL.bBusy THEN
+			IF NOT fbCloseALL.bError THEN
+				step := 5;
+			ELSE 
+				nErrID := fbCloseALL.nErrId;
+				step := 0;
+			END_IF
+		END_IF
+	5:(*wait for connect*)
+		bConnect := FALSE;
+		fbWaitConnect(bEnable := TRUE);
+		nErrID := fbWaitConnect.nErrID;
+		IF NOT fbWaitConnect.bBusy THEN
+			IF NOT fbWaitConnect.bError THEN
+				hSocket := fbWaitConnect.hSocket;
+				step := 9;			
+			ELSE
+				nErrID := fbWaitConnect.nErrID;
+			END_IF
+		END_IF
+		
+	9:(*prepare to recieve data*)
+		IF(GVL.InitPar.RecvSize <> 0) THEN
+			fbRecv(bExecute := FALSE);
+			bNewRecv := TRUE;
+			bConnect := TRUE;
+			RecvLen := GVL.InitPar.RecvSize;
+			SendLen := GVL.InitPar.SendSize;
+			step := 10;
+			GVL.fbRecvDataQue.Reset();//Init recieve data queue
+			GVL.fbSendDataQue.Reset();
+		END_IF
+		
+		
+	10:(*Receive and send phase I*)
+		//*Start to recieve data
+		fbRecv(hSocket := hSocket, cbLen := RecvLen, pDest := ADR(RecvBuff), bExecute := TRUE, tTimeout := GVL.RecvTime);
+		//*prepare data to send
+		fbSend(bExecute := FALSE);
+		//Get SendData
+		IF NOT fbSend.bBusy THEN
+			IF NOT fbSend.bError THEN
+				GVL.fbSendDataQue.GetFromQue(ADR(DataSend));
+				step := 15;
+			ELSE
+				nErrID := fbSend.nErrId;
+				step := 100;
+			END_IF
+		END_IF		
+		step := 15;
+	15: (*Receive and send phase II*)
+		//deal with recieve data
+		fbRecv(bExecute := FALSE);
+		IF NOT fbRecv.bBusy THEN
+			IF NOT fbRecv.bError THEN
+				ACT_RecvData();
+				IF bNewRecv THEN (*put databuff into recieve queque*)
+					GVL.fbRecvDataQue.PutToQue(ADR(DataRecv));	
+					memset(ADR(DataRecv),0, GVL.InitPar.RecvSize);		
+				END_IF
+				step := 10;			
+			ELSE
+				nErrID := fbRecv.nErrId;
+				step := 100;	
+			END_IF
+		END_IF
+		//SendData
+		GVL.fbSendDataQue.GetFromQue(ADR(DataSend));
+		
+		IF GVL.fbSendDataQue.bGetData THEN
+			fbSend(hSocket := hSocket,cbLen :=SendLen, pSrc := ADR(DataSend),bExecute := TRUE,tTimeout := gvl.RecvTime);
+		END_IF
+	100:(*deal with error*)
+		bConnect := FALSE;
+		fbClose(bExecute := FALSE);
+		fbClose(hSocket := hSocket, bExecute := TRUE);
+		step := 102;
+	102: 
+		bConnect := FALSE;
+		fbClose(bExecute := FALSE);
+		IF NOT fbClose.bBusy THEN
+			IF NOT fbClose.bError THEN
+				step:= 5;
+			ELSE 
+				step := 0;
+			END_IF
+		END_IF			
+END_CASE
+]]></ST>
+    </Implementation>
+    <Action Name="ACT_PreSend" Id="{451cca19-7943-4133-93eb-5e8f97967512}">
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="ACT_RecvData" Id="{4f8f6f9d-1497-48f3-a5b9-8bc3eaf48a1b}">
+      <Implementation>
+        <ST><![CDATA[(*Recieve data, every group of data has length of Datalen*)
+IF bNewRecv THEN
+	IF fbRecv.nRecBytes < GVL.InitPar.RecvSize THEN
+		bNewRecv := FALSE;
+		memcpy(ADR(DataRecv),ADR(RecvBuff),fbRecv.nRecBytes);
+		RecvLen := GVL.InitPar.RecvSize - fbRecv.nRecBytes;
+	ELSE
+		memcpy(ADR(DataRecv),ADR(RecvBuff),GVL.InitPar.RecvSize);
+		bNewRecv := TRUE;
+	END_IF
+ELSE
+	IF fbRecv.nRecBytes < RecvLen THEN
+		memcpy(ADR(DataRecv)+ GVL.InitPar.RecvSize - RecvLen, ADR(RecvBuff),fbRecv.nRecBytes);
+		RecvLen := RecvLen - fbRecv.nRecBytes;
+	ELSE		
+		memcpy(ADR(DataRecv)+ GVL.InitPar.RecvSize - RecvLen, ADR(RecvBuff),RecvLen);
+		bNewRecv := TRUE;
+		RecvLen :=GVL.InitPar.RecvSize;
+	END_IF					
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="Comm">
+      <LineId Id="12" Count="1" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="104" Count="1" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="110" Count="2" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="142" Count="2" />
+      <LineId Id="148" Count="1" />
+      <LineId Id="140" Count="1" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="560" Count="0" />
+      <LineId Id="563" Count="3" />
+      <LineId Id="569" Count="0" />
+      <LineId Id="567" Count="1" />
+      <LineId Id="561" Count="1" />
+      <LineId Id="159" Count="0" />
+      <LineId Id="498" Count="0" />
+      <LineId Id="157" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="471" Count="0" />
+      <LineId Id="151" Count="0" />
+      <LineId Id="474" Count="0" />
+      <LineId Id="470" Count="0" />
+      <LineId Id="480" Count="0" />
+      <LineId Id="482" Count="0" />
+      <LineId Id="485" Count="0" />
+      <LineId Id="491" Count="0" />
+      <LineId Id="486" Count="0" />
+      <LineId Id="488" Count="0" />
+      <LineId Id="490" Count="0" />
+      <LineId Id="487" Count="0" />
+      <LineId Id="483" Count="0" />
+      <LineId Id="469" Count="0" />
+      <LineId Id="39" Count="1" />
+      <LineId Id="472" Count="0" />
+      <LineId Id="43" Count="1" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="436" Count="1" />
+      <LineId Id="439" Count="0" />
+      <LineId Id="434" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="489" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="473" Count="0" />
+      <LineId Id="529" Count="0" />
+      <LineId Id="603" Count="0" />
+      <LineId Id="494" Count="2" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="118" Count="1" />
+      <LineId Id="121" Count="1" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="137" Count="0" />
+      <LineId Id="123" Count="1" />
+      <LineId Id="126" Count="1" />
+      <LineId Id="129" Count="0" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="125" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Comm.ACT_PreSend">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="Comm.ACT_RecvData">
+      <LineId Id="22" Count="0" />
+      <LineId Id="2" Count="6" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="9" Count="5" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="17" Count="1" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="20" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
