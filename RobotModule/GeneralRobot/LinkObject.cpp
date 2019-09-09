@@ -1,67 +1,429 @@
 #include "LinkObject.h"
 extern CErrorQueue g_ErrQue;
+
+const double MoveVel = 1.0;
+const double nljMoveVel = 0.05;
+const double delta_t = 2.0;
+const double ACCEPTCURR = 1.0;
+const double TARCURR = 20.0;
+const double XPosLimit = 28.0;
+const double YPosLimit = 141;
+const double ZPosLimit = 30;
+
 /*********************************************************************************************************
-*Ãû³Æ£ºLINKÕý½â
-*¹¦ÄÜ£º¸ù¾ÝÖáÎ»ÖÃ/ËÙ¶È£¬¼ÆËãLINKÕý½â
-*²ÎÊý£º
-	Input£º ¶ÔÏó³ÉÔ±±äÁ¿m_Joints[].m_Status
-	Output:	¶ÔÏó³ÉÔ±±äÁ¿m_Status
-*·µ»ØÖµ£ºÎÞ
 *********************************************************************************************************/
 void CLink_0::LinkForwardKin()
 { 
+	double xNow = m_Joints[0]->m_Status.Position;
+	double yNow_l = m_Joints[1]->m_Status.Position;
+	double yNow_r = m_Joints[2]->m_Status.Position;
+	double zNow_l = m_Joints[3]->m_Status.Position;
+	double zNow_r = m_Joints[4]->m_Status.Position;
 
+	double xVel = m_Joints[0]->m_Status.Velocity;
+	double yVel_l = m_Joints[1]->m_Status.Velocity;
+	double yVel_r = m_Joints[2]->m_Status.Velocity;
+	double zVel_l = m_Joints[3]->m_Status.Velocity;
+	double zVel_r = m_Joints[4]->m_Status.Velocity;
+	double NLJVel = m_Joints[5]->m_Status.Velocity;
+
+	double NLJCurrent = m_Joints[5]->m_Status.Current;
+
+	m_Status.stLinkActKin.LinkPos[0] = xNow;
+	m_Status.stLinkActKin.LinkPos[1] = yNow_l;
+	m_Status.stLinkActKin.LinkPos[2] = yNow_r;
+	m_Status.stLinkActKin.LinkPos[3] = zNow_l;
+	m_Status.stLinkActKin.LinkPos[4] = zNow_r;
+	m_Status.stLinkActKin.LinkVel[0] = NLJVel;
+	m_Status.stLinkActKin.LinkVel[1] = NLJCurrent;
 }
 
 
 /*********************************************************************************************************
-*Ãû³Æ£ºLINKÁª¶¯Äæ½â
-*¹¦ÄÜ£º¸ù¾ÝLINKÁª¶¯Ä¿±ê£¬¼ÆËãÖáÎ»ÖÃ/ËÙ¶È
-*²ÎÊý£º
-Iput£º ¶ÔÏó³ÉÔ±±äÁ¿m_Command
-Output:	¶ÔÏó³ÉÔ±±äÁ¿m_Joints[].m_Commd
-*·µ»ØÖµ£ºÎÞ
 *********************************************************************************************************/
 
 //------------------------------------------------------------------------------//
-//MotionMode1 ×Ô¶¯:Ö±Ïß¾ÀÆ«(PGV)
 //------------------------------------------------------------------------------//
-void CLink_0::MotionMode1() {}
+void CLink_0::MotionMode1() {
+	double targetPos_X = m_Command.stLinkKinPar.LinkPos[0];
+	double targetPos_Y = m_Command.stLinkKinPar.LinkPos[1];
+	double targetPos_Z = m_Command.stLinkKinPar.LinkPos[2];
+
+	double Now_X = m_Status.stLinkActKin.LinkPos[0];
+	double Now_YL = m_Status.stLinkActKin.LinkPos[1];
+	double Now_YR = m_Status.stLinkActKin.LinkPos[2];
+	double Now_ZL = m_Status.stLinkActKin.LinkPos[3];
+	double Now_ZR = m_Status.stLinkActKin.LinkPos[4];
+
+	double Now_Y = (Now_YL + Now_YR) / 2;
+	double Now_Z = (Now_ZL + Now_ZR) / 2;
+
+	//ï¿½ï¿½ï¿½ãµ±Ç°Î»ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Î»ï¿½Ãµï¿½Æ«ï¿½ï¿½
+	double Dis_X = targetPos_X - Now_X;
+	double Dis_Y = targetPos_Y - Now_Y;
+	double Dis_Z = targetPos_Z - Now_Z;
+
+	// ï¿½ï¿½Ê¼ï¿½ï¿½Ö¸ï¿½ï¿½
+	for (int i = 0; i < m_Freedom; i++)
+	{
+		m_Joints[i]->m_Commd.eMC_Motion = eMC_NONE;
+		m_Joints[i]->m_Commd.Velocity = 0;
+		m_Joints[i]->m_Commd.Position = 0;
+	}
+
+	//Æ«ï¿½ï¿½Ð¡ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Î»ï¿½Ã£ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Í¸ï¿½haltÖ¸ï¿½î£¬Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄ¶ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½haltï¿½ï¿½
+	if ((fabs_(Dis_X) < 0.5) && (fabs_(Dis_Y) < 0.5) && (fabs_(Dis_Z) < 0.5)) {
+		for (int i = 0; i < m_Freedom; i++)
+		{
+			m_Joints[i]->m_Commd.eMC_Motion = eMC_HALT;
+			m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
+		}
+		return;
+	}
+
+	//Ð´Ö¸ï¿½ï¿½
+	if (fabs_(Dis_X) > 0.5) {
+		if (Dis_X > 0) { 
+			m_Joints[0]->m_Commd.Velocity = MoveVel;
+			m_Joints[0]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			PosLimit(1);
+		}
+		else {
+			m_Joints[0]->m_Commd.Velocity = -MoveVel;
+			m_Joints[0]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			PosLimit(1);
+		}
+	}
+	else {
+		m_Joints[0]->m_Commd.eMC_Motion = eMC_HALT;
+	}
+
+	if (fabs_(Dis_Y) > 0.5) {
+		if (Dis_Y > 0) {
+			SynControl(1, 2, 0, MoveVel, Now_YL, Now_YR, 1);
+			PosLimit(2);
+		}
+		else {
+			SynControl(1, 2, 0, MoveVel, Now_YL, Now_YR, -1);
+			PosLimit(2);
+		}
+	}
+	else {
+		m_Joints[1]->m_Commd.eMC_Motion = eMC_HALT;
+		m_Joints[2]->m_Commd.eMC_Motion = eMC_HALT;
+	}
+
+	if (fabs_(Dis_Z) > 0.5) {
+		if (Dis_Z > 0) {
+			SynControl(3, 4, 1, 0.5, Now_ZL, Now_ZR, 1);
+			PosLimit(3);
+		}
+		else {
+			SynControl(3, 4, 1, 0.5, Now_ZL, Now_ZR, -1);
+			PosLimit(3);
+		}
+	}
+	else {
+		m_Joints[3]->m_Commd.eMC_Motion = eMC_HALT;
+		m_Joints[4]->m_Commd.eMC_Motion = eMC_HALT;
+	}
+	//ï¿½Â·ï¿½Ö¸ï¿½ï¿½
+	for (int i = 0; i < m_Freedom; i++)
+	{
+		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
+	}
+	return;
+}
 
 //------------------------------------------------------------------------------//
-//MotionMode2 ×Ô¶¯£ºÔ­µØ×ª½Ç(4×é¶ÔÂÖ½Ç¶ÈÏàÍ¬) phiTarget=0Ê±Îªreset
+//ï¿½ï¿½ï¿½ï¶¨ï¿½ï¿½ï¿½ï¿½ï¿½Å¡ï¿½Ý¶ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½Ý¶ï¿½ï¿½Ô½ÓµÄ¿ï¿½ï¿½Æ¹ï¿½ï¿½ï¿½
 //------------------------------------------------------------------------------//
-void CLink_0::MotionMode2() {}
+void CLink_0::MotionMode2() {
+	//ï¿½ï¿½È¡Zï¿½ï¿½ï¿½Î»ï¿½Ãºï¿½Å¡ï¿½Ý¶ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½
+	double zNow_l = m_Status.stLinkActKin.LinkPos[3];
+	double zNow_r = m_Status.stLinkActKin.LinkPos[4];
+	double Now_z = (zNow_l + zNow_r) / 2;
+	double NLJVel = m_Status.stLinkActKin.LinkVel[0];
+	double Current_nlj = m_Status.stLinkActKin.LinkVel[1];
+
+	//ï¿½ï¿½È¡Ä¿ï¿½ï¿½Î»ï¿½ï¿½
+	double tarPos_z = m_Command.stLinkKinPar.LinkPos[0];
+	double tarVel_nlj = m_Command.stLinkKinPar.LinkVel[0];
+
+	//ï¿½ï¿½ï¿½ãµ±Ç°Î»ï¿½ÃµÄ²ï¿½Öµ
+	double deviDis = tarPos_z - Now_z;
+
+	//ï¿½ï¿½Ê¼ï¿½ï¿½Ö¸ï¿½ï¿½
+	for (int i = 0; i < m_Freedom; i++)
+	{
+		m_Joints[i]->m_Commd.eMC_Motion = eMC_NONE;
+		m_Joints[i]->m_Commd.Velocity = 0;
+		m_Joints[i]->m_Commd.Position = 0;
+	}
+
+	//ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½Ñ¾ï¿½ï¿½Ë¶ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Î»Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	if ((fabs_(deviDis) <= 0.5) && (Current_nlj < TARCURR)) {
+		m_Joints[3]->m_Commd.eMC_Motion = eMC_HALT;
+		m_Joints[4]->m_Commd.eMC_Motion = eMC_HALT;
+		m_Joints[5]->m_Commd.eMC_Motion = eMC_HALT;
+		for (int i = 0; i < m_Freedom; i++)
+		{
+			m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
+		}
+		return;
+	}
+	else if (Current_nlj > TARCURR) {
+		m_Joints[3]->m_Commd.eMC_Motion = eMC_HALT;
+		m_Joints[4]->m_Commd.eMC_Motion = eMC_HALT;
+		m_Joints[5]->m_Commd.eMC_Motion = eMC_HALT;
+		for (int i = 0; i < m_Freedom; i++)
+		{
+			m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
+		}
+		return;
+	}
+	else if ((fabs_(deviDis) > 0.5) && (Current_nlj < TARCURR)) {
+		if (deviDis > 0) {
+			e[1] = m_Status.stLinkActKin.LinkPos[3] - m_Status.stLinkActKin.LinkPos[4];
+			double u_inc = A * e[1] + B * e_pre_1[1] + C * e_pre_2[1];
+			e_pre_2[1] = e_pre_1[1];
+			e_pre_1[1] = e[1];
+			if (u_inc < 0) {
+				m_Joints[3]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+				m_Joints[3]->m_Commd.Velocity = MoveVel + fabs_(u_inc) * delta_t;
+				m_Joints[4]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+				m_Joints[4]->m_Commd.Velocity = MoveVel;
+			}
+			else {
+				m_Joints[3]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+				m_Joints[3]->m_Commd.Velocity = MoveVel;
+				m_Joints[4]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+				m_Joints[4]->m_Commd.Velocity = MoveVel + fabs_(u_inc) * delta_t;				
+			}
+			m_Joints[5]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			m_Joints[5]->m_Commd.Velocity = nljMoveVel;
+		}
+		else {
+			e[1] = m_Status.stLinkActKin.LinkPos[3] - m_Status.stLinkActKin.LinkPos[4];
+			double u_inc = A * e[1] + B * e_pre_1[1] + C * e_pre_2[1];
+			e_pre_2[1] = e_pre_1[1];
+			e_pre_1[1] = e[1];
+			if (u_inc < 0) {
+				m_Joints[3]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+				m_Joints[3]->m_Commd.Velocity = -MoveVel + fabs_(u_inc) * delta_t;
+				m_Joints[4]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+				m_Joints[4]->m_Commd.Velocity = -MoveVel;
+			}
+			else {
+				m_Joints[3]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+				m_Joints[3]->m_Commd.Velocity = -MoveVel;
+				m_Joints[4]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+				m_Joints[4]->m_Commd.Velocity = -MoveVel + fabs_(u_inc) * delta_t;
+			}
+			m_Joints[5]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			m_Joints[5]->m_Commd.Velocity = -nljMoveVel;
+		}
+	}
+	for (int i = 0; i < m_Freedom; i++)
+	{
+		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
+	}
+	return;
+
+}
 
 //------------------------------------------------------------------------------//
-//MotionMode3 Ô²»¡ÔË¶¯ ´ÓMotion1µ½3ÒªÇå¿Õqr_code
+//Å¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½Ä£Ê½
 //------------------------------------------------------------------------------//
-void CLink_0::MotionMode3() {}
+void CLink_0::MotionMode3() {
+	//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+	double NLJVel = m_Status.stLinkActKin.LinkVel[0];
+	double Current_nlj = m_Status.stLinkActKin.LinkVel[1];
+
+	//ï¿½ï¿½Ê¼ï¿½ï¿½Ö¸ï¿½ï¿½
+	for (int i = 0; i < m_Freedom; i++)
+	{
+		m_Joints[i]->m_Commd.eMC_Motion = eMC_NONE;
+		m_Joints[i]->m_Commd.Velocity = 0;
+		m_Joints[i]->m_Commd.Position = 0;
+	}
+
+	//Æ«ï¿½ï¿½Ð¡ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Î»ï¿½ï¿½   Î»ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½
+	if (Current_nlj > TARCURR) {
+		m_Joints[5]->m_Commd.eMC_Motion = eMC_HALT;
+		for (int i = 0; i < m_Freedom; i++)
+		{
+			m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
+		}
+		return;
+	}
+	else{
+		m_Joints[5]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+		m_Joints[5]->m_Commd.Velocity = nljMoveVel;
+		for (int i = 0; i < m_Freedom; i++)
+		{
+			m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
+		}
+		return;
+	}
+
+	//ï¿½Â·ï¿½Ö¸ï¿½ï¿½
+	for (int i = 0; i < m_Freedom; i++)
+	{
+		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
+	}
+	return;
+}
 
 //------------------------------------------------------------------------------//
-//MotionMode4 Ô­µØ×ª½Ç(Ô²»¡ÔË¶¯Ç°)
+//ï¿½Ö¶ï¿½Ä£Ê½
 //------------------------------------------------------------------------------//
-void CLink_0::MotionMode4() {}
+void CLink_0::MotionMode4() {
+	//ï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½á£¬ï¿½Ç¸ï¿½ï¿½ï¿½ï¿½ï¿½
+	int isXYZ = m_Command.stLinkKinPar.LinkPos[0]; // 1 ÎªXï¿½á£¬ 2 ÎªYï¿½á£¬ 3 ÎªZï¿½ï¿½, 4 ÎªÅ¡ï¿½ï¿½Ä£Ê½
+	int isPOSorNEG = m_Command.stLinkKinPar.LinkPos[1]; //1 Îªï¿½ï¿½ï¿½ï¿½ 2Îªï¿½ï¿½
+	int beNormMode = m_Command.stLinkKinPar.LinkPos[2]; //ï¿½ï¿½Îªtrueï¿½ï¿½ï¿½ï¿½Îªfalse
+	bool be_NormMode = true;
+	if (beNormMode < -1.0) {
+		be_NormMode = false;
+	}
+	double TarMoveVel = m_Command.stLinkKinPar.LinkVel[0];
 
-//------------------------------------------------------------------------------//
-//MotionMode5 Ö±ÏßÔË¶¯(ÊÖ¶¯) ÊäÈë£ºLinkVel[0]
-//------------------------------------------------------------------------------//
-void CLink_0::MotionMode5() {}
+	//ï¿½ï¿½È¡ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
+	double xNow = m_Status.stLinkActKin.LinkPos[0];
+	double yNow_l = m_Status.stLinkActKin.LinkPos[1];
+	double yNow_r = m_Status.stLinkActKin.LinkPos[2];
+	double zNow_l = m_Status.stLinkActKin.LinkPos[3];
+	double zNow_r = m_Status.stLinkActKin.LinkPos[4];
+	//switch caseï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½á£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½
+	switch (isXYZ)
+	{
+	case 1:
+		if (isPOSorNEG == 1) {
+			m_Joints[0]->m_Commd.Velocity = TarMoveVel;
+			m_Joints[0]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			PosLimit(1, be_NormMode);
+		}
+		else if (isPOSorNEG == 2) {
+			m_Joints[0]->m_Commd.Velocity = -TarMoveVel;
+			m_Joints[0]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			PosLimit(1, be_NormMode);
+		}
+		break;
+	case 2:
+		if (isPOSorNEG == 1) {
+			SynControl(1, 2, 0, TarMoveVel, m_Status.stLinkActKin.LinkPos[1], m_Status.stLinkActKin.LinkPos[2]);
+			PosLimit(2, be_NormMode);
+		}
+		else if (isPOSorNEG == 2) {
+			SynControl(1, 2, 0, TarMoveVel, m_Status.stLinkActKin.LinkPos[1], m_Status.stLinkActKin.LinkPos[2], -1);
+			PosLimit(2, be_NormMode);
+		}
+		break;
+	case 3:
+		if (isPOSorNEG == 1) {
+			SynControl(3, 4, 1, TarMoveVel, m_Status.stLinkActKin.LinkPos[3], m_Status.stLinkActKin.LinkPos[4]);
+			PosLimit(3, be_NormMode);
+		}
+		else if (isPOSorNEG == 2) {
+			SynControl(3, 4, 1, TarMoveVel, m_Status.stLinkActKin.LinkPos[3], m_Status.stLinkActKin.LinkPos[4], -1);
+			PosLimit(3, be_NormMode);
+		}
+		break;
+	case 4:
+		if (isPOSorNEG == 1) {
+			m_Joints[5]->m_Commd.Velocity = nljMoveVel;
+			m_Joints[5]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+		}
+		else if (isPOSorNEG == 2) {
+			m_Joints[5]->m_Commd.Velocity = -nljMoveVel;
+			m_Joints[5]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+		}
+		break;
+	default:
+		break;
+	}
+	//ï¿½Â·ï¿½Ö¸ï¿½ï¿½
+	for (int i = 0; i < m_Freedom; i++)
+	{
+		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
+	}
+	return;
 
-//------------------------------------------------------------------------------//
-//MotionMode6 µ÷Õû·½Ïò½Ç(ÊÖ¶¯) ÊäÈë£ºLinkVel[3]
-//¸Ãº¯ÊýÎ´Ê¹ÓÃ£¬·½Ïò½ÇÊÖ¶¯µ÷ÕûÓÃmode2ÊµÏÖ
-//------------------------------------------------------------------------------//
-void CLink_0::MotionMode6() {}
+}
 
-//------------------------------------------------------------------------------//
-//MotionMode7 Ô²»¡ÔË¶¯(ÊÖ¶¯) ÊäÈë£ºLinkVel[0]¶ÔÓ¦×ßÔ²»¡/LinkVel[2]¶ÔÓ¦Ô­µØ×ª;
-//------------------------------------------------------------------------------//
-void CLink_0::MotionMode7() {}
+//-------------------------------------------------------------------//
+//ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¿ï¿½ï¿½ï¿½, countï¿½ï¿½ï¿½ï¿½yï¿½ï¿½Ó¦ï¿½Ã´ï¿½ï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½zï¿½ï¿½Ó¦ï¿½Ã´ï¿½ï¿½ï¿½1ï¿½ï¿½
+//--------------------------------------------------------------------//
+void CLink_0::SynControl(int numL, int numR, int count, double TarMoveVel, double posL, double posR, int i) {
+	e[count] = posL - posR;
+	double u_inc = A * e[count] + B * e_pre_1[count] + C * e_pre_2[count];
+	e_pre_2[count] = e_pre_1[count];
+	e_pre_1[count] = e[count];
+	double AdjVar = fabs_(u_inc) * delta_t;
+	AdjVar = min(0.5, AdjVar);
+	if (u_inc < 0) {
+		if (i > 0) {
+			m_Joints[numL]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			m_Joints[numL]->m_Commd.Velocity = TarMoveVel;
+			m_Joints[numR]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			m_Joints[numR]->m_Commd.Velocity = TarMoveVel - AdjVar;
+		}
+		else {
+			m_Joints[numL]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			m_Joints[numL]->m_Commd.Velocity = -TarMoveVel + AdjVar;
+			m_Joints[numR]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			m_Joints[numR]->m_Commd.Velocity = -TarMoveVel;
+		}		
+	}
+	else {
+		if (i > 0) {
+			m_Joints[numL]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			m_Joints[numL]->m_Commd.Velocity = TarMoveVel - AdjVar;
+			m_Joints[numR]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			m_Joints[numR]->m_Commd.Velocity = TarMoveVel;
+		}
+		else {
+			m_Joints[numL]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			m_Joints[numL]->m_Commd.Velocity = -TarMoveVel;
+			m_Joints[numR]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			m_Joints[numR]->m_Commd.Velocity = -TarMoveVel + AdjVar;
+		}
+	}	
+}
 
-//------------------------------------------------------------------------------//
-//MotionMode8 ×ßÔ²»¡Ç°µ÷Õû½Ç¶È(ÊÖ¶¯) ÊäÈë£ºLinkVel[3]
-//ÓÉÓÚÔ­µØÐý×ªºÍÔ²»¡ÔË¶¯ºÏ²¢£¬¸Ãº¯ÊýÎ´Ê¹ÓÃ
-//------------------------------------------------------------------------------//
-void CLink_0::MotionMode8() {}
-
+//-----------------------------------------------------------------//
+//ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð³ï¿½ï¿½ï¿½ï¿½Æ£ï¿½currAxisÎª1ï¿½ï¿½2ï¿½ï¿½3ï¿½ï¿½ï¿½Ö±ï¿½ï¿½Ê¾Xï¿½ï¿½Yï¿½ï¿½Z
+//-------------------------------------------------------------------//
+void CLink_0::PosLimit(int currAxis, bool normMode) {
+	if (normMode == true) {
+		double currPos = 0.0;
+		switch (currAxis)
+		{
+		case 1:
+			if (m_Status.stLinkActKin.LinkPos[0] > XPosLimit || m_Status.stLinkActKin.LinkPos[0] < 0.0) {
+				m_Joints[0]->m_Commd.eMC_Motion = eMC_HALT;
+			}
+			break;
+		case 2:
+			currPos = (m_Status.stLinkActKin.LinkPos[1] + m_Status.stLinkActKin.LinkPos[2]) / 2;
+			if (currPos > YPosLimit || currPos < 0.0) {
+				m_Joints[1]->m_Commd.eMC_Motion = eMC_HALT;
+				m_Joints[2]->m_Commd.eMC_Motion = eMC_HALT;
+			}
+			break;
+		case 3:
+			currPos = (m_Status.stLinkActKin.LinkPos[3] + m_Status.stLinkActKin.LinkPos[4]) / 2;
+			if (currPos > ZPosLimit || currPos < 0.0) {
+				m_Joints[3]->m_Commd.eMC_Motion = eMC_HALT;
+				m_Joints[4]->m_Commd.eMC_Motion = eMC_HALT;
+			}
+			break;
+		default:
+			for (int i = 0; i < 6; i++) {
+				m_Joints[i]->m_Commd.eMC_Motion = eMC_HALT;
+			}
+			break;
+		}
+	}     
+}
