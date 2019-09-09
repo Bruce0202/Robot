@@ -23,13 +23,19 @@ public:
 	~CLink_0()
 	{}
 	//多态====================================================//
-	//正解
+	//positive
 	void LinkForwardKin()  ;			//Link 正解
-	//逆解
+
+	//inverse
 	void MotionLineAbsolute() {}		//空的循环，如果跑motion程序在默认状态下一直进这个循环		
 	void MotionLineVelocity() {}		//末端位置模式
 	void MotionLineRelative() {}		//末端速度模式
 	
+	void xAxisMotion();		
+	void yAxisMotion();
+	void zAxisMotion();
+
+
 	void MotionMode1();			//自定义1
 	void MotionMode2();			//自定义2
 	void MotionMode3();			//自定义3

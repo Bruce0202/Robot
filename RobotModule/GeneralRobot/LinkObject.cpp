@@ -1,4 +1,4 @@
-#include "LinkObject.h"
+﻿#include "LinkObject.h"
 extern CErrorQueue g_ErrQue;
 
 const double MoveVel = 1.0;
@@ -6,20 +6,29 @@ const double nljMoveVel = 0.05;
 const double delta_t = 2.0;
 const double ACCEPTCURR = 1.0;
 const double TARCURR = 20.0;
-const double XPosLimit = 28.0;
-const double YPosLimit = 141;
-const double ZPosLimit = 30;
+
+const double XDOWNPOSLIMIT = 0.0;
+const double XUPPOSLIMIT = 28.0;
+
+const double YDOWNPOSLIMIT = 0.0;
+const double YUPPOSLIMIT = 141;
+
+const double ZDOWNPOSLIMIT = 0.0;
+const double ZUPPOSLIMIT = 30;
 
 /*********************************************************************************************************
+Positive kinematics
 *********************************************************************************************************/
 void CLink_0::LinkForwardKin()
 { 
+	//position
 	double xNow = m_Joints[0]->m_Status.Position;
 	double yNow_l = m_Joints[1]->m_Status.Position;
 	double yNow_r = m_Joints[2]->m_Status.Position;
 	double zNow_l = m_Joints[3]->m_Status.Position;
 	double zNow_r = m_Joints[4]->m_Status.Position;
 
+	//velocity
 	double xVel = m_Joints[0]->m_Status.Velocity;
 	double yVel_l = m_Joints[1]->m_Status.Velocity;
 	double yVel_r = m_Joints[2]->m_Status.Velocity;
@@ -27,8 +36,10 @@ void CLink_0::LinkForwardKin()
 	double zVel_r = m_Joints[4]->m_Status.Velocity;
 	double NLJVel = m_Joints[5]->m_Status.Velocity;
 
+	//current
 	double NLJCurrent = m_Joints[5]->m_Status.Current;
 
+	//Positive kinematics,pareper the data for algorithm
 	m_Status.stLinkActKin.LinkPos[0] = xNow;
 	m_Status.stLinkActKin.LinkPos[1] = yNow_l;
 	m_Status.stLinkActKin.LinkPos[2] = yNow_r;
@@ -39,11 +50,76 @@ void CLink_0::LinkForwardKin()
 }
 
 
-/*********************************************************************************************************
-*********************************************************************************************************/
+//-----------------------------------------------------------------//
+//safeMode for X, Y, Z Axis, 1 is X, 2 is Y, 3 is Z
+//-------------------------------------------------------------------//
+void CLink_0::PosLimit(int currAxis, bool safeMode) {
+	if (safeMode == true) {
+		double currPos = 0.0;
+		switch (currAxis)
+		{
+		case 1:
+			if (m_Status.stLinkActKin.LinkPos[0] > XUPPOSLIMIT || m_Status.stLinkActKin.LinkPos[0] < XDOWNPOSLIMIT) {
+				m_Joints[0]->m_Commd.eMC_Motion = eMC_HALT;
+			}
+			break;
+		case 2:
+			currPos = (m_Status.stLinkActKin.LinkPos[1] + m_Status.stLinkActKin.LinkPos[2]) / 2;
+			if (currPos > YUPPOSLIMIT || currPos < YDOWNPOSLIMIT) {
+				m_Joints[1]->m_Commd.eMC_Motion = eMC_HALT;
+				m_Joints[2]->m_Commd.eMC_Motion = eMC_HALT;
+			}
+			break;
+		case 3:
+			currPos = (m_Status.stLinkActKin.LinkPos[3] + m_Status.stLinkActKin.LinkPos[4]) / 2;
+			if (currPos > ZUPPOSLIMIT || currPos < ZDOWNPOSLIMIT) {
+				m_Joints[3]->m_Commd.eMC_Motion = eMC_HALT;
+				m_Joints[4]->m_Commd.eMC_Motion = eMC_HALT;
+			}
+			break;
+		default:
+			for (int i = 0; i < 6; i++) {
+				m_Joints[i]->m_Commd.eMC_Motion = eMC_HALT;
+			}
+			break;
+		}
+	}     
+}
 
-//------------------------------------------------------------------------------//
-//------------------------------------------------------------------------------//
+/*********************************************************************************************************
+Inverse kinematics
+*********************************************************************************************************/
+//X Axis
+void CLink_0::xAxisMotion() {
+	//获取控制信息
+	int beSafeMode = m_Command.stLinkKinPar.LinkPos[0];
+	bool safeMode = true;
+	if (beSafeMode < 0.0) {
+		safeMode = false;
+	}
+	double tarMoveVel = m_Command.stLinkKinPar.LinkVel[0];
+	//获取X轴的位置关系
+	xNowPosition = m_Status.stLinkActKin.LinkPos[0];
+
+	m_Joints[0]->m_Commd.Velocity = tarMoveVel;
+	m_Joints[0]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+	PosLimit(1, safeMode);
+
+	for(int i = 0; i < m_Freedom; i++){
+		m_Joints[0]->
+	}
+
+}
+
+//Y Axis
+void CLink_0::yAxisMotion() {
+}
+
+//Z Asix
+void CLink_0::zAxisMotion() {
+}
+
+
 void CLink_0::MotionMode1() {
 	double targetPos_X = m_Command.stLinkKinPar.LinkPos[0];
 	double targetPos_Y = m_Command.stLinkKinPar.LinkPos[1];
@@ -58,12 +134,10 @@ void CLink_0::MotionMode1() {
 	double Now_Y = (Now_YL + Now_YR) / 2;
 	double Now_Z = (Now_ZL + Now_ZR) / 2;
 
-	//���㵱ǰλ����Ŀ��λ�õ�ƫ��
 	double Dis_X = targetPos_X - Now_X;
 	double Dis_Y = targetPos_Y - Now_Y;
 	double Dis_Z = targetPos_Z - Now_Z;
 
-	// ��ʼ��ָ��
 	for (int i = 0; i < m_Freedom; i++)
 	{
 		m_Joints[i]->m_Commd.eMC_Motion = eMC_NONE;
@@ -71,7 +145,6 @@ void CLink_0::MotionMode1() {
 		m_Joints[i]->m_Commd.Position = 0;
 	}
 
-	//ƫ��С��һ����ֵ��Ϊ������Ŀ��λ�ã����ʱ��͸�haltָ�һ�������еĶ����ˣ���halt��
 	if ((fabs_(Dis_X) < 0.5) && (fabs_(Dis_Y) < 0.5) && (fabs_(Dis_Z) < 0.5)) {
 		for (int i = 0; i < m_Freedom; i++)
 		{
@@ -81,7 +154,6 @@ void CLink_0::MotionMode1() {
 		return;
 	}
 
-	//дָ��
 	if (fabs_(Dis_X) > 0.5) {
 		if (Dis_X > 0) { 
 			m_Joints[0]->m_Commd.Velocity = MoveVel;
@@ -127,7 +199,6 @@ void CLink_0::MotionMode1() {
 		m_Joints[3]->m_Commd.eMC_Motion = eMC_HALT;
 		m_Joints[4]->m_Commd.eMC_Motion = eMC_HALT;
 	}
-	//�·�ָ��
 	for (int i = 0; i < m_Freedom; i++)
 	{
 		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
@@ -392,38 +463,4 @@ void CLink_0::SynControl(int numL, int numR, int count, double TarMoveVel, doubl
 	}	
 }
 
-//-----------------------------------------------------------------//
-//����ÿ������г����ƣ�currAxisΪ1��2��3���ֱ��ʾX��Y��Z
-//-------------------------------------------------------------------//
-void CLink_0::PosLimit(int currAxis, bool normMode) {
-	if (normMode == true) {
-		double currPos = 0.0;
-		switch (currAxis)
-		{
-		case 1:
-			if (m_Status.stLinkActKin.LinkPos[0] > XPosLimit || m_Status.stLinkActKin.LinkPos[0] < 0.0) {
-				m_Joints[0]->m_Commd.eMC_Motion = eMC_HALT;
-			}
-			break;
-		case 2:
-			currPos = (m_Status.stLinkActKin.LinkPos[1] + m_Status.stLinkActKin.LinkPos[2]) / 2;
-			if (currPos > YPosLimit || currPos < 0.0) {
-				m_Joints[1]->m_Commd.eMC_Motion = eMC_HALT;
-				m_Joints[2]->m_Commd.eMC_Motion = eMC_HALT;
-			}
-			break;
-		case 3:
-			currPos = (m_Status.stLinkActKin.LinkPos[3] + m_Status.stLinkActKin.LinkPos[4]) / 2;
-			if (currPos > ZPosLimit || currPos < 0.0) {
-				m_Joints[3]->m_Commd.eMC_Motion = eMC_HALT;
-				m_Joints[4]->m_Commd.eMC_Motion = eMC_HALT;
-			}
-			break;
-		default:
-			for (int i = 0; i < 6; i++) {
-				m_Joints[i]->m_Commd.eMC_Motion = eMC_HALT;
-			}
-			break;
-		}
-	}     
-}
+
