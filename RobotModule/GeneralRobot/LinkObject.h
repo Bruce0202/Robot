@@ -2,6 +2,14 @@
 #include "Link.h"
 #pragma pack(push)
 #pragma pack(8) 
+
+enum objAsix {
+	xAxis = 0,
+	xAxisPlus,
+	yAxis,
+	zAxis
+};
+
 class CLink_0 : public CLink
 {
 public:
@@ -34,6 +42,7 @@ public:
 	void xAxisMotion();		
 	void yAxisMotion();
 	void zAxisMotion();
+	void xPlusAxisMotion();
 
 
 	void MotionMode1();			//自定义1
@@ -49,8 +58,10 @@ public:
 	void SetLinkSelfAction() {}			//Link操作，如末端工具，水炮枪
 
 private:
-	void SynControl(int numL, int numR, int count, double TarMoveVel, double posL, double posR, int i = 1);   //对平行的进行同步控制
-	void PosLimit(int currAxis = 0, bool normMode = true); //对行程的限制
+	void SynControl(objAsix currAxis, double TarMoveVel);   //对平行的进行同步控制
+	void PosLimit(objAsix currAxis, bool normMode = true); //对行程的限制
+
+public:
 
 private:
 	// PID参数
