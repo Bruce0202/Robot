@@ -2,23 +2,7 @@
 
 extern CErrorQueue g_ErrQue;
 
-const double MoveVel = 1.0;
-const double nljMoveVel = 0.05;
-const double delta_t = 2.0;
-const double ACCEPTCURR = 1.0;
-const double TARCURR = 20.0;
 
-const double XDOWNPOSLIMIT = 0.0;
-const double XUPPOSLIMIT = 28.0;
-
-const double YDOWNPOSLIMIT = 0.0;
-const double YUPPOSLIMIT = 141;
-
-const double ZDOWNPOSLIMIT = 0.0;
-const double ZUPPOSLIMIT = 30;
-
-const double XPLUSDOWNPOSLIMIT = 0.0;
-const double XPLUSUPPOSLIMIT = 200;
 
 /*********************************************************************************************************
 Positive kinematics
@@ -176,60 +160,45 @@ void CLink_0::SynControl(objAsix currAxis, double TarMoveVel) {
 /*********************************************************************************************************
 Inverse kinematics
 *********************************************************************************************************/
-//X Axis
-void CLink_0::xAxisMotion() {
+
+//X Axis,tarMoveVel是控制的目标速度，beSafeMode判断是否处于安全模式
+void CLink_0::xAxisMotion(double tarMoveVel, double beSafeMode = 10) {
 	//获取控制信息
-	int beSafeMode = m_Command.stLinkKinPar.LinkPos[0];
 	bool safeMode = true;
 	if (beSafeMode < 0.0) {
 		safeMode = false;
 	}
-	//获取速度参数值
-	double tarMoveVel = m_Command.stLinkKinPar.LinkVel[0];
 	//获取X轴的位置关系
 	double xNowPosition = m_Status.stLinkActKin.LinkPos[0];
 
 	m_Joints[0]->m_Commd.Velocity = tarMoveVel;
 	m_Joints[0]->m_Commd.eMC_Motion = eMC_MOV_VEL;
 	PosLimit(xAxis, safeMode);
-
-	for (int i = 0; i < m_Freedom; i++) {
-		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
-	}
 	return;
 }
 
-//Y Axis
-void CLink_0::yAxisMotion() {
+//Y Axis，tarMoveVel是控制的目标速度，beSafeMode判断是否处于安全模式
+void CLink_0::yAxisMotion(double tarMoveVel, double beSafeMode = 10) {
 	//获取控制信息
-	int beSafeMode = m_Command.stLinkKinPar.LinkPos[0];
 	bool safeMode = true;
 	if (beSafeMode < 0.0) {
 		safeMode = false;
 	}
-	//获取速度参数值
-	double tarMoveVel = m_Command.stLinkKinPar.LinkVel[0];
 	//获取Y轴的位置关系
 	double yNowPosition = m_Status.stLinkActKin.LinkPos[1];
 
 	SynControl(yAxis, tarMoveVel);
 	PosLimit(yAxis, safeMode);
-	for (int i = 0; i < m_Freedom; i++) {
-		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
-	}
 	return;
 }
 
-//Z Asix
-void CLink_0::zAxisMotion() {
+//Z Asix，tarMoveVel是控制的目标速度，beSafeMode判断是否处于安全模式
+void CLink_0::zAxisMotion(double tarMoveVel, double beSafeMode = 10) {
 	//获取控制信息
-	int beSafeMode = m_Command.stLinkKinPar.LinkPos[0];
 	bool safeMode = true;
 	if (beSafeMode < 0.0) {
 		safeMode = false;
 	}
-	//获取速度参数值
-	double tarMoveVel = m_Command.stLinkKinPar.LinkVel[0];
 	//获取Z轴的位置关系
 	double yNowPosition = m_Status.stLinkActKin.LinkPos[3];
 	SynControl(zAxis, tarMoveVel);
@@ -240,48 +209,38 @@ void CLink_0::zAxisMotion() {
 	return;
 }
 
-//X plus Axis
-void CLink_0::xPlusAxisMotion() {
+//X plus Axis，tarMoveVel是控制的目标速度，beSafeMode判断是否处于安全模式
+void CLink_0::xPlusAxisMotion(double tarMoveVel, double beSafeMode = 10) {
 	//获取控制信息
-	int beSafeMode = m_Command.stLinkKinPar.LinkPos[0];
 	bool safeMode = true;
 	if (beSafeMode < 0.0) {
 		safeMode = false;
 	}
-	//获取速度参数值
-	double tarMoveVel = m_Command.stLinkKinPar.LinkVel[0];
 	//获取x轴的位置关系
 	double xPlusNowPosition = m_Status.stLinkActKin.LinkPos[6];
 
 	m_Joints[6]->m_Commd.Velocity = tarMoveVel;
 	m_Joints[6]->m_Commd.eMC_Motion = eMC_MOV_VEL;
 	PosLimit(xAxisPlus, safeMode);
-
-	for (int i = 0; i < m_Freedom; i++) {
-		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
-	}
 	return;
 }
 
-
-
+//-----------------------------------------------------------------------------//
+//位置模式，主要是控制三个轴的运动，分别是大X轴，y轴和Z轴.
+//-----------------------------------------------------------------------------//
 void CLink_0::MotionMode1() {
-	double targetPos_X = m_Command.stLinkKinPar.LinkPos[0];
-	double targetPos_Y = m_Command.stLinkKinPar.LinkPos[1];
-	double targetPos_Z = m_Command.stLinkKinPar.LinkPos[2];
+	//读取控制量
+	double targetPosX = m_Command.stLinkKinPar.LinkPos[0];
+	double targetPosY = m_Command.stLinkKinPar.LinkPos[1];
+	double targetPosZ = m_Command.stLinkKinPar.LinkPos[2];
 
-	double Now_X = m_Status.stLinkActKin.LinkPos[0];
-	double Now_YL = m_Status.stLinkActKin.LinkPos[1];
-	double Now_YR = m_Status.stLinkActKin.LinkPos[2];
-	double Now_ZL = m_Status.stLinkActKin.LinkPos[3];
-	double Now_ZR = m_Status.stLinkActKin.LinkPos[4];
-
-	double Now_Y = (Now_YL + Now_YR) / 2;
-	double Now_Z = (Now_ZL + Now_ZR) / 2;
-
-	double Dis_X = targetPos_X - Now_X;
-	double Dis_Y = targetPos_Y - Now_Y;
-	double Dis_Z = targetPos_Z - Now_Z;
+	//得到当前的位置，然后得到当前与目标位置的差距
+	double nowXPlus = m_Status.stLinkActKin.LinkPos[6];
+	double mowY = (m_Status.stLinkActKin.LinkPos[1] + m_Status.stLinkActKin.LinkPos[2]) / 2;
+	double mowZ = (m_Status.stLinkActKin.LinkPos[3] + m_Status.stLinkActKin.LinkPos[4]) / 2;
+	double Dis_X = targetPosX - nowXPlus;
+	double Dis_Y = targetPosY - mowY;
+	double Dis_Z = targetPosZ - mowZ;
 
 	for (int i = 0; i < m_Freedom; i++) {
 		m_Joints[i]->m_Commd.eMC_Motion = eMC_NONE;
@@ -289,7 +248,7 @@ void CLink_0::MotionMode1() {
 		m_Joints[i]->m_Commd.Position = 0;
 	}
 
-	if ((fabs_(Dis_X) < 0.5) && (fabs_(Dis_Y) < 0.5) && (fabs_(Dis_Z) < 0.5)) {
+	if ((fabs_(Dis_X) < 0.2) && (fabs_(Dis_Y) < 0.2) && (fabs_(Dis_Z) < 0.2)) {
 		for (int i = 0; i < m_Freedom; i++) {
 			m_Joints[i]->m_Commd.eMC_Motion = eMC_HALT;
 			m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
@@ -297,262 +256,188 @@ void CLink_0::MotionMode1() {
 		return;
 	}
 
-	if (fabs_(Dis_X) > 0.5) {
-		if (Dis_X > 0) {
-			m_Joints[0]->m_Commd.Velocity = MoveVel;
-			m_Joints[0]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-			PosLimit(1);
-		}
-		else {
-			m_Joints[0]->m_Commd.Velocity = -MoveVel;
-			m_Joints[0]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-			PosLimit(1);
-		}
+	if (fabs_(Dis_X) > 0.2) {
+		if (Dis_X > 0)
+			xPlusAxisMotion(xPlusMoveVel);
+		else 
+			xPlusAxisMotion(-xPlusMoveVel);
 	}
-	else {
-		m_Joints[0]->m_Commd.eMC_Motion = eMC_HALT;
-	}
+	else
+		m_Joints[6]->m_Commd.eMC_Motion = eMC_HALT;
 
-	if (fabs_(Dis_Y) > 0.5) {
-		if (Dis_Y > 0) {
-			SynControl(1, 2, 0, MoveVel, Now_YL, Now_YR, 1);
-			PosLimit(2);
-		}
-		else {
-			SynControl(1, 2, 0, MoveVel, Now_YL, Now_YR, -1);
-			PosLimit(2);
-		}
+	if (fabs_(Dis_Y) > 0.2) {
+		if (Dis_Y > 0)
+			yAxisMotion(yMoveVel);
+		else
+			yAxisMotion(-yMoveVel);
 	}
 	else {
 		m_Joints[1]->m_Commd.eMC_Motion = eMC_HALT;
 		m_Joints[2]->m_Commd.eMC_Motion = eMC_HALT;
 	}
 
-	if (fabs_(Dis_Z) > 0.5) {
-		if (Dis_Z > 0) {
-			SynControl(3, 4, 1, 0.5, Now_ZL, Now_ZR, 1);
-			PosLimit(3);
-		}
-		else {
-			SynControl(3, 4, 1, 0.5, Now_ZL, Now_ZR, -1);
-			PosLimit(3);
-		}
+	if (fabs_(Dis_Z) > 0.2) {
+		if (Dis_Z > 0)
+			zAxisMotion(zMoveVel);
+		else 
+			zAxisMotion(-zMoveVel);
 	}
 	else {
 		m_Joints[3]->m_Commd.eMC_Motion = eMC_HALT;
 		m_Joints[4]->m_Commd.eMC_Motion = eMC_HALT;
 	}
-	for (int i = 0; i < m_Freedom; i++) {
+
+	for (int i = 0; i < m_Freedom; i++)
 		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
-	}
+
 	return;
 }
 
 //------------------------------------------------------------------------------//
-//���ﶨ�����š�ݶ�ͷ�����ݶ��ԽӵĿ��ƹ���
+//这是一个控制拧螺钉头接入螺钉的程序，主要是控制Z轴
 //------------------------------------------------------------------------------//
 void CLink_0::MotionMode2() {
-	//��ȡZ���λ�ú�š�ݶ�����ĵ���
-	double zNow_l = m_Status.stLinkActKin.LinkPos[3];
-	double zNow_r = m_Status.stLinkActKin.LinkPos[4];
-	double Now_z = (zNow_l + zNow_r) / 2;
+	//获取当前的状态
+	double nowZ = (m_Status.stLinkActKin.LinkPos[3] + m_Status.stLinkActKin.LinkPos[4]) / 2;
 	double NLJVel = m_Status.stLinkActKin.LinkVel[0];
-	double Current_nlj = m_Status.stLinkActKin.LinkVel[1];
+	double currentNlj = m_Status.stLinkActKin.LinkVel[1];
 
-	//��ȡĿ��λ��
-	double tarPos_z = m_Command.stLinkKinPar.LinkPos[0];
-	double tarVel_nlj = m_Command.stLinkKinPar.LinkVel[0];
+	//读入控制指令
+	double tarPosZ = m_Command.stLinkKinPar.LinkPos[0];
+	double tarVelNlj = m_Command.stLinkKinPar.LinkVel[0];
 
-	//���㵱ǰλ�õĲ�ֵ
-	double deviDis = tarPos_z - Now_z;
+	//位置的偏差
+	double deviDis = tarPosZ - nowZ;
 
-	//��ʼ��ָ��
 	for (int i = 0; i < m_Freedom; i++) {
 		m_Joints[i]->m_Commd.eMC_Motion = eMC_NONE;
 		m_Joints[i]->m_Commd.Velocity = 0;
 		m_Joints[i]->m_Commd.Position = 0;
 	}
 
-	//�ж��Ƿ��Ѿ��˶�����Ŀ��λֵ���������ӵ��������Ϊ��ȫ������
-	if ((fabs_(deviDis) <= 0.5) && (Current_nlj < TARCURR)) {
+	//接入操作
+	if ((fabs_(deviDis) <= 0.2) && (currentNlj < TARCURR)) {
 		m_Joints[3]->m_Commd.eMC_Motion = eMC_HALT;
 		m_Joints[4]->m_Commd.eMC_Motion = eMC_HALT;
 		m_Joints[5]->m_Commd.eMC_Motion = eMC_HALT;
-		for (int i = 0; i < m_Freedom; i++) {
+		for (int i = 0; i < m_Freedom; i++)
 			m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
-		}
 		return;
 	}
-	else if (Current_nlj > TARCURR) {
+	else if (currentNlj > TARCURR) {
 		m_Joints[3]->m_Commd.eMC_Motion = eMC_HALT;
 		m_Joints[4]->m_Commd.eMC_Motion = eMC_HALT;
 		m_Joints[5]->m_Commd.eMC_Motion = eMC_HALT;
-		for (int i = 0; i < m_Freedom; i++) {
+		for (int i = 0; i < m_Freedom; i++)
 			m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
-		}
 		return;
 	}
-	else if ((fabs_(deviDis) > 0.5) && (Current_nlj < TARCURR)) {
+	else if ((fabs_(deviDis) > 0.2) && (currentNlj < TARCURR)) {
 		if (deviDis > 0) {
-			e[1] = m_Status.stLinkActKin.LinkPos[3] - m_Status.stLinkActKin.LinkPos[4];
-			double u_inc = A * e[1] + B * e_pre_1[1] + C * e_pre_2[1];
-			e_pre_2[1] = e_pre_1[1];
-			e_pre_1[1] = e[1];
-			if (u_inc < 0) {
-				m_Joints[3]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-				m_Joints[3]->m_Commd.Velocity = MoveVel + fabs_(u_inc) * delta_t;
-				m_Joints[4]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-				m_Joints[4]->m_Commd.Velocity = MoveVel;
-			}
-			else {
-				m_Joints[3]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-				m_Joints[3]->m_Commd.Velocity = MoveVel;
-				m_Joints[4]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-				m_Joints[4]->m_Commd.Velocity = MoveVel + fabs_(u_inc) * delta_t;
-			}
+			zAxisMotion(NLJVel);
 			m_Joints[5]->m_Commd.eMC_Motion = eMC_MOV_VEL;
 			m_Joints[5]->m_Commd.Velocity = nljMoveVel;
 		}
 		else {
-			e[1] = m_Status.stLinkActKin.LinkPos[3] - m_Status.stLinkActKin.LinkPos[4];
-			double u_inc = A * e[1] + B * e_pre_1[1] + C * e_pre_2[1];
-			e_pre_2[1] = e_pre_1[1];
-			e_pre_1[1] = e[1];
-			if (u_inc < 0) {
-				m_Joints[3]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-				m_Joints[3]->m_Commd.Velocity = -MoveVel + fabs_(u_inc) * delta_t;
-				m_Joints[4]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-				m_Joints[4]->m_Commd.Velocity = -MoveVel;
-			}
-			else {
-				m_Joints[3]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-				m_Joints[3]->m_Commd.Velocity = -MoveVel;
-				m_Joints[4]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-				m_Joints[4]->m_Commd.Velocity = -MoveVel + fabs_(u_inc) * delta_t;
-			}
+			//e[1] = m_Status.stLinkActKin.LinkPos[3] - m_Status.stLinkActKin.LinkPos[4];
+			//double u_inc = A * e[1] + B * e_pre_1[1] + C * e_pre_2[1];
+			//e_pre_2[1] = e_pre_1[1];
+			//e_pre_1[1] = e[1];
+			//if (u_inc < 0) {
+			//	m_Joints[3]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			//	m_Joints[3]->m_Commd.Velocity = -MoveVel + fabs_(u_inc) * delta_t;
+			//	m_Joints[4]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			//	m_Joints[4]->m_Commd.Velocity = -MoveVel;
+			//}
+			//else {
+			//	m_Joints[3]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			//	m_Joints[3]->m_Commd.Velocity = -MoveVel;
+			//	m_Joints[4]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+			//	m_Joints[4]->m_Commd.Velocity = -MoveVel + fabs_(u_inc) * delta_t;
+			//}
+			zAxisMotion(-NLJVel);
 			m_Joints[5]->m_Commd.eMC_Motion = eMC_MOV_VEL;
 			m_Joints[5]->m_Commd.Velocity = -nljMoveVel;
 		}
 	}
-	for (int i = 0; i < m_Freedom; i++) {
+	for (int i = 0; i < m_Freedom; i++)
 		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
-	}
 	return;
-
 }
 
 //------------------------------------------------------------------------------//
-//š��������˶�ģʽ
+//这是拧紧电机的控制程序
 //------------------------------------------------------------------------------//
 void CLink_0::MotionMode3() {
-	//��ȡ���������Ϣ
+	//读当前的状态
 	double NLJVel = m_Status.stLinkActKin.LinkVel[0];
-	double Current_nlj = m_Status.stLinkActKin.LinkVel[1];
+	double currentNlj = m_Status.stLinkActKin.LinkVel[1];
 
-	//��ʼ��ָ��
 	for (int i = 0; i < m_Freedom; i++) {
 		m_Joints[i]->m_Commd.eMC_Motion = eMC_NONE;
 		m_Joints[i]->m_Commd.Velocity = 0;
 		m_Joints[i]->m_Commd.Position = 0;
 	}
 
-	//ƫ��С��һ����ֵ��Ϊ������Ŀ��λ��   λ����Ϣ����Ҫ����
-	if (Current_nlj > TARCURR) {
+	if (currentNlj > TARCURR) {
 		m_Joints[5]->m_Commd.eMC_Motion = eMC_HALT;
-		for (int i = 0; i < m_Freedom; i++) {
-			m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
-		}
-		return;
 	}
 	else {
 		m_Joints[5]->m_Commd.eMC_Motion = eMC_MOV_VEL;
 		m_Joints[5]->m_Commd.Velocity = nljMoveVel;
-		for (int i = 0; i < m_Freedom; i++) {
-			m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
-		}
-		return;
 	}
 
-	//�·�ָ��
-	for (int i = 0; i < m_Freedom; i++) {
+	for (int i = 0; i < m_Freedom; i++)
 		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
-	}
 	return;
 }
 
-//------------------------------------------------------------------------------//
-//�ֶ�ģʽ
-//------------------------------------------------------------------------------//
-void CLink_0::MotionMode4() {
-	//��ȡ��Ӧ����Ϣ��������һ���ᣬ�Ǹ�����
-	int isXYZ = m_Command.stLinkKinPar.LinkPos[0]; // 1 ΪX�ᣬ 2 ΪY�ᣬ 3 ΪZ��, 4 Ϊš��ģʽ
-	int isPOSorNEG = m_Command.stLinkKinPar.LinkPos[1]; //1 Ϊ���� 2Ϊ��
-	int beNormMode = m_Command.stLinkKinPar.LinkPos[2]; //��Ϊtrue����Ϊfalse
-	bool be_NormMode = true;
-	if (beNormMode < -1.0) {
-		be_NormMode = false;
-	}
-	double TarMoveVel = m_Command.stLinkKinPar.LinkVel[0];
 
-	//��ȡ��ǰ�����λ��
-	double xNow = m_Status.stLinkActKin.LinkPos[0];
-	double yNow_l = m_Status.stLinkActKin.LinkPos[1];
-	double yNow_r = m_Status.stLinkActKin.LinkPos[2];
-	double zNow_l = m_Status.stLinkActKin.LinkPos[3];
-	double zNow_r = m_Status.stLinkActKin.LinkPos[4];
-	//switch case�������ĸ��ᣬ������д��
-	switch (isXYZ) {
-	case 1:
-		if (isPOSorNEG == 1) {
-			m_Joints[0]->m_Commd.Velocity = TarMoveVel;
-			m_Joints[0]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-			PosLimit(1, be_NormMode);
-		}
-		else if (isPOSorNEG == 2) {
-			m_Joints[0]->m_Commd.Velocity = -TarMoveVel;
-			m_Joints[0]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-			PosLimit(1, be_NormMode);
-		}
-		break;
-	case 2:
-		if (isPOSorNEG == 1) {
-			SynControl(1, 2, 0, TarMoveVel, m_Status.stLinkActKin.LinkPos[1], m_Status.stLinkActKin.LinkPos[2]);
-			PosLimit(2, be_NormMode);
-		}
-		else if (isPOSorNEG == 2) {
-			SynControl(1, 2, 0, TarMoveVel, m_Status.stLinkActKin.LinkPos[1], m_Status.stLinkActKin.LinkPos[2], -1);
-			PosLimit(2, be_NormMode);
-		}
-		break;
-	case 3:
-		if (isPOSorNEG == 1) {
-			SynControl(3, 4, 1, TarMoveVel, m_Status.stLinkActKin.LinkPos[3], m_Status.stLinkActKin.LinkPos[4]);
-			PosLimit(3, be_NormMode);
-		}
-		else if (isPOSorNEG == 2) {
-			SynControl(3, 4, 1, TarMoveVel, m_Status.stLinkActKin.LinkPos[3], m_Status.stLinkActKin.LinkPos[4], -1);
-			PosLimit(3, be_NormMode);
-		}
-		break;
-	case 4:
-		if (isPOSorNEG == 1) {
-			m_Joints[5]->m_Commd.Velocity = nljMoveVel;
-			m_Joints[5]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-		}
-		else if (isPOSorNEG == 2) {
-			m_Joints[5]->m_Commd.Velocity = -nljMoveVel;
-			m_Joints[5]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-		}
-		break;
-	default:
-		break;
-	}
-	//�·�ָ��
-	for (int i = 0; i < m_Freedom; i++) {
+//------------------------------------------------------------------------------//
+//手动模式
+//------------------------------------------------------------------------------//
+void CLink_0::XAxisMotion() {
+	double tarMoveVel = m_Command.stLinkKinPar.LinkVel[0];
+	int beSafeMode = int(m_Command.stLinkKinPar.LinkPos[0]);
+	xAxisMotion(tarMoveVel, beSafeMode);
+	for (int i = 0; i < m_Freedom; i++)
 		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
-	}
 	return;
+}
 
+void CLink_0::YAxisMotion() {
+	double tarMoveVel = m_Command.stLinkKinPar.LinkVel[0];
+	int beSafeMode = int(m_Command.stLinkKinPar.LinkPos[0]);
+	yAxisMotion(tarMoveVel, beSafeMode);
+	for (int i = 0; i < m_Freedom; i++)
+		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
+	return;
+}
+
+void CLink_0::ZAxisMotion() {
+	double tarMoveVel = m_Command.stLinkKinPar.LinkVel[0];
+	int beSafeMode = int(m_Command.stLinkKinPar.LinkPos[0]);
+	zAxisMotion(tarMoveVel, beSafeMode);
+	for (int i = 0; i < m_Freedom; i++)
+		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
+	return;
+}
+
+void CLink_0::XPlusAxisMotion() {
+	double tarMoveVel = m_Command.stLinkKinPar.LinkVel[0];
+	int beSafeMode = int(m_Command.stLinkKinPar.LinkPos[0]);
+	xPlusAxisMotion(tarMoveVel, beSafeMode);
+	for (int i = 0; i < m_Freedom; i++)
+		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
+	return;
+}
+
+void CLink_0::NLJAxisMotion() {
+	m_Joints[5]->m_Commd.Velocity = nljMoveVel;
+	m_Joints[5]->m_Commd.eMC_Motion = eMC_MOV_VEL;
+	for (int i = 0; i < m_Freedom; i++)
+		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
+	return;
 }
 
 

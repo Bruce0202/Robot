@@ -39,16 +39,10 @@ public:
 	void MotionLineVelocity() {}		//末端位置模式
 	void MotionLineRelative() {}		//末端速度模式
 	
-	void xAxisMotion();		
-	void yAxisMotion();
-	void zAxisMotion();
-	void xPlusAxisMotion();
-
-
-	void MotionMode1();			//自定义1
-	void MotionMode2();			//自定义2
-	void MotionMode3();			//自定义3
-	void MotionMode4();			//自定义4
+	void MotionMode1();			//位置模式
+	void MotionMode2();			//对接
+	void MotionMode3();			//拧紧
+	void MotionMode4() {}		//自定义4
 	void MotionMode5() {} 		//自定义5
 	void MotionMode6() {}		//自定义6
 	void MotionMode7() {}		//自定义7
@@ -60,6 +54,16 @@ public:
 private:
 	void SynControl(objAsix currAxis, double TarMoveVel);   //对平行的进行同步控制
 	void PosLimit(objAsix currAxis, bool normMode = true); //对行程的限制
+	void xAxisMotion(double tarMoveVel, double beSafeMode = 10);
+	void yAxisMotion(double tarMoveVel, double beSafeMode = 10);
+	void zAxisMotion(double tarMoveVel, double beSafeMode = 10);
+	void xPlusAxisMotion(double tarMoveVel, double beSafeMode = 10);
+
+	void XAxisMotion();
+	void YAxisMotion();
+	void ZAxisMotion();
+	void XPlusAxisMotion();
+	void NLJAxisMotion();
 
 public:
 
@@ -71,6 +75,28 @@ private:
 	double e_pre_2[2];
 	double e[2];
 
+	//控制参数
+	const double nljMoveVel = 0.05;
+	const double delta_t = 2.0;
+	const double ACCEPTCURR = 1.0;
+	const double TARCURR = 20.0;
+
+	const double XDOWNPOSLIMIT = 0.0;
+	const double XUPPOSLIMIT = 28.0;
+
+	const double YDOWNPOSLIMIT = 0.0;
+	const double YUPPOSLIMIT = 141;
+
+	const double ZDOWNPOSLIMIT = 0.0;
+	const double ZUPPOSLIMIT = 30;
+
+	const double XPLUSDOWNPOSLIMIT = 0.0;
+	const double XPLUSUPPOSLIMIT = 200;
+
+	//这是位置模式，运动速度的默认值
+	double xPlusMoveVel = 1.0;
+	double yMoveVel = 1.0;
+	double zMoveVel = 0.5;
 };
 
 class CLink_1 : public CLink
