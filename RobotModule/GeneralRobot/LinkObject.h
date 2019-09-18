@@ -53,11 +53,11 @@ public:
 
 private:
 	void SynControl(objAsix currAxis, double TarMoveVel);   //对平行的进行同步控制
-	void PosLimit(objAsix currAxis, bool normMode = true); //对行程的限制
-	void xAxisMotion(double tarMoveVel, double beSafeMode = 10);
-	void yAxisMotion(double tarMoveVel, double beSafeMode = 10);
-	void zAxisMotion(double tarMoveVel, double beSafeMode = 10);
-	void xPlusAxisMotion(double tarMoveVel, double beSafeMode = 10);
+	void PosLimit(objAsix currAxis, bool normMode); //对行程的限制
+	void xAxisMotion(double tarMoveVel, double beSafeMode);
+	void yAxisMotion(double tarMoveVel, double beSafeMode);
+	void zAxisMotion(double tarMoveVel, double beSafeMode);
+	void xPlusAxisMotion(double tarMoveVel, double beSafeMode);
 
 	void XAxisMotion();
 	void YAxisMotion();

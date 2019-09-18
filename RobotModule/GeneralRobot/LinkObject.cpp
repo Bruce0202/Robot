@@ -89,16 +89,20 @@ void CLink_0::PosLimit(objAsix currAxis, bool safeMode = true) {
 //SynControl(1, 2, 0, MoveVel, Now_YL, Now_YR, 1);
 //--------------------------------------------------------------------//
 void CLink_0::SynControl(objAsix currAxis, double TarMoveVel) {
+	double posL = 0.0;
+	double posR = 0.0;
+	double u_inc = 0.0;
+	double AdjVar = 0.0;
 	switch (currAxis)
 	{
 	case yAxis:
-		double posL = m_Status.stLinkActKin.LinkPos[1];
-		double posR = m_Status.stLinkActKin.LinkPos[2];
+		posL = m_Status.stLinkActKin.LinkPos[1];
+		posR = m_Status.stLinkActKin.LinkPos[2];
 		e[0] = posL - posR;
-		double u_inc = A * e[0] + B * e_pre_1[0] + C * e_pre_2[0];
+		u_inc = A * e[0] + B * e_pre_1[0] + C * e_pre_2[0];
 		e_pre_2[0] = e_pre_1[0];
 		e_pre_1[0] = e[0];
-		double AdjVar = fabs_(u_inc) * delta_t;
+		AdjVar = fabs_(u_inc) * delta_t;
 		AdjVar = min(0.5, AdjVar);
 		if (u_inc < 0) {
 			int flag1 = 1; int flag2 = 2;
@@ -122,13 +126,13 @@ void CLink_0::SynControl(objAsix currAxis, double TarMoveVel) {
 		}
 		break;
 	case zAxis:
-		double posL = m_Status.stLinkActKin.LinkPos[3];
-		double posR = m_Status.stLinkActKin.LinkPos[4];
+		posL = m_Status.stLinkActKin.LinkPos[3];
+		posR = m_Status.stLinkActKin.LinkPos[4];
 		e[1] = posL - posR;
-		double u_inc = A * e[1] + B * e_pre_1[1] + C * e_pre_2[1];
+		u_inc = A * e[1] + B * e_pre_1[1] + C * e_pre_2[1];
 		e_pre_2[1] = e_pre_1[1];
 		e_pre_1[1] = e[1];
-		double AdjVar = fabs_(u_inc) * delta_t;
+		AdjVar = fabs_(u_inc) * delta_t;
 		AdjVar = min(0.5, AdjVar);
 		if (u_inc < 0) {
 			int flag1 = 3; int flag2 = 4;
@@ -152,7 +156,7 @@ void CLink_0::SynControl(objAsix currAxis, double TarMoveVel) {
 		}
 		break;
 	default:
-		printf("using the SynControl function, but do nothing");
+//		printf("using the SynControl function, but do nothing");
 		break;
 	}
 }

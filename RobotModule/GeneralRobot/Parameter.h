@@ -14,13 +14,13 @@ const double MIN = 1.7*exp_(308);
 //------------------------------------------------------------------------------//
 //LINK自由度配置
 //------------------------------------------------------------------------------//
-const LONG LINK_FREEDOM[6] = { 6, 0, 0, 0, 0, 0 };
+const LONG LINK_FREEDOM[6] = { 7, 0, 0, 0, 0, 0 };
 
 //------------------------------------------------------------------------------//
 //轴限位
 //------------------------------------------------------------------------------//
-const double LINK_0_JOINT_LIMIT_POS[MAX_FREEDOM_LINK] = { MAX, MAX, MAX, MAX, MAX, MAX, 0, 0,0,0 };
-const double LINK_0_JOINT_LIMIT_NEG[MAX_FREEDOM_LINK] = { -MIN,-MIN,-MIN,-MIN,-MIN,-MIN,0,0,0,0 };
+const double LINK_0_JOINT_LIMIT_POS[MAX_FREEDOM_LINK] = { MAX, MAX, MAX, MAX, MAX, MAX, MAX, 0,0,0 };
+const double LINK_0_JOINT_LIMIT_NEG[MAX_FREEDOM_LINK] = { -MIN,-MIN,-MIN,-MIN,-MIN,-MIN,-MIN,0,0,0 };
 
 
 //const double LINK_0_JOINT_LIMIT_POS[MAX_FREEDOM_LINK] = { 0,0,0,0,0,0,0,0,0,0 };
@@ -39,7 +39,7 @@ const double LINK_5_JOINT_LIMIT_NEG[MAX_FREEDOM_LINK] = { 0,0,0,0,0,0,0,0,0,0 };
 //------------------------------------------------------------------------------//
 //最大速度
 //------------------------------------------------------------------------------//
-const double LINK_0_JOINT_MAX_VEL[MAX_FREEDOM_LINK] = { 10,10,10,10,10,10,0,0,0,0 };
+const double LINK_0_JOINT_MAX_VEL[MAX_FREEDOM_LINK] = { 10,10,10,10,10,10,10,0,0,0 };
 //const double LINK_0_JOINT_MAX_VEL[MAX_FREEDOM_LINK] = { 0,0,0,0,0,0,0,0,0,0 };
 const double LINK_1_JOINT_MAX_VEL[MAX_FREEDOM_LINK] = { 0,0,0,0,0,0,0,0,0,0 };
 const double LINK_2_JOINT_MAX_VEL[MAX_FREEDOM_LINK] = { 0,0,0,0,0,0,0,0,0,0 };
@@ -50,7 +50,7 @@ const double LINK_5_JOINT_MAX_VEL[MAX_FREEDOM_LINK] = { 0,0,0,0,0,0,0,0,0,0 };
 //------------------------------------------------------------------------------//
 //减速比
 //------------------------------------------------------------------------------//
-const double LINK_0_JOINT_RATIO[MAX_FREEDOM_LINK] = { 1,1,1,1,1,1,0,0,0,0 };
+const double LINK_0_JOINT_RATIO[MAX_FREEDOM_LINK] = { 1,1,1,1,1,1,1,0,0,0 };
 //const double LINK_0_JOINT_RATIO[MAX_FREEDOM_LINK] = { 0,0,0,0,0,0,0,0,0,0 };
 const double LINK_1_JOINT_RATIO[MAX_FREEDOM_LINK] = { 0,0,0,0,0,0,0,0,0,0 };
 const double LINK_2_JOINT_RATIO[MAX_FREEDOM_LINK] = { 0,0,0,0,0,0,0,0,0,0 };
@@ -61,7 +61,7 @@ const double LINK_5_JOINT_RATIO[MAX_FREEDOM_LINK] = { 0,0,0,0,0,0,0,0,0,0 };
 //------------------------------------------------------------------------------//
 //电机方向
 //------------------------------------------------------------------------------//
-const LONG LINK_0_JOINT_DIRECTION[MAX_FREEDOM_LINK] = {1,1,1,1,1,1,0,0,0,0 };
+const LONG LINK_0_JOINT_DIRECTION[MAX_FREEDOM_LINK] = {1,1,1,1,1,1,1,0,0,0 };
 //const LONG LINK_0_JOINT_DIRECTION[MAX_FREEDOM_LINK] = { 0,0,0,0,0,0,0,0,0,0 };
 const LONG LINK_1_JOINT_DIRECTION[MAX_FREEDOM_LINK] = { 0,0,0,0,0,0,0,0,0,0 };
 const LONG LINK_2_JOINT_DIRECTION[MAX_FREEDOM_LINK] = { 0,0,0,0,0,0,0,0,0,0 };
