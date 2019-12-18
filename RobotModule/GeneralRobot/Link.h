@@ -29,17 +29,6 @@ public:
 	void CommdHalt();
 	void CommdMove();
 
-	double output1;
-	double output2;
-	double output3;
-	double output4;
-	double output5;
-	double output6;
-	double output7;
-	double output8;
-	////////////
-	double output88;
-	////////////
 protected:
 	void JugeLinkState();
 	void LinkStateMachine();

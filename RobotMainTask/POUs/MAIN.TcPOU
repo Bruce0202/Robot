@@ -59,13 +59,21 @@ END_VAR
 	15:
 		GetTime(cpuAccountDW=>time_start);
 	 	
+		//write the CTL word into CtlComd
 		GVL.fbRecvDataQue.GetfromQue(ADR(CtlComd));
+		//read the Axis Status, not send, set the MC_ActStatus
 		GroupReadAxis();
 
+		//this send the CtlComd to C Module, to dicide how to handle the CtlComd
+		//the input variable is MC_ActStatus, and the CtlComd
+		//the output variable is MC_SetCommd, Status.
 		robot.RunRobot(pMC_Inputs := ADR(MC_ActStatus), pMC_Outputs := ADR(MC_SetCommd),
 								pCtlComd	:= ADR(CtlComd) , pRobotStatus := ADR(Status));
-														
+				
+		//according to MC_setCommd, to control Axis;										
 		GroupSetAxis();
+		
+		//send the atatus to upper
 		GVL.fbSendDataQue.PutToQue(ADR(Status));
 		
 		GetTime(cpuAccountDW=>time_end);
@@ -115,13 +123,19 @@ END_FOR
       <LineId Id="30" Count="0" />
       <LineId Id="140" Count="0" />
       <LineId Id="44" Count="0" />
+      <LineId Id="546" Count="0" />
       <LineId Id="235" Count="0" />
+      <LineId Id="547" Count="0" />
       <LineId Id="505" Count="0" />
+      <LineId Id="548" Count="0" />
       <LineId Id="268" Count="0" />
+      <LineId Id="549" Count="1" />
       <LineId Id="202" Count="0" />
       <LineId Id="267" Count="0" />
       <LineId Id="320" Count="0" />
+      <LineId Id="551" Count="0" />
       <LineId Id="203" Count="0" />
+      <LineId Id="552" Count="1" />
       <LineId Id="141" Count="0" />
       <LineId Id="192" Count="0" />
       <LineId Id="191" Count="0" />

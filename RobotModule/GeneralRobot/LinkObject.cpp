@@ -2,8 +2,6 @@
 
 extern CErrorQueue g_ErrQue;
 
-
-
 /*********************************************************************************************************
 Positive kinematics
 *********************************************************************************************************/
@@ -70,7 +68,7 @@ void CLink_0::PosLimit(objAsix currAxis, bool safeMode = true) {
 			break;
 		case xAxisPlus:
 			currPos = m_Status.stLinkActKin.LinkPos[6];
-			if (currPos > ZUPPOSLIMIT || currPos < ZDOWNPOSLIMIT) {
+			if (currPos > XPLUSUPPOSLIMIT || currPos < XPLUSDOWNPOSLIMIT) {
 				m_Joints[6]->m_Commd.eMC_Motion = eMC_HALT;
 			}
 			break;
@@ -82,7 +80,6 @@ void CLink_0::PosLimit(objAsix currAxis, bool safeMode = true) {
 		}
 	}
 }
-
 
 //-------------------------------------------------------------------//
 //basing PID, control two axis to move
@@ -161,10 +158,6 @@ void CLink_0::SynControl(objAsix currAxis, double TarMoveVel) {
 	}
 }
 
-/*********************************************************************************************************
-Inverse kinematics
-*********************************************************************************************************/
-
 //X Axis,tarMoveVel是控制的目标速度，beSafeMode判断是否处于安全模式
 void CLink_0::xAxisMotion(double tarMoveVel, double beSafeMode = 10) {
 	//获取控制信息
@@ -173,7 +166,7 @@ void CLink_0::xAxisMotion(double tarMoveVel, double beSafeMode = 10) {
 		safeMode = false;
 	}
 	//获取X轴的位置关系
-	double xNowPosition = m_Status.stLinkActKin.LinkPos[0];
+	//double xNowPosition = m_Status.stLinkActKin.LinkPos[0];
 
 	m_Joints[0]->m_Commd.Velocity = tarMoveVel;
 	m_Joints[0]->m_Commd.eMC_Motion = eMC_MOV_VEL;
@@ -189,7 +182,7 @@ void CLink_0::yAxisMotion(double tarMoveVel, double beSafeMode = 10) {
 		safeMode = false;
 	}
 	//获取Y轴的位置关系
-	double yNowPosition = m_Status.stLinkActKin.LinkPos[1];
+	//double yNowPosition = m_Status.stLinkActKin.LinkPos[1];
 
 	SynControl(yAxis, tarMoveVel);
 	PosLimit(yAxis, safeMode);
@@ -204,12 +197,13 @@ void CLink_0::zAxisMotion(double tarMoveVel, double beSafeMode = 10) {
 		safeMode = false;
 	}
 	//获取Z轴的位置关系
-	double yNowPosition = m_Status.stLinkActKin.LinkPos[3];
+	//double zNowPosition = m_Status.stLinkActKin.LinkPos[3];
+
 	SynControl(zAxis, tarMoveVel);
 	PosLimit(zAxis, safeMode);
-	for (int i = 0; i < m_Freedom; i++) {
-		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
-	}
+	//for (int i = 0; i < m_Freedom; i++) {
+	//	m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
+	//}
 	return;
 }
 
@@ -221,7 +215,7 @@ void CLink_0::xPlusAxisMotion(double tarMoveVel, double beSafeMode = 10) {
 		safeMode = false;
 	}
 	//获取x轴的位置关系
-	double xPlusNowPosition = m_Status.stLinkActKin.LinkPos[6];
+	//double xPlusNowPosition = m_Status.stLinkActKin.LinkPos[6];
 
 	m_Joints[6]->m_Commd.Velocity = tarMoveVel;
 	m_Joints[6]->m_Commd.eMC_Motion = eMC_MOV_VEL;
@@ -229,20 +223,24 @@ void CLink_0::xPlusAxisMotion(double tarMoveVel, double beSafeMode = 10) {
 	return;
 }
 
+/*********************************************************************************************************
+Inverse kinematics
+*********************************************************************************************************/
 //-----------------------------------------------------------------------------//
 //位置模式，主要是控制三个轴的运动，分别是大X轴，y轴和Z轴.
 //-----------------------------------------------------------------------------//
-void CLink_0::MotionMode1() {
+void CLink_0::MotionMode6() {
 	//读取控制量
-	double targetPosX = m_Command.stLinkKinPar.LinkPos[0];
+	double targetPosXPlus = m_Command.stLinkKinPar.LinkPos[0];
 	double targetPosY = m_Command.stLinkKinPar.LinkPos[1];
 	double targetPosZ = m_Command.stLinkKinPar.LinkPos[2];
 
 	//得到当前的位置，然后得到当前与目标位置的差距
+	//这里就是使用的X大轴、Y以及Z轴
 	double nowXPlus = m_Status.stLinkActKin.LinkPos[6];
 	double mowY = (m_Status.stLinkActKin.LinkPos[1] + m_Status.stLinkActKin.LinkPos[2]) / 2;
 	double mowZ = (m_Status.stLinkActKin.LinkPos[3] + m_Status.stLinkActKin.LinkPos[4]) / 2;
-	double Dis_X = targetPosX - nowXPlus;
+	double Dis_X = targetPosXPlus - nowXPlus;
 	double Dis_Y = targetPosY - mowY;
 	double Dis_Z = targetPosZ - mowZ;
 
@@ -252,7 +250,7 @@ void CLink_0::MotionMode1() {
 		m_Joints[i]->m_Commd.Position = 0;
 	}
 
-	if ((fabs_(Dis_X) < 0.2) && (fabs_(Dis_Y) < 0.2) && (fabs_(Dis_Z) < 0.2)) {
+	if ((fabs_(Dis_X) < 0.1) && (fabs_(Dis_Y) < 0.1) && (fabs_(Dis_Z) < 0.1)) {
 		for (int i = 0; i < m_Freedom; i++) {
 			m_Joints[i]->m_Commd.eMC_Motion = eMC_HALT;
 			m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
@@ -260,7 +258,7 @@ void CLink_0::MotionMode1() {
 		return;
 	}
 
-	if (fabs_(Dis_X) > 0.2) {
+	if (fabs_(Dis_X) > 0.1) {
 		if (Dis_X > 0)
 			xPlusAxisMotion(xPlusMoveVel);
 		else 
@@ -269,7 +267,7 @@ void CLink_0::MotionMode1() {
 	else
 		m_Joints[6]->m_Commd.eMC_Motion = eMC_HALT;
 
-	if (fabs_(Dis_Y) > 0.2) {
+	if (fabs_(Dis_Y) > 0.1) {
 		if (Dis_Y > 0)
 			yAxisMotion(yMoveVel);
 		else
@@ -280,7 +278,7 @@ void CLink_0::MotionMode1() {
 		m_Joints[2]->m_Commd.eMC_Motion = eMC_HALT;
 	}
 
-	if (fabs_(Dis_Z) > 0.2) {
+	if (fabs_(Dis_Z) > 0.1) {
 		if (Dis_Z > 0)
 			zAxisMotion(zMoveVel);
 		else 
@@ -300,15 +298,15 @@ void CLink_0::MotionMode1() {
 //------------------------------------------------------------------------------//
 //这是一个控制拧螺钉头接入螺钉的程序，主要是控制Z轴
 //------------------------------------------------------------------------------//
-void CLink_0::MotionMode2() {
+void CLink_0::MotionMode7() {
+	//读入控制指令
+	double tarPosZ = m_Command.stLinkKinPar.LinkPos[0];
+	double tarVelNlj = m_Command.stLinkKinPar.LinkVel[0];
+
 	//获取当前的状态
 	double nowZ = (m_Status.stLinkActKin.LinkPos[3] + m_Status.stLinkActKin.LinkPos[4]) / 2;
 	double NLJVel = m_Status.stLinkActKin.LinkVel[0];
 	double currentNlj = m_Status.stLinkActKin.LinkVel[1];
-
-	//读入控制指令
-	double tarPosZ = m_Command.stLinkKinPar.LinkPos[0];
-	double tarVelNlj = m_Command.stLinkKinPar.LinkVel[0];
 
 	//位置的偏差
 	double deviDis = tarPosZ - nowZ;
@@ -359,9 +357,9 @@ void CLink_0::MotionMode2() {
 			//	m_Joints[4]->m_Commd.eMC_Motion = eMC_MOV_VEL;
 			//	m_Joints[4]->m_Commd.Velocity = -MoveVel + fabs_(u_inc) * delta_t;
 			//}
-			zAxisMotion(-NLJVel);
+			zAxisMotion(0);
 			m_Joints[5]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-			m_Joints[5]->m_Commd.Velocity = -nljMoveVel;
+			m_Joints[5]->m_Commd.Velocity = nljMoveVel;
 		}
 	}
 	for (int i = 0; i < m_Freedom; i++)
@@ -372,7 +370,7 @@ void CLink_0::MotionMode2() {
 //------------------------------------------------------------------------------//
 //这是拧紧电机的控制程序
 //------------------------------------------------------------------------------//
-void CLink_0::MotionMode3() {
+void CLink_0::MotionMode8() {
 	//读当前的状态
 	double NLJVel = m_Status.stLinkActKin.LinkVel[0];
 	double currentNlj = m_Status.stLinkActKin.LinkVel[1];
@@ -396,11 +394,11 @@ void CLink_0::MotionMode3() {
 	return;
 }
 
-
 //------------------------------------------------------------------------------//
 //手动模式
 //------------------------------------------------------------------------------//
-void CLink_0::XAxisMotion() {
+//X轴30mm
+void CLink_0::MotionMode1() {
 	double tarMoveVel = m_Command.stLinkKinPar.LinkVel[0];
 	int beSafeMode = int(m_Command.stLinkKinPar.LinkPos[0]);
 	xAxisMotion(tarMoveVel, beSafeMode);
@@ -409,7 +407,8 @@ void CLink_0::XAxisMotion() {
 	return;
 }
 
-void CLink_0::YAxisMotion() {
+//Y轴140mm
+void CLink_0::MotionMode2() {
 	double tarMoveVel = m_Command.stLinkKinPar.LinkVel[0];
 	int beSafeMode = int(m_Command.stLinkKinPar.LinkPos[0]);
 	yAxisMotion(tarMoveVel, beSafeMode);
@@ -418,7 +417,8 @@ void CLink_0::YAxisMotion() {
 	return;
 }
 
-void CLink_0::ZAxisMotion() {
+//Z轴30mm
+void CLink_0::MotionMode3() {
 	double tarMoveVel = m_Command.stLinkKinPar.LinkVel[0];
 	int beSafeMode = int(m_Command.stLinkKinPar.LinkPos[0]);
 	zAxisMotion(tarMoveVel, beSafeMode);
@@ -427,7 +427,8 @@ void CLink_0::ZAxisMotion() {
 	return;
 }
 
-void CLink_0::XPlusAxisMotion() {
+//X轴200mm
+void CLink_0::MotionMode4() {
 	double tarMoveVel = m_Command.stLinkKinPar.LinkVel[0];
 	int beSafeMode = int(m_Command.stLinkKinPar.LinkPos[0]);
 	xPlusAxisMotion(tarMoveVel, beSafeMode);
@@ -436,8 +437,9 @@ void CLink_0::XPlusAxisMotion() {
 	return;
 }
 
-void CLink_0::NLJAxisMotion() {
-	m_Joints[5]->m_Commd.Velocity = nljMoveVel;
+//拧螺钉电机
+void CLink_0::MotionMode5() {
+	m_Joints[5]->m_Commd.Velocity = m_Command.stLinkKinPar.LinkVel[0] > 0 ? nljMoveVel : -nljMoveVel;
 	m_Joints[5]->m_Commd.eMC_Motion = eMC_MOV_VEL;
 	for (int i = 0; i < m_Freedom; i++)
 		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);

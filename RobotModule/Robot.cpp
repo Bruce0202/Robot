@@ -126,7 +126,7 @@ ULONG CRobot::InitRobot(st_InitParameter* pInitPar)
 ULONG CRobot::RunRobot(st_AxisGroupRead* pMC_Inputs, st_AxisGroupSet* pMC_Outputs, Recvbuff* pCtlComd, Sendbuff* pRobotStatus)
 {
 	ULONG result;
-	robot.Run(pMC_Inputs, pMC_Outputs, pCtlComd, pRobotStatus);
+	robot. Run(pMC_Inputs, pMC_Outputs, pCtlComd, pRobotStatus);
 	return 0;
 }
 

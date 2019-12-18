@@ -5,7 +5,7 @@
 (*Listioning and accecpt connect for remote*)
 VAR_INPUT
 	bEnable : BOOL;
-	sLocalHost : STRING(15) := '192.168.1.245';//'192.168.1.245';'192.168.137.74'
+	sLocalHost : STRING(15) := '192.168.1.100';//'192.168.1.245';'192.168.137.74'
 	nLocalPort : UINT := 4999;
 
 END_VAR

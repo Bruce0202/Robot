@@ -36,20 +36,20 @@ public:
 
 	//inverse
 	void MotionLineAbsolute() {}		//空的循环，如果跑motion程序在默认状态下一直进这个循环		
-	void MotionLineVelocity() {}		//末端位置模式
-	void MotionLineRelative() {}		//末端速度模式
+	void MotionLineVelocity() {}		//未定义
+	void MotionLineRelative() {}		//末定义
 	
-	void MotionMode1();			//位置模式
-	void MotionMode2();			//对接
-	void MotionMode3();			//拧紧
-	void MotionMode4() {}		//自定义4
-	void MotionMode5() {} 		//自定义5
-	void MotionMode6() {}		//自定义6
-	void MotionMode7() {}		//自定义7
-	void MotionMode8() {}		//自定义8
-	void MotionMode9() {}		//自定义9
+	void MotionMode1();		//X
+	void MotionMode2();		//Y
+	void MotionMode3();		//Z
+	void MotionMode4();		//XPLUS
+	void MotionMode5();		//拧紧电机
+	void MotionMode6();		//位置模式
+	void MotionMode7();		//对接
+	void MotionMode8();		//拧紧
+	void MotionMode9() {}	//自定义9
 
-	void SetLinkSelfAction() {}			//Link操作，如末端工具，水炮枪
+	void SetLinkSelfAction() {}			//未定义
 
 private:
 	void SynControl(objAsix currAxis, double TarMoveVel);   //对平行的进行同步控制
@@ -58,12 +58,6 @@ private:
 	void yAxisMotion(double tarMoveVel, double beSafeMode);
 	void zAxisMotion(double tarMoveVel, double beSafeMode);
 	void xPlusAxisMotion(double tarMoveVel, double beSafeMode);
-
-	void XAxisMotion();
-	void YAxisMotion();
-	void ZAxisMotion();
-	void XPlusAxisMotion();
-	void NLJAxisMotion();
 
 public:
 

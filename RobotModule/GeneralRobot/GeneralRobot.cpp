@@ -192,6 +192,7 @@ void CGeneralRobot::Run(st_AxisGroupRead *MC_status, st_AxisGroupSet *MC_SetCmd,
 	
 	SetFeedback();
 	
+	//这个东西还没有开发好，或者没有使用到过
 	SetAction();
 	
 	
@@ -203,7 +204,7 @@ void CGeneralRobot::Run(st_AxisGroupRead *MC_status, st_AxisGroupSet *MC_SetCmd,
 
 /********************************
 *名称：Robot状态获取
-*功能：根据轴状态判断车体状态
+*功能：根据Link的状态判断Robot的状态，Link由最底层的Asix决定
 *参数介绍：无
 *返回值：无
 ********************************/
