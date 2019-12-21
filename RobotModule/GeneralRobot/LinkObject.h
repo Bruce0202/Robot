@@ -5,9 +5,9 @@
 
 enum objAsix {
 	xAxis = 0,
-	xAxisPlus,
 	yAxis,
-	zAxis
+	zAxis,
+	wheelAxis
 };
 
 class CLink_0 : public CLink
@@ -57,7 +57,7 @@ private:
 	void xAxisMotion(double tarMoveVel, double beSafeMode);
 	void yAxisMotion(double tarMoveVel, double beSafeMode);
 	void zAxisMotion(double tarMoveVel, double beSafeMode);
-	void xPlusAxisMotion(double tarMoveVel, double beSafeMode);
+	void xWheelMotion(double tarMoveVel, double beSafeMode);
 
 public:
 
