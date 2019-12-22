@@ -37,6 +37,12 @@ void CLink_0::LinkForwardKin() {
 	m_Status.stLinkActKin.LinkPos[6] = xPlusNow;
 	m_Status.stLinkActKin.LinkVel[0] = NLJVel;
 	m_Status.stLinkActKin.LinkVel[1] = NLJCurrent;
+
+	if (m_Command.stLinkKinPar.eActMotionMode != eMotionMode7) {
+		connectionFlag = 0;
+	}
+	test = connectionFlag;
+
 }
 
 //-----------------------------------------------------------------//
@@ -301,11 +307,14 @@ void CLink_0::MotionMode6() {
 void CLink_0::MotionMode7() {
 	//读入控制指令
 	double tarPosZ = m_Command.stLinkKinPar.LinkPos[0];
-	double tarVelNlj = m_Command.stLinkKinPar.LinkVel[0];
+	if (connectionFlag == 0) {
+		NljObjPosi = m_Command.stLinkKinPar.LinkPos[1] + 2.5;
+		connectionFlag++;
+	}
 
 	//获取当前的状态
 	double nowZ = (m_Status.stLinkActKin.LinkPos[3] + m_Status.stLinkActKin.LinkPos[4]) / 2;
-	double NLJVel = m_Status.stLinkActKin.LinkVel[0];
+	double NljPosi = m_Status.stLinkActKin.LinkPos[5];
 	double currentNlj = m_Status.stLinkActKin.LinkVel[1];
 
 	//位置的偏差
@@ -317,51 +326,30 @@ void CLink_0::MotionMode7() {
 		m_Joints[i]->m_Commd.Position = 0;
 	}
 
+
+
 	//接入操作
-	if ((fabs_(deviDis) <= 0.2) && (currentNlj < TARCURR)) {
-		m_Joints[3]->m_Commd.eMC_Motion = eMC_HALT;
-		m_Joints[4]->m_Commd.eMC_Motion = eMC_HALT;
-		m_Joints[5]->m_Commd.eMC_Motion = eMC_HALT;
-		for (int i = 0; i < m_Freedom; i++)
-			m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
-		return;
-	}
-	else if (currentNlj > TARCURR) {
-		m_Joints[3]->m_Commd.eMC_Motion = eMC_HALT;
-		m_Joints[4]->m_Commd.eMC_Motion = eMC_HALT;
-		m_Joints[5]->m_Commd.eMC_Motion = eMC_HALT;
-		for (int i = 0; i < m_Freedom; i++)
-			m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
-		return;
-	}
-	else if ((fabs_(deviDis) > 0.2) && (currentNlj < TARCURR)) {
+	if (fabs_(deviDis) > 0.1) {
 		if (deviDis > 0) {
-			zAxisMotion(NLJVel);
-			m_Joints[5]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-			m_Joints[5]->m_Commd.Velocity = nljMoveVel;
+			zAxisMotion(0.5);
 		}
 		else {
-			//e[1] = m_Status.stLinkActKin.LinkPos[3] - m_Status.stLinkActKin.LinkPos[4];
-			//double u_inc = A * e[1] + B * e_pre_1[1] + C * e_pre_2[1];
-			//e_pre_2[1] = e_pre_1[1];
-			//e_pre_1[1] = e[1];
-			//if (u_inc < 0) {
-			//	m_Joints[3]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-			//	m_Joints[3]->m_Commd.Velocity = -MoveVel + fabs_(u_inc) * delta_t;
-			//	m_Joints[4]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-			//	m_Joints[4]->m_Commd.Velocity = -MoveVel;
-			//}
-			//else {
-			//	m_Joints[3]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-			//	m_Joints[3]->m_Commd.Velocity = -MoveVel;
-			//	m_Joints[4]->m_Commd.eMC_Motion = eMC_MOV_VEL;
-			//	m_Joints[4]->m_Commd.Velocity = -MoveVel + fabs_(u_inc) * delta_t;
-			//}
-			zAxisMotion(0);
+			zAxisMotion(-0.5);
+		}
+	}
+	else {
+		m_Joints[3]->m_Commd.eMC_Motion = eMC_HALT;
+		m_Joints[4]->m_Commd.eMC_Motion = eMC_HALT;
+		if (fabs_(NljObjPosi - NljPosi) < 0.1) {
+			m_Joints[5]->m_Commd.eMC_Motion = eMC_HALT;
+		}
+		else {
 			m_Joints[5]->m_Commd.eMC_Motion = eMC_MOV_VEL;
 			m_Joints[5]->m_Commd.Velocity = nljMoveVel;
 		}
 	}
+	test1 = NljObjPosi;
+	test2 = NljPosi;
 	for (int i = 0; i < m_Freedom; i++)
 		m_Joints[i]->CommdMove(m_Joints[i]->m_Commd);
 	return;

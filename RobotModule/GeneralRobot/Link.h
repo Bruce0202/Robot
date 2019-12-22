@@ -71,6 +71,8 @@ public:
 	stAction		m_ActAction;		//PLC当前动作
 
 	int				test;
+	double        test1;
+	double          test2;
 private:
 	stLinkCommand	m_preCommand;
 

@@ -91,6 +91,9 @@ private:
 	double xPlusMoveVel = 1.0;
 	double yMoveVel = 1.0;
 	double zMoveVel = 0.5;
+
+	int connectionFlag = 0;
+	double NljObjPosi = 0.0;
 };
 
 class CLink_1 : public CLink
