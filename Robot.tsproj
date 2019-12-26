@@ -2044,7 +2044,7 @@ External Setpoint Generation:
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
-						<EncPara MaxCount="#xffffffff"/>
+						<EncPara Offset="1210" MaxCount="#xffffffff"/>
 						<Vars VarGrpType="1">
 							<Name>Inputs</Name>
 							<Var>
@@ -2251,7 +2251,7 @@ External Setpoint Generation:
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
-						<EncPara MaxCount="#xffffffff"/>
+						<EncPara ScaleFactorDenominator="51.095748" Offset="1163.3371" Inverse="true" MaxCount="#xffffffff"/>
 						<Vars VarGrpType="1">
 							<Name>Inputs</Name>
 							<Var>
@@ -2318,7 +2318,7 @@ External Setpoint Generation:
 						</Vars>
 					</Encoder>
 					<Drive Name="Drive" DrvType="16">
-						<DrvPara MaxCount="#xffffffff" DriveControlDWord="#x00020000">
+						<DrvPara Inverse="true" MaxCount="#xffffffff" DriveControlDWord="#x00020000">
 							<Analog ScaleFactorActTorque="0.1"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
@@ -2460,7 +2460,7 @@ External Setpoint Generation:
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
-						<EncPara MaxCount="#xffffffff"/>
+						<EncPara ScaleFactorDenominator="51.095748" Offset="318.369" Inverse="true" MaxCount="#xffffffff"/>
 						<Vars VarGrpType="1">
 							<Name>Inputs</Name>
 							<Var>
@@ -2527,7 +2527,7 @@ External Setpoint Generation:
 						</Vars>
 					</Encoder>
 					<Drive Name="Drive" DrvType="16">
-						<DrvPara MaxCount="#xffffffff" DriveControlDWord="#x00020000">
+						<DrvPara Inverse="true" MaxCount="#xffffffff" DriveControlDWord="#x00020000">
 							<Analog ScaleFactorActTorque="0.1"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
@@ -2669,7 +2669,9 @@ External Setpoint Generation:
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
-						<EncPara MaxCount="#xffffffff"/>
+						<EncPara ScaleFactorDenominator="11.75751305" Offset="107.3187" Inverse="true" MaxCount="#xffffffff">
+							<ParameterChanged>7</ParameterChanged>
+						</EncPara>
 						<Vars VarGrpType="1">
 							<Name>Inputs</Name>
 							<Var>
@@ -2736,7 +2738,7 @@ External Setpoint Generation:
 						</Vars>
 					</Encoder>
 					<Drive Name="Drive" DrvType="16">
-						<DrvPara MaxCount="#xffffffff" DriveControlDWord="#x00020000">
+						<DrvPara Inverse="true" MaxCount="#xffffffff" DriveControlDWord="#x00020000">
 							<Analog ScaleFactorActTorque="0.1"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
@@ -2878,7 +2880,9 @@ External Setpoint Generation:
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
-						<EncPara MaxCount="#xffffffff"/>
+						<EncPara ScaleFactorDenominator="141.4214" Offset="83.5667" MaxCount="#xffffffff">
+							<ParameterChanged>7</ParameterChanged>
+						</EncPara>
 						<Vars VarGrpType="1">
 							<Name>Inputs</Name>
 							<Var>
@@ -3087,7 +3091,7 @@ External Setpoint Generation:
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
-						<EncPara MaxCount="#xffffffff"/>
+						<EncPara ScaleFactorDenominator="5.22698" MaxCount="#xffffffff"/>
 						<Vars VarGrpType="1">
 							<Name>Inputs</Name>
 							<Var>
@@ -3296,7 +3300,7 @@ External Setpoint Generation:
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
-						<EncPara MaxCount="#xffffffff"/>
+						<EncPara ScaleFactorDenominator="5.25493" Offset="143.0882" Inverse="true" MaxCount="#xffffffff"/>
 						<Vars VarGrpType="1">
 							<Name>Inputs</Name>
 							<Var>
@@ -3363,7 +3367,7 @@ External Setpoint Generation:
 						</Vars>
 					</Encoder>
 					<Drive Name="Drive" DrvType="16">
-						<DrvPara MaxCount="#xffffffff" DriveControlDWord="#x00020000">
+						<DrvPara Inverse="true" MaxCount="#xffffffff" DriveControlDWord="#x00020000">
 							<Analog ScaleFactorActTorque="0.1"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
