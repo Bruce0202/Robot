@@ -21,6 +21,9 @@ VAR_GLOBAL
 	
 	//NEW
 	TestMotor : ARRAY [0..19] OF AXIS_REF;
+	
+	//this is the actual torque
+	axisTorque AT%I*:INT;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

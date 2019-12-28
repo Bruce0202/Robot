@@ -2669,9 +2669,7 @@ External Setpoint Generation:
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
-						<EncPara ScaleFactorDenominator="11.75751305" Offset="107.3187" Inverse="true" MaxCount="#xffffffff">
-							<ParameterChanged>7</ParameterChanged>
-						</EncPara>
+						<EncPara ScaleFactorDenominator="11.75751305" Offset="107.3187" Inverse="true" MaxCount="#xffffffff"/>
 						<Vars VarGrpType="1">
 							<Name>Inputs</Name>
 							<Var>
@@ -2880,9 +2878,7 @@ External Setpoint Generation:
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
-						<EncPara ScaleFactorDenominator="141.4214" Offset="83.5667" MaxCount="#xffffffff">
-							<ParameterChanged>7</ParameterChanged>
-						</EncPara>
+						<EncPara ScaleFactorDenominator="141.4214" Offset="4.8786" MaxCount="#xffffffff"/>
 						<Vars VarGrpType="1">
 							<Name>Inputs</Name>
 							<Var>
@@ -3300,7 +3296,9 @@ External Setpoint Generation:
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
-						<EncPara ScaleFactorDenominator="5.25493" Offset="143.0882" Inverse="true" MaxCount="#xffffffff"/>
+						<EncPara ScaleFactorDenominator="5.25493" Offset="5" Inverse="true" MaxCount="#xffffffff">
+							<ParameterChanged>7</ParameterChanged>
+						</EncPara>
 						<Vars VarGrpType="1">
 							<Name>Inputs</Name>
 							<Var>
@@ -4574,6 +4572,16 @@ External Setpoint Generation:
 						<Var>
 							<Name>GVL.TestMotor[19].PlcToNc</Name>
 							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="1">
+						<Name>CommTask Inputs</Name>
+						<Var>
+							<Name>GVL.axisTorque</Name>
+							<Comment>
+								<![CDATA[this is the actual torque]]>
+							</Comment>
+							<Type>INT</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2018-10-22T11:30:53">
@@ -7271,7 +7279,7 @@ External Setpoint Generation:
 						<SyncMan>00188c0026000100010000008c008c008c00001826010000</SyncMan>
 						<SyncMan>00198c0022000100020000008c008c008c00001922010000</SyncMan>
 						<SyncMan>00110a006400010003000000000020002000001164010000</SyncMan>
-						<SyncMan>80110a002000010004000000000020002000801120010000</SyncMan>
+						<SyncMan>80110c002000010004000000000020002000801120010000</SyncMan>
 						<Fmmu>0000000000000000001100020100000001000000000000000000000000000000</Fmmu>
 						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
 						<SwitchPortData>00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</SwitchPortData>
@@ -7428,7 +7436,7 @@ External Setpoint Generation:
 								<Type>INT</Type>
 							</Entry>
 						</Pdo>
-						<Pdo Name="Inputs" Index="#x1a13" Flags="#x0010">
+						<Pdo Name="Inputs" Index="#x1a13" Flags="#x0010" SyncMan="3">
 							<Entry Name="Torque actual value" Index="#x6077">
 								<Type>INT</Type>
 							</Entry>
@@ -8316,6 +8324,7 @@ External Setpoint Generation:
 		</Io>
 	</Project>
 	<Mappings>
+		<MappingInfo Identifier="{08502002-0030-0304-0020-500830000403}" Id="#x02030040" Watchdog="00000000000000000000000000000000"/>
 		<MappingInfo Identifier="{05000010-2001-0850-1000-040300205008}" Id="#x02030030" Watchdog="14000000040000000400000004000000"/>
 		<MappingInfo Identifier="{00000000-0020-0304-1000-040321000403}" Id="#x02030020"/>
 		<MappingInfo Identifier="{00000000-0030-0304-1000-040330000403}" Id="#x02030010"/>
@@ -8401,6 +8410,7 @@ External Setpoint Generation:
 		</OwnerA>
 		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Axis 6">
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 6 (Elmo Drive)">
+				<Link VarA="Drive^Inputs^In^nDataIn3[0]" VarB="Inputs_1^Torque actual value"/>
 				<Link VarA="Drive^Inputs^In^nDcOutputTime" VarB="InfoData^DcOutputShift"/>
 				<Link VarA="Drive^Inputs^In^nState1" VarB="Inputs^Status word"/>
 				<Link VarA="Drive^Inputs^In^nState2" VarB="Inputs^Status word" Size="8" OffsB="8"/>
@@ -8432,6 +8442,9 @@ External Setpoint Generation:
 			</OwnerB>
 		</OwnerA>
 		<OwnerA Name="TIPC^RobotMainTask^RobotMainTask Instance">
+			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 6 (Elmo Drive)">
+				<Link VarA="CommTask Inputs^GVL.axisTorque" VarB="Inputs_1^Torque actual value"/>
+			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
 				<Link VarA="MainTask Inputs^GVL.TestMotor[0].NcToPlc" VarB="Outputs^ToPlc"/>
 				<Link VarA="MainTask Outputs^GVL.TestMotor[0].PlcToNc" VarB="Inputs^FromPlc"/>
